@@ -1,0 +1,161 @@
+// Font Weight Tokens
+$font-weight-bold: 700;
+$font-weight-semibold: 600;
+$font-weight-medium: 500;
+$font-weight-regular: 400;
+
+// Font Size Tokens
+$font-size-3xl: 32px;
+$font-size-2xl: 24px;
+$font-size-xl: 24px;
+$font-size-2lg: 18px;
+$font-size-lg: 16px;
+$font-size-md: 14px;
+$font-size-sm: 13px;
+$font-size-xs: 12px;
+
+// Typography Mixins (토큰 조합)
+@mixin text-3xl-bold {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+}
+
+@mixin text-3xl-semibold {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-semibold;
+}
+
+@mixin text-2xl-bold {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+}
+
+@mixin text-2xl-semibold {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+}
+
+@mixin text-2xl-medium {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-medium;
+}
+
+@mixin text-2xl-regular {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-regular;
+}
+
+@mixin text-xl-bold {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+}
+
+@mixin text-xl-semibold {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+}
+
+@mixin text-xl-medium {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-medium;
+}
+
+@mixin text-xl-regular {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-regular;
+}
+
+@mixin text-2lg-bold {
+  font-size: $font-size-2lg;
+  font-weight: $font-weight-bold;
+}
+
+@mixin text-2lg-semibold {
+  font-size: $font-size-2lg;
+  font-weight: $font-weight-semibold;
+}
+
+@mixin text-2lg-medium {
+  font-size: $font-size-2lg;
+  font-weight: $font-weight-medium;
+}
+
+@mixin text-2lg-regular {
+  font-size: $font-size-2lg;
+  font-weight: $font-weight-regular;
+}
+
+@mixin text-lg-bold {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+}
+
+@mixin text-lg-semibold {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+}
+
+@mixin text-lg-medium {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+}
+
+@mixin text-lg-regular {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-regular;
+}
+
+@mixin text-md-bold {
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+}
+
+@mixin text-md-semibold {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+}
+
+@mixin text-md-medium {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+}
+
+@mixin text-md-regular {
+  font-size: $font-size-md;
+  font-weight: $font-weight-regular;
+}
+
+@mixin text-sm-semibold {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+}
+
+@mixin text-sm-medium {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+}
+
+@mixin text-xs-semibold {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+}
+
+@mixin text-xs-medium {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+}
+
+@mixin text-xs-regular {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-regular;
+}
+
+//Color Tokens
+$color-black: #101318;
+$color-white: #ffffff;
+$color-gray-100: #f2f4f8;
+$color-gray-300: #cfdbea;
+$color-gray-500: #9facbd;
+$color-gray-800: #2d3034;
+$color-primary-purple: #6a42db;
+$color-secondary-purple: #f1edfc;
