@@ -7,147 +7,185 @@ $font-weight-regular: 400;
 // Font Size Tokens
 $font-size-3xl: 32px;
 $font-size-2xl: 24px;
-$font-size-xl: 24px;
+$font-size-xl: 20px;
 $font-size-2lg: 18px;
 $font-size-lg: 16px;
 $font-size-md: 14px;
 $font-size-sm: 13px;
 $font-size-xs: 12px;
 
+// Font Line height Tokens
+$line-height-3xl: 42px;
+$line-height-2xl: 32px;
+$line-height-xl: 32px;
+$line-height-2lg: 26px;
+$line-height-lg: 26px;
+$line-height-md: 24px;
+$line-height-sm: 22px;
+$line-height-xs-semibold: 20px;
+$line-height-xs: 18px;
+
 // Typography Mixins (토큰 조합)
 @mixin text-3xl-bold {
   font-size: $font-size-3xl;
   font-weight: $font-weight-bold;
+  line-height: $line-height-3xl;
 }
 
 @mixin text-3xl-semibold {
   font-size: $font-size-3xl;
   font-weight: $font-weight-semibold;
+  line-height: $line-height-3xl;
 }
 
 @mixin text-2xl-bold {
   font-size: $font-size-2xl;
   font-weight: $font-weight-bold;
+  line-height: $line-height-2xl;
 }
 
 @mixin text-2xl-semibold {
   font-size: $font-size-2xl;
   font-weight: $font-weight-semibold;
+  line-height: $line-height-2xl;
 }
 
 @mixin text-2xl-medium {
   font-size: $font-size-2xl;
   font-weight: $font-weight-medium;
+  line-height: $line-height-2xl;
 }
 
 @mixin text-2xl-regular {
   font-size: $font-size-2xl;
   font-weight: $font-weight-regular;
+  line-height: $line-height-2xl;
 }
 
 @mixin text-xl-bold {
   font-size: $font-size-xl;
   font-weight: $font-weight-bold;
+  line-height: $line-height-xl;
 }
 
 @mixin text-xl-semibold {
   font-size: $font-size-xl;
   font-weight: $font-weight-semibold;
+  line-height: $line-height-xl;
 }
 
 @mixin text-xl-medium {
   font-size: $font-size-xl;
   font-weight: $font-weight-medium;
+  line-height: $line-height-xl;
 }
 
 @mixin text-xl-regular {
   font-size: $font-size-xl;
   font-weight: $font-weight-regular;
+  line-height: $line-height-xl;
 }
 
 @mixin text-2lg-bold {
   font-size: $font-size-2lg;
   font-weight: $font-weight-bold;
+  line-height: $line-height-2lg;
 }
 
 @mixin text-2lg-semibold {
   font-size: $font-size-2lg;
   font-weight: $font-weight-semibold;
+  line-height: $line-height-2lg;
 }
 
 @mixin text-2lg-medium {
   font-size: $font-size-2lg;
   font-weight: $font-weight-medium;
+  line-height: $line-height-2lg;
 }
 
 @mixin text-2lg-regular {
   font-size: $font-size-2lg;
   font-weight: $font-weight-regular;
+  line-height: $line-height-2lg;
 }
 
 @mixin text-lg-bold {
   font-size: $font-size-lg;
   font-weight: $font-weight-bold;
+  line-height: $line-height-lg;
 }
 
 @mixin text-lg-semibold {
   font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
+  line-height: $line-height-lg;
 }
 
 @mixin text-lg-medium {
   font-size: $font-size-lg;
   font-weight: $font-weight-medium;
+  line-height: $line-height-lg;
 }
 
 @mixin text-lg-regular {
   font-size: $font-size-lg;
   font-weight: $font-weight-regular;
+  line-height: $line-height-lg;
 }
 
 @mixin text-md-bold {
   font-size: $font-size-md;
   font-weight: $font-weight-bold;
+  line-height: $line-height-md;
 }
 
 @mixin text-md-semibold {
   font-size: $font-size-md;
   font-weight: $font-weight-semibold;
+  line-height: $line-height-md;
 }
 
 @mixin text-md-medium {
   font-size: $font-size-md;
   font-weight: $font-weight-medium;
+  line-height: $line-height-md;
 }
 
 @mixin text-md-regular {
   font-size: $font-size-md;
   font-weight: $font-weight-regular;
+  line-height: $line-height-md;
 }
 
 @mixin text-sm-semibold {
   font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
+  line-height: $line-height-sm;
 }
 
 @mixin text-sm-medium {
   font-size: $font-size-sm;
   font-weight: $font-weight-medium;
+  line-height: $line-height-sm;
 }
 
 @mixin text-xs-semibold {
   font-size: $font-size-xs;
   font-weight: $font-weight-semibold;
+  line-height: $line-height-xs-semibold;
 }
 
 @mixin text-xs-medium {
   font-size: $font-size-xs;
   font-weight: $font-weight-medium;
+  line-height: $line-height-xs;
 }
 
 @mixin text-xs-regular {
   font-size: $font-size-xs;
   font-weight: $font-weight-regular;
+  line-height: $line-height-xs;
 }
 
 //Color Tokens
