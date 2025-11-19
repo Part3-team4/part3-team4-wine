@@ -1,6 +1,126 @@
-// Button.module.scss
 @import '@/styles/variables';
 
 .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  box-sizing: border-box;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// 크기 variants (클래스 가이드 기준 - 높이값)
+.xsmall {
+  height: 42px;
+  padding: 0 20px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+.small {
+  height: 48px;
+  padding: 11px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.medium {
+  height: 50px;
+  padding: 0 28px;
+  font-size: 16px;
+  border-radius: 12px;
+}
+
+.large {
+  height: 52px;
+  padding: 0 32px;
+  font-size: 16px;
+  border-radius: 12px;
+}
+
+.xlarge {
+  height: 54px;
+  padding: 0 36px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+
+// 색상 variants
+// 메인 버튼
+.filled {
   background-color: $color-primary-purple;
+  color: $color-white;
+
+  &:hover:not(:disabled) {
+    background-color: $color-primary-purple;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    background-color: $color-secondary-purple;
+    color: $color-gray-500;
+  }
+}
+
+// 서브 버튼
+.tinted {
+  background-color: $color-secondary-purple;
+  color: $color-primary-purple;
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}
+
+// 아웃라인 버튼
+.outlined {
+  background-color: $color-white;
+  border: 1px solid $color-gray-300;
+  color: $color-gray-500;
+}
+
+// 흰색 버튼
+.subtle {
+  background-color: $color-white;
+  color: $color-gray-800;
+  padding: 0 20px;
+}
+
+// 전체 너비
+.fullWidth {
+  width: 100%;
+}
+
+// 둥근 버튼
+.rounded {
+  border-radius: 100px;
+}
+
+// 아이콘 스타일
+.icon {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.text {
+  line-height: 1;
 }
