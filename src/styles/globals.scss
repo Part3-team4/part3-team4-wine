@@ -1,5 +1,6 @@
-@import "./reset";
-@import "./variables";
+@use './reset';
+@use './variables';
+@use './mixins';
 
 :root {
   font-family: var(--font-pretendard);
