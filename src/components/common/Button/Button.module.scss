@@ -8,11 +8,10 @@
   gap: 8px;
   border: none;
   border-radius: 12px;
-  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
-  font-family: inherit;
   box-sizing: border-box;
+  @include m.text-lg-bold;
 
   &:disabled {
     opacity: 0.5;
@@ -24,46 +23,42 @@
 .xsmall {
   height: 42px;
   padding: 0 20px;
-  font-size: $font-size-md;
   border-radius: 8px;
 }
 
 .small {
   height: 48px;
   padding: 11px;
-  font-size: $font-size-md;
   border-radius: 10px;
 }
 
 .medium {
   height: 50px;
   padding: 0 28px;
-  font-size: $font-size-lg;
   border-radius: 12px;
 }
 
 .large {
   height: 52px;
   padding: 0 32px;
-  font-size: $font-size-lg;
+  @include m.text-lg-medium;
   border-radius: 12px;
 }
 
 .xlarge {
   height: 54px;
   padding: 0 36px;
-  font-size: $font-size-2lg;
   border-radius: 12px;
 }
 
 // 색상 variants
 // 메인 버튼
 .filled {
-  background-color: $color-primary-purple;
-  color: $color-white;
+  background-color: v.$color-primary-purple;
+  color: v.$color-white;
 
   &:hover:not(:disabled) {
-    background-color: $color-primary-purple;
+    background-color: v.$color-primary-purple;
   }
 
   &:active:not(:disabled) {
@@ -71,15 +66,15 @@
   }
 
   &:disabled {
-    background-color: $color-secondary-purple;
-    color: $color-gray-500;
+    background-color: v.$color-secondary-purple;
+    color: v.$color-gray-500;
   }
 }
 
 // 서브 버튼
 .tinted {
-  background-color: $color-secondary-purple;
-  color: $color-primary-purple;
+  background-color: v.$color-secondary-purple;
+  color: v.$color-primary-purple;
 
   &:active:not(:disabled) {
     transform: scale(0.98);
@@ -88,15 +83,15 @@
 
 // 아웃라인 버튼
 .outlined {
-  background-color: $color-white;
+  background-color: v.$color-white;
   border: 1px solid $color-gray-300;
-  color: $color-gray-500;
+  color: v.$color-gray-500;
 }
 
 // 흰색 버튼
 .subtle {
-  background-color: $color-white;
-  color: $color-gray-800;
+  background-color: v.$color-white;
+  color: v.$color-gray-800;
   padding: 0 20px;
 }
 
@@ -114,15 +109,5 @@
 .icon {
   display: flex;
   align-items: center;
-  font-size: $font-size-xl;
-
-  // img {
-  //   width: 24px;
-  //   height: 24px;
-  // }
-}
-
-// 버튼 텍스트
-.text {
-  line-height: 1;
+  font-size: v.$font-size-xl;
 }
