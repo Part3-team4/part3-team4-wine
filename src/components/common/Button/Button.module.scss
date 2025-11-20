@@ -1,6 +1,113 @@
-// Button.module.scss
-@import '@/styles/variables';
+@use '@/styles/variables' as v;
+@use '@/styles/mixins' as m;
 
 .button {
-  background-color: $color-primary-purple;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-sizing: border-box;
+  @include m.text-lg-bold;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// 크기 variants (클래스 가이드 기준 - 높이값)
+.xsmall {
+  height: 42px;
+  padding: 0 20px;
+  border-radius: 8px;
+}
+
+.small {
+  height: 48px;
+  padding: 11px;
+  border-radius: 10px;
+}
+
+.medium {
+  height: 50px;
+  padding: 0 28px;
+  border-radius: 12px;
+}
+
+.large {
+  height: 52px;
+  padding: 0 32px;
+  @include m.text-lg-medium;
+  border-radius: 12px;
+}
+
+.xlarge {
+  height: 54px;
+  padding: 0 36px;
+  border-radius: 12px;
+}
+
+// 색상 variants
+// 메인 버튼
+.filled {
+  background-color: v.$color-primary-purple;
+  color: v.$color-white;
+
+  &:hover:not(:disabled) {
+    background-color: v.$color-primary-purple;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    background-color: v.$color-secondary-purple;
+    color: v.$color-gray-500;
+  }
+}
+
+// 서브 버튼
+.tinted {
+  background-color: v.$color-secondary-purple;
+  color: v.$color-primary-purple;
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}
+
+// 아웃라인 버튼
+.outlined {
+  background-color: v.$color-white;
+  border: 1px solid $color-gray-300;
+  color: v.$color-gray-500;
+}
+
+// 흰색 버튼
+.subtle {
+  background-color: v.$color-white;
+  color: v.$color-gray-800;
+  padding: 0 20px;
+}
+
+// 전체 너비
+.fullWidth {
+  width: 100%;
+}
+
+// 둥근 버튼
+.rounded {
+  border-radius: 100px;
+}
+
+// 아이콘 스타일
+.icon {
+  display: flex;
+  align-items: center;
+  font-size: v.$font-size-xl;
 }
