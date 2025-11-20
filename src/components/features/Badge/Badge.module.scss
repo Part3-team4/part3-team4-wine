@@ -1,0 +1,24 @@
+@use '@/styles/mixins' as m;
+@use '@/styles/variables' as v;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 15px;
+  border-radius: 12px;
+  background: v.$color-secondary-purple;
+  color: v.$color-primary-purple;
+  @include m.text-2lg-bold;
+
+  svg {
+    path {
+      fill: v.$color-primary-purple;
+    }
+  }
+}
+
+.badgePrefix {
+  display: flex;
+  align-items: center;
+}
