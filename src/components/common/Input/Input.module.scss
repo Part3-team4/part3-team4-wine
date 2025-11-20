@@ -1,0 +1,60 @@
+@use './variables' as v;
+@use '@/styles/mixins' as m;
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.label {
+  @include m.text-lg-medium;
+  color: v.$color-gray-800;
+}
+
+.input {
+  @include m.text-lg-regular;
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid $color-gray-300;
+  border-radius: 12px;
+  background-color: v.$color-white;
+  transition: all 0.2s ease;
+
+  &::placeholder {
+    color: v.$color-gray-500;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: v.$color-primary-purple;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  }
+
+  &.error {
+    border-color: v.$color-error-red;
+
+    &:focus {
+      border-color: v.$color-error-red;
+      box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+    }
+  }
+
+  &:disabled {
+    background-color: v.$color-gray-300;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.helperText {
+  font-size: v.$font-size-md;
+  color: v.$color-gray-500;
+  margin: 0;
+  padding-left: 4px;
+
+  &.errorText {
+    color: v.$color-error-red;
+  }
+}
