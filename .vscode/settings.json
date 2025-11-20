@@ -1,8 +1,26 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode", // 저장 시 Prettier 포맷
-  "editor.formatOnSave": true, // 저장 시 자동 포맷
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // ❗ ESLint는 JS/TS/TSX만 자동 적용하도록 제한
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "always"
   },
-  "files.eol": "\n" // 팀 공통 줄바꿈
+
+  // ❗ JSON, config 파일은 Prettier만 처리하게 함
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
