@@ -1,0 +1,21 @@
+@use '@/styles' as *;
+
+.chip {
+  padding: 6px 10px;
+  border-radius: 100px;
+  display: inline-flex;
+  border: 1px solid $color-gray-300;
+  color: $color-gray-800;
+  @include text-md-medium;
+  transition: opacity 0.3s;
+
+  &.selected {
+    color: $color-white;
+    border-color: $color-primary-purple;
+    background-color: $color-primary-purple;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
