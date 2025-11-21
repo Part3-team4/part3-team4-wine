@@ -1,0 +1,17 @@
+@use '@/styles' as *;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 15px;
+  border-radius: 12px;
+  background: $color-secondary-purple;
+  color: $color-primary-purple;
+  @include text-2lg-bold;
+}
+
+.badgePrefix {
+  display: flex;
+  align-items: center;
+}
