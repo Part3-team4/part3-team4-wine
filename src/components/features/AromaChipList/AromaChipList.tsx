@@ -11,7 +11,9 @@
  *
  * @example
  * // 기본 모드 (선택 불가)
- * <AromaChipList />
+ * <AromaChipList
+ *  defaultSelected={["CHERRY", "BERRY"] // 배열 삽입}
+ * />
  *
  * @example
  * // 클릭 가능한 모드 + 기본 선택값 존재
