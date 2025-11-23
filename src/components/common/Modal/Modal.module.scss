@@ -1,0 +1,62 @@
+// 추후 수정될 수 있습니다.
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  padding: 24px;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  max-height: calc(100vh - 80px);
+  position: relative;
+  padding: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding-top: 24px;
+  flex-shrink: 0;
+}
+
+.closeBtn {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+}
+
+.content {
+  overflow-y: auto;
+  flex: 1;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 999px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.35);
+  }
+}
+
+.footer {
+  padding-bottom: 24px;
+  flex-shrink: 0;
+}
