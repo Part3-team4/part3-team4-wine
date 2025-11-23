@@ -58,14 +58,15 @@ export default function Modal({
         ref={contentRef}
         tabIndex={-1}
       >
-        <div className={styles.header}>
-          <button className={styles.closeBtn} onClick={handleClose} aria-label="닫기">
-            <Close />
-          </button>
-        </div>
+        <div className={styles.header}></div>
 
         <div className={styles.content}>{children}</div>
-        <div className={styles.footer}>버튼 생길 곳</div>
+        <div className={styles.footer}>
+          버튼 생길 곳{' '}
+          <button className={styles.closeBtn} onClick={handleClose} aria-label="닫기">
+            <Image src={Close} alt="닫기" width={32} height={32} />
+          </button>
+        </div>
       </div>
     </div>
   );
