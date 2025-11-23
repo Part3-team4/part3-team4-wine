@@ -1,16 +1,20 @@
-import type { Metadata } from "next";
-import "@/styles/globals.scss";
-import { pretendard } from "./fonts";
+import type { Metadata } from 'next';
+import '@/styles/globals.scss';
+import { pretendard } from './fonts';
+import { ModalProvider } from '@/components/common/Modal/ModalProvider';
 
 export const metadata: Metadata = {
-  title: "WINE",
-  description: "Part3 Team4 Project WINE",
+  title: 'WINE',
+  description: 'Part3 Team4 Project WINE',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" className={pretendard.variable}>
-      <body>{children}</body>
+      <body>
+        {' '}
+        <ModalProvider>{children}</ModalProvider>
+      </body>
     </html>
   );
 }
