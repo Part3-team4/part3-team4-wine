@@ -8,11 +8,15 @@ import { useModalContext } from './ModalProvider';
  *
  * 모달을 열고 닫는 기능을 제공하는 커스텀 훅입니다.
  *
- * - open(children, options?): 모달을 열고 모달 id를 반환합니다.
- * - close(id?): 특정 모달(id)을 닫거나 id 없으면 전체 모달을 닫습니다.
+ * @returns {{
+ *   open: (children: ReactNode, options?: { onClose?: () => void }) => string;
+ *   close: (id?: string) => void;
+ * }}
+ *
+ * - open(children, options?): 모달을 엽니다. 반환값(id)을 저장해야 나중에 close(id)로 닫을 수 있습니다.
+ * - close(id): 반드시 open()이 반환한 id를 사용해야 합니다. 하드코딩된 id는 사용하지 마세요.
  *
  * @example
- *
  * import { useModal } from "@/components/common/Modal/useModal";
  * import Modal from "@/components/common/Modal/Modal";
  *
@@ -20,22 +24,17 @@ import { useModalContext } from './ModalProvider';
  *   const { open, close } = useModal();
  *
  *   function handleOpen() {
- *     // open은 "JSX(ReactNode)"를 첫 인자로 받습니다.
+ *     // open()이 반환한 id를 저장
  *     const id = open(
- *       <Modal id="welcome">
- *         <h2>환영합니다!</h2>
- *         <p>모달 내부 내용</p>
- *
- *         <button onClick={() => close("welcome")}>닫기</button>
+ *       <Modal>
+ *         <h2>안녕하세요!</h2>
+ *         <button onClick={() => close(id)}>닫기</button>
  *       </Modal>
  *     );
- *
- *     // 필요하면 id를 보관하여 나중에 close(id)로 닫을 수 있음
  *   }
  *
  *   return <button onClick={handleOpen}>모달 열기</button>;
  * }
- *
  */
 export function useModal() {
   const { openModal, closeModal } = useModalContext();
