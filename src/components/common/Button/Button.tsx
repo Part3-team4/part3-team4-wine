@@ -47,7 +47,7 @@ import React, { ComponentPropsWithRef, forwardRef } from 'react';
  * <Button
  *   variant="subtle"
  *   size="large"
- *   icon={<Kakao />}
+ *    icon={<img src={Kakao.src} width={24} height={24} />}
  *   fullWidth
  * >
  *   kakao로 시작하기
@@ -89,7 +89,7 @@ import React, { ComponentPropsWithRef, forwardRef } from 'react';
  * <Button
  *   variant="outlined"
  *   size="small"
- *   icon={<span><Filter/></span>}
+ *   icon={<img src={Filter.src} width={26} height={26} />}
  * />
  *
  * @example
