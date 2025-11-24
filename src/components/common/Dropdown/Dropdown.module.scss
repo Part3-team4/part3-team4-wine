@@ -1,0 +1,35 @@
+@use '@/styles' as *;
+
+.wrapper {
+  position: relative;
+  display: inline-block;
+  margin-left: 200px; /* 임시 */
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 17px);
+  right: 0;
+  padding: 3px 4px;
+  min-width: 126px;
+  border: 1px solid $color-gray-300;
+  border-radius: 16px;
+  background-color: $color-white;
+}
+
+.item > button,
+.item > a {
+  display: block;
+  padding: 10px 31px;
+  white-space: nowrap;
+  text-align: center;
+  border-radius: 12px;
+  @include text-lg-medium;
+  transition: 0.3s all;
+}
+
+.item:hover > button,
+.item:hover > a {
+  color: $color-primary-purple;
+  background: $color-secondary-purple;
+}
