@@ -1,0 +1,246 @@
+@use '@/styles' as *;
+
+.scaleWrapper {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  user-select: none;
+}
+
+.track {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 6px;
+  width: 100%;
+  background-color: $color-gray-100;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.rangeFill {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 6px;
+  background-color: $color-primary-purple;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.thumb,
+.rangeThumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: solid 1px $color-gray-300;
+  cursor: pointer;
+  z-index: 2;
+  transition: transform 0.15s ease;
+
+  &:hover {
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+
+  &:active {
+    transform: translate(-50%, -50%) scale(1.25);
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    &:hover,
+    &:active {
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .rangeThumb {
+    background-color: #fff;
+  }
+  /* SingleScale의 input[type="range"] */
+  .rangeInput {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    transform: translateY(-50%);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    cursor: pointer;
+    z-index: 3;
+
+    // 트랙을 thumb와 같은 높이로 설정
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      background: transparent;
+      border: none;
+    }
+
+    &::-moz-range-track {
+      width: 100%;
+      height: 6px;
+      background: transparent;
+      border: none;
+    }
+
+    &::-ms-track {
+      width: 100%;
+      height: 6px;
+      background: transparent;
+      border: none;
+      color: transparent;
+    }
+
+    // Thumb 스타일
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      margin-top: -6px; // (18px - 6px) / 2 = 트랙 중앙 정렬
+      border-radius: 50%;
+      background: var(--thumb-bg, #333);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+      border: none;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+      &:hover {
+        transform: scale(1.15);
+      }
+
+      &:active {
+        transform: scale(1.25);
+      }
+    }
+
+    &::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--thumb-bg, #333);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+      &:hover {
+        transform: scale(1.15);
+      }
+
+      &:active {
+        transform: scale(1.25);
+      }
+    }
+
+    &::-ms-thumb {
+      width: 18px;
+      height: 18px;
+      margin-top: 0;
+      border-radius: 50%;
+      background: var(--thumb-bg, #333);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+      &:hover {
+        transform: scale(1.15);
+      }
+
+      &:active {
+        transform: scale(1.25);
+      }
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible::-webkit-slider-thumb {
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    }
+
+    &:focus-visible::-moz-range-thumb {
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    }
+
+    &:focus-visible::-ms-thumb {
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+
+      &::-webkit-slider-thumb {
+        cursor: not-allowed;
+        opacity: 0.5;
+
+        &:hover,
+        &:active {
+          transform: none;
+        }
+      }
+
+      &::-moz-range-thumb {
+        cursor: not-allowed;
+        opacity: 0.5;
+
+        &:hover,
+        &:active {
+          transform: none;
+        }
+      }
+
+      &::-ms-thumb {
+        cursor: not-allowed;
+        opacity: 0.5;
+
+        &:hover,
+        &:active {
+          transform: none;
+        }
+      }
+    }
+  }
+}
+
+.thumb {
+  background-color: $color-primary-purple;
+}
+
+.rangeThumb {
+  background-color: #fff;
+}
+
+.thumbWrapper {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.thumbLabel {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  @include text-lg-medium;
+  color: $color-primary-purple;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 10;
+}
