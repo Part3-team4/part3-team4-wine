@@ -1,16 +1,21 @@
-import type { Metadata } from "next";
-import "@/styles/globals.scss";
-import { pretendard } from "./fonts";
+import type { Metadata } from 'next';
+import '@/styles/globals.scss';
+import { pretendard } from './fonts';
 
 export const metadata: Metadata = {
-  title: "WINE",
-  description: "Part3 Team4 Project WINE",
+  title: {
+    default: 'WINE',
+    template: '%s | WINE',
+  },
+  description: 'Part3 Team4 Project WINE',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" className={pretendard.variable}>
-      <body>{children}</body>
+      <div className="wrap">
+        <body>{children}</body>
+      </div>
     </html>
   );
 }
