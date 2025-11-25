@@ -17,7 +17,7 @@ import Wine from '@/assets/icons/ico_wine.png';
 import Logo from '@/assets/icons/ico_logo.png';
 import LogoBlack from '@/assets/icons/ico_logo_black.png';
 import Warning from '@/assets/icons/ico_warning.png';
-import Profile from '@/assets/icons/ico_profile.png';
+import ProfileDefault from '@/assets/icons/ico_profile.png';
 import ProfileHover from '@/assets/icons/ico_profile_hover.png';
 
 export {
@@ -40,6 +40,6 @@ export {
   Logo,
   LogoBlack,
   Warning,
-  Profile,
+  ProfileDefault,
   ProfileHover,
 };
