@@ -25,6 +25,7 @@ type ModalProps = {
   children: React.ReactNode;
   ariaLabel?: string;
   className?: string;
+  withCloseButton?: boolean;
 };
 
 export default function Modal({
@@ -33,6 +34,7 @@ export default function Modal({
   children,
   ariaLabel = 'Modal Dialog',
   className = '',
+  withCloseButton = true,
 }: ModalProps) {
   const { closeModal } = useModalContext();
   const contentRef = useRef<HTMLDivElement | null>(null);
@@ -63,9 +65,12 @@ export default function Modal({
 
         <div className={styles.content}>{children}</div>
         <div className={styles.footer}>버튼 생길 곳 </div>
-        <button className={styles.closeBtn} onClick={handleClose} aria-label="닫기">
-          <Image src={Close} alt="닫기" width={32} height={32} />
-        </button>
+
+        {withCloseButton && (
+          <button className={styles.closeBtn} onClick={handleClose} aria-label="닫기">
+            <Image src={Close} alt="닫기" width={32} height={32} />
+          </button>
+        )}
       </div>
     </div>
   );

@@ -35,6 +35,14 @@ import { useModalContext } from '@/provider/ModalProvider';
  *
  *   return <button onClick={handleOpen}>모달 열기</button>;
  * }
+ *
+ * @example X버튼 없는 모달
+ * const id = open(
+ *  <Modal withCloseButton={false}>
+ *    <h2>X 버튼이 없는 모달</h2>
+ *    <button onClick={() => close(id)}>직접 만든 닫기 버튼</button>
+ *  </Modal>
+ * );
  */
 export function useModal() {
   const { openModal, closeModal } = useModalContext();
