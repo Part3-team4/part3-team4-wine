@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from 'react';
 import clsx from 'clsx';
 import styles from './Scale.module.scss';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 type BaseProps = {
   min?: number;
@@ -17,10 +18,6 @@ type SingleScaleProps = BaseProps & {
   value: number;
   onChange: (value: number) => void;
 };
-
-function formatCurrency(value: number) {
-  return `${value.toLocaleString()}₩`;
-}
 
 type RangeScaleProps = BaseProps & {
   type: 'range';
