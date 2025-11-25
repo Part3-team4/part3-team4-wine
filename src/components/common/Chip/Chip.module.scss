@@ -1,0 +1,29 @@
+@use '@/styles' as *;
+
+.chip {
+  padding: 6px 10px;
+  border-radius: 100px;
+  display: inline-block;
+  border: 1px solid $color-gray-300;
+  color: $color-gray-800;
+  @include text-md-medium;
+  transition: all 0.3s;
+
+  &.selected {
+    color: $color-white;
+    border-color: $color-primary-purple;
+    background-color: $color-primary-purple;
+
+    &:hover {
+      color: $color-gray-800;
+      border-color: $color-gray-300;
+      background-color: $color-white;
+    }
+  }
+
+  &:hover {
+    color: $color-white;
+    border-color: $color-primary-purple;
+    background-color: $color-primary-purple;
+  }
+}

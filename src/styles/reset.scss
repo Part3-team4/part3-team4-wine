@@ -36,3 +36,17 @@ select {
   border: none;
   outline: none;
 }
+
+/* home, 로그인, 회원가입 */
+.homeWrap,
+.authWrap {
+  min-height: 100svh;
+  background-color: #f2f4f8;
+}
+
+/* 그 이외의 페이지 */
+.contentWrap {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+}

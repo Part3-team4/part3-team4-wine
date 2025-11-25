@@ -1,5 +1,4 @@
-@use '@/styles/variables' as v;
-@use '@/styles/mixins' as m;
+@use '@/styles' as *;
 
 .button {
   display: inline-flex;
@@ -11,7 +10,7 @@
   cursor: pointer;
   transition: all 0.2s;
   box-sizing: border-box;
-  @include m.text-lg-bold;
+  @include text-lg-bold;
 
   &:disabled {
     opacity: 0.5;
@@ -41,7 +40,7 @@
 .large {
   height: 52px;
   padding: 0 32px;
-  @include m.text-lg-medium;
+  @include text-lg-medium;
   border-radius: 12px;
 }
 
@@ -54,11 +53,11 @@
 // 색상 variants
 // 메인 버튼
 .filled {
-  background-color: v.$color-primary-purple;
-  color: v.$color-white;
+  background-color: $color-primary-purple;
+  color: $color-white;
 
   &:hover:not(:disabled) {
-    background-color: v.$color-primary-purple;
+    background-color: $color-primary-purple;
   }
 
   &:active:not(:disabled) {
@@ -66,15 +65,15 @@
   }
 
   &:disabled {
-    background-color: v.$color-secondary-purple;
-    color: v.$color-gray-500;
+    background-color: $color-secondary-purple;
+    color: $color-gray-500;
   }
 }
 
 // 서브 버튼
 .tinted {
-  background-color: v.$color-secondary-purple;
-  color: v.$color-primary-purple;
+  background-color: $color-secondary-purple;
+  color: $color-primary-purple;
 
   &:active:not(:disabled) {
     transform: scale(0.98);
@@ -83,15 +82,15 @@
 
 // 아웃라인 버튼
 .outlined {
-  background-color: v.$color-white;
+  background-color: $color-white;
   border: 1px solid $color-gray-300;
-  color: v.$color-gray-500;
+  color: $color-gray-500;
 }
 
 // 흰색 버튼
 .subtle {
-  background-color: v.$color-white;
-  color: v.$color-gray-800;
+  background-color: $color-white;
+  color: $color-gray-800;
   padding: 0 20px;
 }
 
@@ -109,5 +108,5 @@
 .icon {
   display: flex;
   align-items: center;
-  font-size: v.$font-size-xl;
+  font-size: $font-size-xl;
 }

@@ -1,24 +1,24 @@
-import Close from '@/assets/icons/ico_close.svg';
-import DropdownArrow from '@/assets/icons/ico_dropdown_arrow.svg';
-import Filter from '@/assets/icons/ico_filter.svg';
-import Kakao from '@/assets/icons/ico_Kakao.svg';
-import KebabLg from '@/assets/icons/ico_kebab_lg.svg';
-import KebabMd from '@/assets/icons/ico_kebab_md.svg';
-import KebabSm from '@/assets/icons/ico_kebab_sm.svg';
-import LikeActive from '@/assets/icons/ico_like_active.svg';
-import Like from '@/assets/icons/ico_like.svg';
-import MoreArrow from '@/assets/icons/ico_more_arrow.svg';
-import Photo from '@/assets/icons/ico_photo.svg';
-import RightArrow from '@/assets/icons/ico_right_arrow.svg';
-import Search from '@/assets/icons/ico_search.svg';
-import Star from '@/assets/icons/ico_star.svg';
-import Wine from '@/assets/icons/ico_wine.svg';
-import Logo from '@/assets/icons/ico_logo.svg';
-import LogoBlack from '@/assets/icons/ico_logo_black.svg';
-import WineBottle1 from '@/assets/icons/ico_wine_bottle1.svg';
-import WineBottle2 from '@/assets/icons/ico_wine_bottle2.svg';
-import WineBottle3 from '@/assets/icons/ico_wine_bottle3.svg';
-import WineBottle4 from '@/assets/icons/ico_wine_bottle4.svg';
+import Close from '@/assets/icons/ico_close.png';
+import DropdownArrow from '@/assets/icons/ico_dropdown_arrow.png';
+import Filter from '@/assets/icons/ico_filter.png';
+import Kakao from '@/assets/icons/ico_Kakao.png';
+import KebabLg from '@/assets/icons/ico_kebab_lg.png';
+import KebabMd from '@/assets/icons/ico_kebab_md.png';
+import KebabSm from '@/assets/icons/ico_kebab_sm.png';
+import LikeActive from '@/assets/icons/ico_like_active.png';
+import Like from '@/assets/icons/ico_like.png';
+import MoreArrow from '@/assets/icons/ico_more_arrow.png';
+import Photo from '@/assets/icons/ico_photo.png';
+import RightArrow from '@/assets/icons/ico_right_arrow.png';
+import Search from '@/assets/icons/ico_search.png';
+import Star from '@/assets/icons/ico_star.png';
+import StarActive from '@/assets/icons/ico_star_active.png';
+import Wine from '@/assets/icons/ico_wine.png';
+import Logo from '@/assets/icons/ico_logo.png';
+import LogoBlack from '@/assets/icons/ico_logo_black.png';
+import Warning from '@/assets/icons/ico_warning.png';
+import Profile from '@/assets/icons/ico_profile.png';
+import ProfileHover from '@/assets/icons/ico_profile_hover.png';
 
 export {
   Close,
@@ -35,11 +35,11 @@ export {
   RightArrow,
   Search,
   Star,
+  StarActive,
   Wine,
   Logo,
   LogoBlack,
-  WineBottle1,
-  WineBottle2,
-  WineBottle3,
-  WineBottle4,
+  Warning,
+  Profile,
+  ProfileHover,
 };

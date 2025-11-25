@@ -1,80 +1,162 @@
 import styles from '@/components/common/Button/Button.module.scss';
+import clsx from 'clsx';
+import React, { ComponentPropsWithRef, forwardRef } from 'react';
 
 /**
- * 버튼 컴포넌트의 Props 인터페이스
+ * Button 컴포넌트의 props 타입 정의
+ *
+ * @typedef {Object} ButtonProps
+ * @property {('filled' | 'tinted' | 'outlined' | 'subtle')} [variant='filled'] - 버튼 스타일 변형
+ * @property {('xsmall' | 'small' | 'medium' | 'large' | 'xlarge')} [size='medium'] - 버튼 크기
+ * @property {React.ReactNode} [icon] - 버튼 내부에 표시할 아이콘
+ * @property {boolean} [fullWidth=false] - true일 경우 버튼이 부모 요소의 전체 너비를 차지
+ * @property {boolean} [rounded=false] - true일 경우 버튼 모서리가 둥글게 표시
  */
-interface ButtonProps {
-  /** 버튼에 표시될 텍스트 */
-  text: string;
-  /** 버튼의 스타일 variant
-   * @default 'filled'
-   */
-  variant?: 'filled' | 'tinted' | 'outlined' | 'subtle';
-  /** 버튼의 크기
-   * @default 'medium'
-   */
-  size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
-  /** 버튼 왼쪽에 표시될 아이콘 (React 노드) */
-  icon?: React.ReactNode;
-  /** 버튼 클릭 시 실행될 콜백 함수 */
-  onClick?: () => void;
-  /** 버튼 비활성화 여부
-   * @default false
-   */
-  disabled?: boolean;
-  /** 버튼을 부모 요소의 전체 너비로 확장할지 여부
-   * @default false
-   */
-  fullWidth?: boolean;
-  /** 버튼의 모서리를 둥글게 처리할지 여부
-   * @default false
-   */
-  rounded?: boolean;
-}
 
 /**
- * 재사용 가능한 버튼 컴포넌트
+ * variant 사용 가이드:
+ *
+ * - filled: 주요 액션 (가입하기, 저장, 제출 등)
+ *   <Button variant="filled">가입하기</Button>
+ *
+ * - tinted: 보조 액션 (초기화, 되돌리기 등)
+ *   <Button variant="tinted">초기화</Button>
+ *
+ * - outlined: 중립적 액션 (취소, 닫기 등)
+ *   <Button variant="outlined">취소</Button>
+ *
+ * - subtle: 소셜 로그인, 약한 강조
+ *   <Button variant="subtle">kakao로 시작하기</Button>
+ */
+
+/**
+ * 재사용 가능한 Button 컴포넌트
+ *
+ * @component
+ *
+ * @description
+ * 다양한 스타일, 크기, 옵션을 지원하는 범용 버튼 컴포넌트입니다.
+ * variant, size, icon, fullWidth, rounded 등의 prop을 조합하여 원하는 스타일의 버튼을 만들 수 있습니다.
  *
  * @example
- * ```tsx
  * // 기본 사용
- * <Button text="확인" />
+ * <Button>클릭하세요</Button>
  *
- * // 아이콘이 있는 버튼
- * <Button text="저장" icon={<SaveIcon />} variant="filled" />
+ * @example
+ * // subtle (large) - 카카오로 시작하기
+ * <Button
+ *   variant="subtle"
+ *   size="large"
+ *    icon={<img src={Kakao.src} width={24} height={24} />}
+ *   fullWidth
+ * >
+ *   kakao로 시작하기
+ * </Button>
  *
- * // 전체 너비 버튼
- * <Button text="제출" fullWidth onClick={handleSubmit} />
+ * @example
+ * // filled (medium) - 가입하기
+ * <Button
+ *   variant="filled"
+ *   size="medium"
+ *   fullWidth
+ * >
+ *   가입하기
+ * </Button>
  *
- * // 둥근 모서리의 작은 버튼
- * <Button text="취소" size="small" rounded variant="outlined" />
- * ```
+ * @example
+ * // filled : disabled (비활성화)
+ * <Button
+ *   variant="filled"
+ *   size="medium"
+ *   fullWidth
+ *   disabled
+ * >
+ *   가입하기
+ * </Button>
  *
- * @param props - 버튼 컴포넌트의 속성
- * @returns 렌더링된 버튼 엘리먼트
+ * @example
+ * // filled (medium) - 둥글게
+ * <Button
+ *   variant="filled"
+ *   size="medium"
+ *   rounded
+ * >
+ *   와인 보러가기
+ * </Button>
+ *
+ * @example
+ * // outlined (small) - 아이콘만
+ * <Button
+ *   variant="outlined"
+ *   size="small"
+ *   icon={<img src={Filter.src} width={26} height={26} />}
+ * />
+ *
+ * @example
+ * // onClick 이벤트 핸들러 사용
+ * <Button onClick={() => alert('클릭!')}>
+ *   클릭하세요
+ * </Button>
+ *
+ * @example
+ * // 폼 제출 버튼
+ * <form onSubmit={handleSubmit}>
+ *   <Button type="submit" variant="filled">
+ *     제출
+ *   </Button>
+ * </form>
+ *
+ * @example
+ * // 커스텀 className 추가
+ * <Button className="my-custom-class">
+ *   커스텀 스타일 버튼
+ * </Button>
  */
-function Button({
-  text,
-  variant = 'filled',
-  size = 'medium',
-  icon,
-  onClick,
-  disabled = false,
-  fullWidth = false,
-  rounded = false,
-}: ButtonProps) {
-  return (
-    <button
-      className={`${styles.button} ${styles[variant]} ${styles[size]} ${
-        fullWidth ? styles.fullWidth : ''
-      } ${rounded ? styles.rounded : ''}`}
-      onClick={onClick}
-      disabled={disabled}
-    >
-      {icon && <span className={styles.icon}>{icon}</span>}
-      {text && <span className={styles.text}>{text}</span>}
-    </button>
-  );
-}
+
+type ButtonProps = ComponentPropsWithRef<'button'> & {
+  variant?: 'filled' | 'tinted' | 'outlined' | 'subtle';
+  size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+  icon?: React.ReactNode;
+  fullWidth?: boolean;
+  rounded?: boolean;
+};
+
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      variant = 'filled',
+      size = 'medium',
+      icon,
+      fullWidth = false,
+      rounded = false,
+      children,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
+    return (
+      <button
+        ref={ref}
+        className={clsx(
+          styles.button,
+          styles[variant],
+          styles[size],
+          {
+            [styles.fullWidth]: fullWidth,
+            [styles.rounded]: rounded,
+          },
+          className,
+        )}
+        {...props}
+      >
+        {icon && <span className={styles.icon}>{icon}</span>}
+        {children}
+      </button>
+    );
+  },
+);
+
+Button.displayName = 'Button';
 
 export default Button;
