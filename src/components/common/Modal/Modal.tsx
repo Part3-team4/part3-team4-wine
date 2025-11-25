@@ -17,6 +17,7 @@ import { useModalContext } from '@/provider/ModalProvider';
 import styles from './Modal.module.scss';
 import { Close } from '@/assets';
 import clsx from 'clsx';
+import Image from 'next/image';
 
 type ModalProps = {
   id?: string;
@@ -61,12 +62,10 @@ export default function Modal({
         <div className={styles.header}></div>
 
         <div className={styles.content}>{children}</div>
-        <div className={styles.footer}>
-          버튼 생길 곳{' '}
-          <button className={styles.closeBtn} onClick={handleClose} aria-label="닫기">
-            <Image src={Close} alt="닫기" width={32} height={32} />
-          </button>
-        </div>
+        <div className={styles.footer}>버튼 생길 곳 </div>
+        <button className={styles.closeBtn} onClick={handleClose} aria-label="닫기">
+          <Image src={Close} alt="닫기" width={32} height={32} />
+        </button>
       </div>
     </div>
   );
