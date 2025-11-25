@@ -46,7 +46,7 @@ export const AROMA_KO: Record<AromaType, string> = {
   LEATHER: '가죽',
 };
 
-// 리뷰 등록 모달 Chip 에서 사용할 수 있음
+// UI 컴포넌트에서 바로 사용 가능
 export const AROMA_OPTIONS = Object.entries(AROMA_KO).map(([value, label]) => ({
   value: value as AromaType,
   label,
