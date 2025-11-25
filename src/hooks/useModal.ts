@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { useModalContext } from './ModalProvider';
+import { useModalContext } from '@/provider/ModalProvider';
 
 /**
  * useModal

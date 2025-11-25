@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import '@/styles/globals.scss';
 import { pretendard } from './fonts';
-import { ModalProvider } from '@/components/common/Modal/ModalProvider';
+import { ModalProvider } from '@/provider/ModalProvider';
 
 export const metadata: Metadata = {
   title: 'WINE',

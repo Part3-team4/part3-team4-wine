@@ -13,7 +13,7 @@
  */
 
 import { useRef } from 'react';
-import { useModalContext } from './ModalProvider';
+import { useModalContext } from '@/provider/ModalProvider';
 import styles from './Modal.module.scss';
 import { Close } from '@/assets';
 import clsx from 'clsx';
