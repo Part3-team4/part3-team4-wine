@@ -1,0 +1,41 @@
+@use '@/styles' as *;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 60px;
+  background-color: $color-black;
+  height: 70px;
+  border-radius: 16px;
+
+  h1 {
+    width: 52px;
+
+    a {
+      display: block;
+      @include text-lg-medium;
+      &:hover img {
+        filter: brightness(0) invert(41%) sepia(56%) saturate(554%) hue-rotate(219deg)
+          brightness(0.95);
+      }
+    }
+
+    img {
+      transition: filter 0.3s;
+    }
+  }
+
+  .list {
+    display: flex;
+    gap: 20px;
+
+    a {
+      color: $color-white;
+      transition: color 0.5s;
+      &:hover {
+        color: $color-primary-purple;
+      }
+    }
+  }
+}
