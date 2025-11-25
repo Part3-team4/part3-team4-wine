@@ -4,9 +4,6 @@ import { pretendard } from './fonts';
 import { ModalProvider } from '@/provider/ModalProvider';
 
 export const metadata: Metadata = {
-  title: 'WINE',
-
-export const metadata: Metadata = {
   title: {
     default: 'WINE',
     template: '%s | WINE',
@@ -17,11 +14,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" className={pretendard.variable}>
-      <div className="wrap">
-        <body>
+      <body>
+        <div className="wrap">
           <ModalProvider>{children}</ModalProvider>
-        </body>
-      </div>
+        </div>
+      </body>
     </html>
   );
 }
