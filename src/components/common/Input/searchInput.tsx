@@ -1,61 +1,41 @@
 import styles from '@/components/common/Input/searchInput.module.scss';
 import clsx from 'clsx';
-import React, { ComponentPropsWithRef, forwardRef } from 'react';
+import { ComponentPropsWithRef } from 'react';
 import { Search } from '@/assets/index';
 
 /**
- * SearchInput 컴포넌트의 props 타입 정의
- *
- * @typedef {Object} SearchInputProps
- * @property {boolean} [fullWidth=false] - true일 경우 부모 요소의 전체 너비를 차지
+ * SearchInput 컴포넌트의 Props 타입
  */
-
-type SearchInputProps = ComponentPropsWithRef<'input'> & {
-  fullWidth?: boolean;
-};
+export type SearchInputProps = ComponentPropsWithRef<'input'>;
 
 /**
  * 재사용 가능한 SearchInput 컴포넌트
  *
- * @component
- *
  * @description
  * 검색 아이콘이 포함된 입력창 컴포넌트입니다.
+ * 부모 요소의 전체 너비를 차지합니다.
  *
  * @example
+ * ```tsx
  * // 기본 사용
- * <SearchInput
- *   placeholder="와인을 검색해 보세요"
- * />
+ * <SearchInput placeholder="와인을 검색해 보세요" />
  *
- *  * @example
- * // 전체 너비
+ * // 제어 컴포넌트로 사용
+ * const [searchText, setSearchText] = useState('');
  * <SearchInput
- *   fullWidth
- *   placeholder="와인을 검색해 보세요"
+ *   value={searchText}
+ *   onChange={(e) => setSearchText(e.target.value)}
+ *   placeholder="검색어를 입력하세요"
  * />
- *
+ * ```
  */
-
-const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
-  ({ fullWidth = false, className, ...props }, ref) => {
-    return (
-      <div
-        className={clsx(
-          styles.searchContainer,
-          {
-            [styles.fullWidth]: fullWidth,
-          },
-          className,
-        )}
-      >
-        <img className={styles.searchIcon} src={Search.src} />
-        <input ref={ref} type="text" className={styles.searchInput} {...props} />
-      </div>
-    );
-  },
-);
-
-SearchInput.displayName = 'SearchInput';
+function SearchInput({ className, ...props }: SearchInputProps) {
+  return (
+    <div className={clsx(styles.searchContainer, className)}>
+      <img className={styles.searchIcon} src={Search.src} alt="검색" />
+      <input type="text" className={styles.searchInput} {...props} />
+    </div>
+  );
+}
 
 export default SearchInput;
