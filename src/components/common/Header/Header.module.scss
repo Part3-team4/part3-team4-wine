@@ -38,4 +38,35 @@
       }
     }
   }
+
+  // dropdown 위치
+  > div {
+    > div {
+      > div {
+        top: 100%;
+      }
+    }
+  }
+}
+
+/* 반응형 */
+
+/* 모바일 */
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 0 20px;
+    height: 50px;
+
+    // dropdown
+    > div {
+      > div {
+        button {
+          > div {
+            width: 30px !important;
+            height: 30px !important;
+          }
+        }
+      }
+    }
+  }
 }
