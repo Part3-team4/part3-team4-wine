@@ -15,9 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko" className={pretendard.variable}>
       <body>
-        <div className="wrap">
-          <ModalProvider>{children}</ModalProvider>
-        </div>
+        <ModalProvider>{children}</ModalProvider>
       </body>
     </html>
   );
