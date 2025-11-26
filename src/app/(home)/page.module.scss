@@ -1,0 +1,36 @@
+@use '@/styles' as *;
+
+.mainContent {
+  background-color: #ffc;
+  width: 100%;
+  padding: 80px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .mainBtn {
+    width: 280px;
+    margin-top: 104px;
+  }
+}
+
+.mainBanner {
+  background-color: pink;
+  width: 100%;
+  height: 535px;
+  margin-bottom: 160px;
+}
+
+.mainContFrame {
+  background-color: #cfc;
+  width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+
+  .mainCont {
+    background-color: #bbc;
+    width: 100%;
+    height: 320px;
+  }
+}
