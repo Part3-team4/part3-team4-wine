@@ -2,6 +2,7 @@ import styles from '@/components/common/Input/searchInput.module.scss';
 import clsx from 'clsx';
 import { ComponentPropsWithRef } from 'react';
 import { Search } from '@/assets/index';
+import Image from 'next/image';
 
 /**
  * SearchInput 컴포넌트의 Props 타입
@@ -32,7 +33,7 @@ export type SearchInputProps = ComponentPropsWithRef<'input'>;
 function SearchInput({ className, ...props }: SearchInputProps) {
   return (
     <div className={clsx(styles.searchContainer, className)}>
-      <img className={styles.searchIcon} src={Search.src} alt="검색" />
+      <Image className={styles.searchIcon} src={Search} alt="검색" />
       <input type="text" className={styles.searchInput} {...props} />
     </div>
   );
