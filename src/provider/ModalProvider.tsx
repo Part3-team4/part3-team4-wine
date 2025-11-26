@@ -152,7 +152,7 @@ function ModalWrapper({
     return () => window.removeEventListener('keydown', onKey);
   }, [isTop]);
 
-  return <div className="modal-portal-wrapper">{children}</div>;
+  return <div className="modalPortalWrapper">{children}</div>;
 }
 
 export function useModalContext() {

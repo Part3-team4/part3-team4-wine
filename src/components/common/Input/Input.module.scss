@@ -1,5 +1,4 @@
-@use './variables' as v;
-@use '@/styles/mixins' as m;
+@use '@/styles' as *;
 
 .inputContainer {
   display: flex;
@@ -9,52 +8,55 @@
 }
 
 .label {
-  @include m.text-lg-medium;
-  color: v.$color-gray-800;
+  color: $color-gray-800;
+  @include text-lg-medium;
 }
 
 .input {
-  @include m.text-lg-regular;
   width: 100%;
-  padding: 14px 18px;
+  padding: 14px 20px;
   border: 1px solid $color-gray-300;
-  border-radius: 12px;
-  background-color: v.$color-white;
+  border-radius: 16px;
+  background-color: $color-white;
   transition: all 0.2s ease;
+  @include text-lg-regular;
 
   &::placeholder {
-    color: v.$color-gray-500;
+    color: $color-gray-500;
   }
 
   &:focus {
     outline: none;
-    border-color: v.$color-primary-purple;
+    border-color: $color-primary-purple;
     box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
   }
 
   &.error {
-    border-color: v.$color-error-red;
+    border-color: $color-error-red;
 
     &:focus {
-      border-color: v.$color-error-red;
       box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
     }
   }
 
   &:disabled {
-    background-color: v.$color-gray-300;
+    background-color: $color-gray-300;
     cursor: not-allowed;
-    opacity: 0.6;
   }
 }
 
-.helperText {
-  font-size: v.$font-size-md;
-  color: v.$color-gray-500;
+.errorText {
+  font-size: $font-size-md;
+  color: $color-error-red;
   margin: 0;
   padding-left: 4px;
+}
 
-  &.errorText {
-    color: v.$color-error-red;
+// 모바일 반응형
+@media screen and (max-width: 767px) {
+  .input {
+    padding: 9px 20px;
+    border-radius: 12px;
+    @include text-md-regular;
   }
 }

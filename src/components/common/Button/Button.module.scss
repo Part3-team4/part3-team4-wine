@@ -6,7 +6,7 @@
   justify-content: center;
   gap: 8px;
   border: none;
-  border-radius: 12px;
+  border-radius: 16px;
   cursor: pointer;
   transition: all 0.2s;
   box-sizing: border-box;
@@ -20,34 +20,34 @@
 
 // 크기 variants (클래스 가이드 기준 - 높이값)
 .xsmall {
-  height: 42px;
+  min-height: 42px;
   padding: 0 20px;
-  border-radius: 8px;
-}
-
-.small {
-  height: 48px;
-  padding: 11px;
-  border-radius: 10px;
-}
-
-.medium {
-  height: 50px;
-  padding: 0 28px;
   border-radius: 12px;
 }
 
+.small {
+  min-height: 48px;
+  padding: 11px;
+  border-radius: 8px;
+}
+
+.medium {
+  min-height: 50px;
+  padding: 0 28px;
+  border-radius: 16px;
+}
+
 .large {
-  height: 52px;
+  min-height: 52px;
   padding: 0 32px;
   @include text-lg-medium;
   border-radius: 12px;
 }
 
 .xlarge {
-  height: 54px;
+  min-height: 54px;
   padding: 0 36px;
-  border-radius: 12px;
+  border-radius: 16px;
 }
 
 // 색상 variants
@@ -109,4 +109,25 @@
   display: flex;
   align-items: center;
   font-size: $font-size-xl;
+}
+
+// 모바일 반응형
+@media screen and (max-width: 767px) {
+  .button {
+    padding: 9px 20px;
+    border-radius: 12px;
+    @include text-md-regular;
+  }
+
+  .xsmall {
+    min-height: 40px;
+    padding: 0 18px;
+    @include text-md-bold;
+  }
+
+  .medium {
+    min-height: 48px;
+    border-radius: 12px;
+    @include text-md-bold;
+  }
 }
