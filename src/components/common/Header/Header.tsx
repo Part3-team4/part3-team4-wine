@@ -30,7 +30,7 @@ export default function Header() {
         {/* 비 로그인 상태 */}
         {/* <ul className={styles.list}>
           <li>
-            <Link href="/login">로그인</Link>
+            <Link href="/signin">로그인</Link>
           </li>
           <li>
             <Link href="/signup">회원가입</Link>
@@ -40,7 +40,7 @@ export default function Header() {
         {/* 마이 페이지 */}
         {/* <ul className={styles.list}>
           <li>
-            <Link href="/winelist">와인 목록</Link>
+            <Link href="/wines">와인 목록</Link>
           </li>
           <li>
             <Link href="/">로그아웃</Link>
