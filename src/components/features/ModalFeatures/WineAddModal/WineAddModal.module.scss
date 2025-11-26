@@ -1,0 +1,46 @@
+@use '@/styles' as *;
+
+.header {
+  @include text-2xl-bold;
+  color: $color-gray-800;
+}
+
+.modalWrapper {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.content {
+  padding-right: 10px;
+}
+
+.wineImage {
+  width: 140px;
+}
+
+.footer {
+  display: flex;
+  gap: 8px;
+}
+
+.cancleBtn {
+  padding: 16px 36px;
+}
+
+.addBtn {
+  flex: 1;
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    @include text-xl-bold;
+  }
+
+  .content {
+    label {
+      @include text-md-medium;
+    }
+  }
+}
