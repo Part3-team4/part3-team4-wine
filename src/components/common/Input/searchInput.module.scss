@@ -27,7 +27,7 @@
   background-color: $color-white;
   outline: none;
   transition: box-shadow 0.2s;
-  @include text-md-regular;
+  @include text-lg-regular;
 
   &::placeholder {
     color: $color-gray-500;
@@ -44,9 +44,11 @@
 }
 
 // 모바일 반응형
-@media (max-width: 375px) {
-  // 모바일 포인트는 임시! (협의 후 수정 예정)
+@media screen and (max-width: 767px) {
   .searchInput {
     height: 38px;
+    padding-left: 45px;
+    padding-right: 15px;
+    @include text-md-regular;
   }
 }

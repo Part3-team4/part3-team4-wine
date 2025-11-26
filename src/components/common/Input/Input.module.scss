@@ -14,12 +14,11 @@
 
 .input {
   width: 100%;
-  padding: 11px 20px;
+  padding: 14px 20px;
   border: 1px solid $color-gray-300;
   border-radius: 16px;
   background-color: $color-white;
   transition: all 0.2s ease;
-
   @include text-lg-regular;
 
   &::placeholder {
@@ -51,4 +50,13 @@
   color: $color-error-red;
   margin: 0;
   padding-left: 4px;
+}
+
+// 모바일 반응형
+@media screen and (max-width: 767px) {
+  .input {
+    padding: 9px 20px;
+    border-radius: 12px;
+    @include text-md-regular;
+  }
 }
