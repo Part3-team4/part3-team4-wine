@@ -9,6 +9,10 @@
   overflow: hidden;
   border: 1px solid $color-gray-300;
   background-color: $color-white;
+
+  &:focus-within {
+    border-color: $color-primary-purple; // 포커스 시 보라색
+  }
 }
 
 .textarea {
