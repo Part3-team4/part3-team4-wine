@@ -8,22 +8,17 @@
   color: $color-gray-800;
   @include text-md-medium;
   transition: all 0.3s;
+  background-color: $color-white;
+
+  &:hover {
+    color: $color-primary-purple;
+    border-color: $color-primary-purple;
+    background-color: $color-white;
+  }
 
   &.selected {
     color: $color-white;
-    border-color: $color-primary-purple;
     background-color: $color-primary-purple;
-
-    &:hover {
-      color: $color-gray-800;
-      border-color: $color-gray-300;
-      background-color: $color-white;
-    }
-  }
-
-  &:hover {
-    color: $color-white;
     border-color: $color-primary-purple;
-    background-color: $color-primary-purple;
   }
 }
