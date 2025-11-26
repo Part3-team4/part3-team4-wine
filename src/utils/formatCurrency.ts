@@ -1,3 +1,3 @@
 export function formatCurrency(value: number) {
-  return `${value.toLocaleString()}₩`;
+  return `${value.toLocaleString('ko-KR')}₩`;
 }
