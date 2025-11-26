@@ -26,7 +26,7 @@
 'use client';
 
 import Chip from '@/components/common/Chip/Chip';
-import { aroma, aromaKo } from '@/constants/aroma';
+import { AROMA_EN, AROMA_KO, AromaType } from '@/constants/aroma';
 import { useState } from 'react';
 import styles from './AromaChipList.module.scss';
 
@@ -47,10 +47,12 @@ export default function AromaChipList({
     );
   };
 
+  const aromaList = Object.values(AROMA_EN);
+
   return (
     <ul className={styles.aromaChipList}>
       {clickable
-        ? aroma.map((label, i) => (
+        ? aromaList.map((label, i) => (
             <li key={label}>
               <Chip
                 key={label}
@@ -58,14 +60,14 @@ export default function AromaChipList({
                 onClick={() => toggle(label)}
                 clickable
               >
-                {aromaKo[i]}
+                {AROMA_KO[label]}
               </Chip>
             </li>
           ))
-        : aroma.map((label, i) => (
+        : aromaList.map((label, i) => (
             <li key={label}>
               <Chip key={label} selected={defaultSelected.includes(label)}>
-                {aromaKo[i]}
+                {AROMA_KO[label]}
               </Chip>
             </li>
           ))}
