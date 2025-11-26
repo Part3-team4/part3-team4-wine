@@ -1,43 +1,21 @@
-import styles from '@/components/common/Input/Input.module.scss';
+import style from '@/components/common/Input/Input.module.scss';
 import clsx from 'clsx';
-import React, { ComponentPropsWithRef, forwardRef } from 'react';
+import React, { ComponentPropsWithRef } from 'react';
 
-type InputProps = ComponentPropsWithRef<'input'> & {
-  label?: string;
-  helperText?: string;
-  error?: boolean;
+/**
+ * Input 컴포넌트에 전달할 수 있는 모든 props 타입.
+ * HTML 기본 input 속성들을 모두 상속하고,
+ * className을 자유롭게 추가할 수 있습니다.
+ */
+export type InputProps = ComponentPropsWithRef<'input'> & {
+  className?: string;
 };
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, helperText, error = false, className, ...props }, ref) => {
-    return (
-      <div className={styles.inputContainer}>
-        {label && <label className={styles.label}>{label}</label>}
-        <input
-          ref={ref}
-          className={clsx(
-            styles.input,
-            {
-              [styles.error]: error,
-            },
-            className,
-          )}
-          {...props}
-        />
-        {helperText && (
-          <p
-            className={clsx(styles.helperText, {
-              [styles.errorText]: error,
-            })}
-          >
-            {helperText}
-          </p>
-        )}
-      </div>
-    );
-  },
-);
-
-Input.displayName = 'Input';
-
-export default Input;
+/**
+ * 재사용 가능한 기본 Input 컴포넌트.
+ * - 기본 스타일을 유지하면서
+ * - 추가로 전달된 className을 clsx로 병합합니다.
+ */
+export default function Input({ className, ...props }: InputProps) {
+  return <input {...props} className={clsx(style.input, className)} />;
+}
