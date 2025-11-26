@@ -13,36 +13,42 @@ import { useModalContext } from '@/provider/ModalProvider';
  *   close: (id?: string) => void;
  * }}
  *
- * - open(children, options?): 모달을 엽니다. 반환값(id)을 저장해야 나중에 close(id)로 닫을 수 있습니다.
- * - close(id): 반드시 open()이 반환한 id를 사용해야 합니다. 하드코딩된 id는 사용하지 마세요.
+ * @function open
+ * 모달을 엽니다. 반환된 id를 저장하여 나중에 특정 모달을 닫을 수 있습니다.
+ * @param {ReactNode} children - 모달에 렌더링할 컴포넌트
+ * @param {Object} options - 추가 옵션
+ * @param {Function} options.onClose - 모달이 닫힐 때 실행될 콜백
+ * @returns {string} 생성된 모달의 고유 ID
+ *
+ * @function close
+ * 열려있는 모달을 닫습니다.
+ * @param {string} id - 닫을 모달의 ID (생략 시 모든 모달 닫음)
  *
  * @example
- * import { useModal } from "@/components/common/Modal/useModal";
- * import Modal from "@/components/common/Modal/Modal";
+ * // 페이지에서 모달 열기
+ * 'use client';
+ *
+ * import { useModal } from '@/hooks/useModal';
+ * import DeleteModal from '@/components/features/ModalFeatures/DeleteModal/DeleteModal';
  *
  * export default function Page() {
  *   const { open, close } = useModal();
  *
- *   function handleOpen() {
- *     // open()이 반환한 id를 저장
+ *   const handleOpenDeleteModal = () => {
  *     const id = open(
- *       <Modal>
- *         <h2>안녕하세요!</h2>
- *         <button onClick={() => close(id)}>닫기</button>
- *       </Modal>
+ *       <DeleteModal
+ *         onDelete={() => {
+ *           console.log('삭제됨');
+ *           close(id);
+ *         }}
+ *         onCancel={() => close(id)}
+ *       />
  *     );
- *   }
+ *   };
  *
- *   return <button onClick={handleOpen}>모달 열기</button>;
+ *   return <button onClick={handleOpenDeleteModal}>삭제</button>;
  * }
  *
- * @example X버튼 없는 모달
- * const id = open(
- *  <Modal withCloseButton={false}>
- *    <h2>X 버튼이 없는 모달</h2>
- *    <button onClick={() => close(id)}>직접 만든 닫기 버튼</button>
- *  </Modal>
- * );
  */
 export function useModal() {
   const { openModal, closeModal } = useModalContext();
