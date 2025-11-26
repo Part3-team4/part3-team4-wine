@@ -7,11 +7,56 @@ import ImageInput from '@/components/common/Input/ImageInput';
 import styles from './WineAddModal.module.scss';
 
 type WineAddModalProps = {
-  onCancel?: () => void;
   onAdd?: () => void;
 };
 
-export default function WineAddModal({ onCancel, onAdd }: WineAddModalProps) {
+/**
+ * WineAddModal
+ *
+ * 새로운 와인을 등록하는 모달 컴포넌트입니다.
+ * 와인 이름, 가격, 원산지, 타입, 사진을 입력받습니다.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Function} [props.onAdd] - 와인 등록 버튼 클릭 시 실행될 콜백 함수
+ *
+ * @example
+ * // 페이지에서 사용 예시
+ * 'use client';
+ *
+ * import { useModal } from '@/hooks/useModal';
+ * import WineAddModal from '@/components/features/ModalFeatures/WineAddModal/WineAddModal';
+ *
+ * export default function WineListPage() {
+ *   const { open, close } = useModal();
+ *
+ *   const handleOpenWineAddModal = () => {
+ *     const id = open(
+ *       <WineAddModal
+ *         onAdd={() => {
+ *           // 와인 등록 API 호출
+ *           console.log('와인 등록 완료');
+ *           close(id);
+ *         }}
+ *       />
+ *     );
+ *   };
+ *
+ *   return (
+ *     <div>
+ *       <button onClick={handleOpenWineAddModal}>와인 등록하기</button>
+ *     </div>
+ *   );
+ * }
+ *
+ * @features
+ * - 와인 이름 입력 (FormInput)
+ * - 가격 입력 (FormInput - number type)
+ * - 원산지 입력 (FormInput)
+ * - 와인 타입 입력 (추후 SelectBox로 변경 예정)
+ * - 와인 사진 업로드 (ImageInput)
+ */
+export default function WineAddModal({ onAdd }: WineAddModalProps) {
   return (
     <Modal withCloseButton={true} className={styles.modalWrapper}>
       <Modal.Header>
@@ -46,9 +91,6 @@ export default function WineAddModal({ onCancel, onAdd }: WineAddModalProps) {
       </Modal.Content>
       <Modal.Footer>
         <div className={styles.footer}>
-          <Button className={styles.cancleBtn} size="large" variant="tinted" onClick={onCancel}>
-            취소
-          </Button>
           <Button className={styles.addBtn} size="large" variant="filled" onClick={onAdd}>
             와인 등록하기
           </Button>
