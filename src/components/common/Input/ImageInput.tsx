@@ -106,7 +106,7 @@ export default function ImageInput({
           type="file"
           accept={accept}
           onChange={handleChange}
-          style={{ display: 'none' }}
+          className={styles.fileInput}
           {...props}
         />
 
