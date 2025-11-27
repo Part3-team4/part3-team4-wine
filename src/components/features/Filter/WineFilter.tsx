@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import styles from './Filter.module.scss';
+import styles from './WineFilter.module.scss';
 import Chip from '@/components/common/Chip/Chip';
 import { WINE_TYPE_OPTIONS } from '@/constants/wine';
 import type { WineType } from '@/constants/wine';
 import Scale from '@/components/common/Scale/Scale';
 
-export default function Filter() {
+export default function WineFilter() {
   const [selected, setSelected] = useState<WineType[]>([]);
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(74000);
