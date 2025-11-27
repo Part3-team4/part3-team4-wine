@@ -10,6 +10,7 @@ import StarRating from '@/components/common/StarRating/StarRating';
 import TextArea from '@/components/common/TextArea/TextArea';
 import Chip from '@/components/common/Chip/Chip';
 import { AROMA_OPTIONS, AromaType } from '@/constants/aroma';
+import AromaChipList from '../../AromaChipList/AromaChipList';
 
 type ReviewAddModalProps = {
   wineName: string;
@@ -107,18 +108,7 @@ export default function ReviewAddModal({ wineName, onAdd }: ReviewAddModalProps)
           </div>
           <div className={styles.section}>
             <h3 className={styles.subTitle}>기억에 남는 향이 있나요?</h3>
-            <div className={styles.aromaChip}>
-              {AROMA_OPTIONS.map((option) => (
-                <Chip
-                  key={option.value}
-                  clickable
-                  selected={selected.includes(option.value)}
-                  onClick={() => toggleAroma(option.value)}
-                >
-                  {option.label}
-                </Chip>
-              ))}
-            </div>
+            <AromaChipList />
           </div>
         </div>
       </Modal.Content>
