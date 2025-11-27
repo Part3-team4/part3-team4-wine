@@ -45,6 +45,33 @@
   }
 }
 
+.fileInput {
+  display: none;
+}
+
+.uploadArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  background: #fff;
+  border: 1px solid $color-gray-300;
+  border-radius: 16px;
+  cursor: pointer;
+  overflow: hidden;
+
+  &:hover {
+    background: $color-gray-100;
+  }
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .errorText {
   font-size: $font-size-md;
   color: $color-error-red;
