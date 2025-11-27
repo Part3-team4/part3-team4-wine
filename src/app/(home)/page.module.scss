@@ -1,0 +1,80 @@
+@use '@/styles' as *;
+
+.mainContent {
+  width: 100%;
+  padding: 80px 0;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.mainBanner {
+  width: 100%;
+  margin-bottom: 160px;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  .bannerImage {
+    width: 100%;
+  }
+}
+
+.mainContFrame {
+  padding-left: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 96px;
+
+  .contentImage {
+    width: 640px;
+  }
+  .contentImage:first-child {
+    width: 700px;
+  }
+}
+
+.mainBtn {
+  width: 280px;
+  margin-top: 104px;
+}
+
+// 테블릿 반응형
+@media screen and (max-width: 1023px) {
+  .mainContent {
+    padding: 24px 0;
+  }
+
+  .mainBanner {
+    margin-bottom: 80px;
+  }
+
+  .mainContFrame {
+    padding-left: calc((100% - 640px) / 2);
+  }
+
+  .mainBtn {
+    margin-top: 80px;
+  }
+}
+
+// 모바일 반응형
+@media screen and (max-width: 767px) {
+  .mainBanner {
+    margin-bottom: 48px;
+  }
+
+  .mainContFrame {
+    padding-left: 0;
+    gap: 48px;
+    padding-bottom: 50px;
+  }
+
+  .mainBtn {
+    margin-top: 0;
+    position: fixed;
+    bottom: 21px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+  }
+}

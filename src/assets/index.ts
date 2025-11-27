@@ -1,3 +1,4 @@
+// 아이콘
 import Close from '@/assets/icons/ico_close.png';
 import DropdownArrow from '@/assets/icons/ico_dropdown_arrow.png';
 import Filter from '@/assets/icons/ico_filter.png';
