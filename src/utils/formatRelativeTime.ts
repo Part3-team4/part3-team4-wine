@@ -2,6 +2,27 @@
  * 주어진 날짜 기준으로 상대 시간을 문자열로 변환합니다.
  * @param pastDate Date | number | string (Date로 변환 가능한 값)
  * @returns "00초 전", "00분 전", "00시간 전" 등
+ *
+ *
+ * @example
+ * 실제 사용법
+ * import { formatRelativeTime } from '@/utils/formatRelativeTime';
+ *
+ * formatRelativeTime(시간);
+ *
+ * 예시로 확인해보기
+ * "01시간 전"
+ * formatRelativeTime('2025-01-28T22:00:00');
+ *
+ * "40초 전"
+ * formatRelativeTime(Date.now() - 40 * 1000);
+ *
+ * "10일 전"
+ * formatRelativeTime(Date.now() - 10 * 24 * 60 * 60 * 1000);
+ *
+ * "01년 전"
+ * formatRelativeTime(Date.now() - 400 * 24 * 60 * 60 * 1000);
+ *
  */
 export function formatRelativeTime(pastDate: Date | string | number) {
   const past = new Date(pastDate).getTime();
@@ -22,14 +43,3 @@ export function formatRelativeTime(pastDate: Date | string | number) {
   if (month < 12) return `${String(month).padStart(2, '0')}개월 전`;
   return `${String(year).padStart(2, '0')}년 전`;
 }
-
-// formatRelativeTime('2025-01-28T22:00:00');
-// "01시간 전"
-
-// formatRelativeTime(Date.now() - 40 * 1000);
-// "40초 전"
-
-// formatRelativeTime(Date.now() - 10 * 24 * 60 * 60 * 1000);
-// "10일 전"
-
-// formatRelativeTime(Date.now() - 400 * 24 * 60 * 60 * 1000);
