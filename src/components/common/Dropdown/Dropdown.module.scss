@@ -9,6 +9,7 @@
   position: absolute;
   top: calc(100% + 17px);
   right: 0;
+  z-index: 20;
   padding: 3px 4px;
   min-width: 126px;
   border: 1px solid $color-gray-300;
