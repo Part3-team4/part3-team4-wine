@@ -1,154 +1,95 @@
-import styles from '@/components/common/SelectBox/SelectBox.module.scss';
-import clsx from 'clsx';
-import React, { ComponentPropsWithRef, forwardRef, useState, useEffect } from 'react';
-import { DropdownArrow } from '@/assets/index';
-
-/**
- * SelectBox 컴포넌트의 props 타입 정의
- *
- * @typedef {Object} SelectBoxProps
- * @property {string} [label] - select 위에 표시될 라벨 텍스트
- * @property {Array<{value: string, label: string}>} options - 선택 옵션 목록 (필수)
- * @property {string} [helperText] - select 아래에 표시될 도움말 또는 에러 메시지
- * @property {boolean} [error=false] - true일 경우 에러 스타일 적용
- * @property {boolean} [fullWidth=false] - true일 경우 부모 요소의 전체 너비를 차지
- * @property {string} [placeholder] - 선택되지 않은 상태에서 표시될 placeholder 텍스트
- */
-
-type SelectBoxProps = ComponentPropsWithRef<'select'> & {
-  label?: string;
-  options: Array<{ value: string; label: string }>;
-  helperText?: string;
-  error?: boolean;
-  fullWidth?: boolean;
-  placeholder?: string;
-};
-
 /**
  * 재사용 가능한 SelectBox 컴포넌트
- * 
+ *
+ * - Dropdown을 기반으로 선택 UI를 제공합니다.
+ * - 항목을 선택하면 내부 상태가 업데이트되고,
+ *   `onChange`가 전달된 경우 외부로 선택값이 전달됩니다.
+ *
  * @component
- * 
- * @description
- * label, options, helperText, error 상태를 지원하는 범용 select 컴포넌트입니다.
- * 기본 시스템 드롭다운을 사용하며, 선택 전에는 연한 회색, 선택 후에는 진한 검정색으로 표시됩니다.
- * 
+ *
+ * @param {Object[]} options - 선택 가능한 옵션 리스트
+ * @param {string} options[].label - 화면에 표시되는 텍스트
+ * @param {string} options[].value - 실제 값
+ * @param {string} [placeholder='선택하세요'] - 선택 전 표시되는 기본 문구
+ * @param {(value: string) => void} [onChange] - 선택된 값을 외부로 전달하는 콜백
+ *
  * @example
- * // 기본 사용 - 와인 타입 선택
- * const [wineType, setWineType] = useState('');
- * 
- *  const wineTypeOptions = [
-    { value: 'red', label: 'Red' },
-    { value: 'white', label: 'White' },
-    { value: 'sparkling', label: 'Sparkling' },
-  ];
- * 
- * <SelectBox 
- *   label="타입"
- *   placeholder="선택하세요"
- *   options={wineTypeOptions}
- *   value={wineType}
- *   onChange={(e) => setWineType(e.target.value)}
+ * // 단일 SelectBox 사용 예시
+ * <SelectBox
+ *   options={[
+ *     { label: '체리', value: 'CHERRY' },
+ *     { label: '베리', value: 'BERRY' },
+ *     { label: '오크', value: 'OAK' },
+ *   ]}
  * />
- * 
+ *
  * @example
- * // 비활성화 상태
- * <SelectBox 
- *   label="타입"
- *   placeholder="선택하세요"
- *   options={wineTypeOptions}
- *   value="red"
- *   disabled
+ * // 선택값을 상태로 관리하는 경우
+ * const [value, setValue] = useState('');
+ *
+ * <SelectBox
+ *   options={[
+ *     { label: '체리', value: 'CHERRY' },
+ *     { label: '베리', value: 'BERRY' },
+ *     { label: '오크', value: 'OAK' },
+ *   ]}
+ *   onChange={(v) => setValue(v)}
  * />
- * 
  */
 
-const SelectBox = forwardRef<HTMLSelectElement, SelectBoxProps>(
-  (
-    {
-      label,
-      options,
-      helperText,
-      error = false,
-      fullWidth = false,
-      placeholder,
-      className,
-      value,
-      defaultValue,
-      onChange,
-      ...props
-    },
-    ref,
-  ) => {
-    // 초기값 체크 (value 또는 defaultValue 기준)
-    const initialValue = value !== undefined ? value : defaultValue;
-    const [hasValue, setHasValue] = useState(initialValue !== undefined && initialValue !== '');
+'use client';
 
-    // value가 외부에서 변경될 때마다 체크
-    useEffect(() => {
-      if (value !== undefined) {
-        setHasValue(value !== '');
-      }
-    }, [value]);
+import { useState } from 'react';
+import Dropdown from '@/components/common/Dropdown';
+import styles from './SelectBox.module.scss';
+import Image from 'next/image';
+import { DropdownArrow } from '@/assets';
 
-    // onChange 핸들러
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const newValue = e.target.value;
-      setHasValue(newValue !== '');
+interface Option {
+  label: string;
+  value: string;
+}
 
-      // 부모의 onChange 호출
-      onChange?.(e);
-    };
+interface SelectBoxProps {
+  options: Option[];
+  placeholder?: string;
+  onChange?: (value: string) => void;
+}
 
-    return (
-      <div
-        className={clsx(styles.selectContainer, {
-          [styles.fullWidth]: fullWidth,
-        })}
-      >
-        {label && <label className={styles.label}>{label}</label>}
-        <div className={styles.selectWrapper}>
-          <select
-            ref={ref}
-            value={value}
-            onChange={handleChange}
-            className={clsx(
-              styles.select,
-              {
-                [styles.error]: error,
-                [styles.hasValue]: hasValue,
-              },
-              className,
-            )}
-            {...props}
-          >
-            {placeholder && (
-              <option value="" disabled>
-                {placeholder}
-              </option>
-            )}
-            {options.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
+export default function SelectBox({
+  options,
+  placeholder = '선택하세요',
+  onChange,
+}: SelectBoxProps) {
+  const [selectedValue, setSelectedValue] = useState<string | null>(null);
+
+  const handleChange = (value: string) => {
+    setSelectedValue(value);
+    onChange?.(value);
+  };
+
+  const selectedLabel = options.find((v) => v.value === selectedValue)?.label;
+
+  return (
+    <div className={styles.selectbox}>
+      <Dropdown onChange={handleChange}>
+        <Dropdown.Trigger>
+          <span className={selectedValue ? styles.selected : styles.placeholder}>
+            {selectedValue ? selectedLabel : placeholder}
+          </span>
+          <Image src={DropdownArrow} alt="select box 화살표" width={24} height={24} />
+        </Dropdown.Trigger>
+
+        <div className={styles.menu}>
+          <Dropdown.Menu>
+            {options.map((o) => (
+              <Dropdown.Item key={o.value} value={o.value}>
+                <button>{o.label}</button>
+              </Dropdown.Item>
             ))}
-          </select>
-          <img className={styles.chevronIcon} src={DropdownArrow.src} />
+          </Dropdown.Menu>
         </div>
-        {helperText && (
-          <p
-            className={clsx(styles.helperText, {
-              [styles.errorText]: error,
-            })}
-          >
-            {helperText}
-          </p>
-        )}
-      </div>
-    );
-  },
-);
-
-SelectBox.displayName = 'SelectBox';
-
-export default SelectBox;
+      </Dropdown>
+    </div>
+  );
+}
