@@ -14,14 +14,14 @@ export interface RadioOption {
 
 /**
  * RadioFilter 컴포넌트의 Props
- * @interface RadioFilterProps
+ * @interface RadioProps
  * @property {string} [className] - 외부에서 추가할 CSS 클래스 (선택사항)
  * @property {string} [title] - 필터 제목 (선택사항, 예: "RATING", "CATEGORY", "PRICE")
  * @property {RadioOption[]} options - 렌더링할 옵션 배열
  * @property {string} selectedValue - 현재 선택된 옵션의 value 값
  * @property {function} onValueChange - 옵션 선택 시 호출되는 콜백 함수
  */
-interface RadioFilterProps {
+interface RadioProps {
   className?: string;
   title?: string;
   options: RadioOption[];
@@ -30,18 +30,18 @@ interface RadioFilterProps {
 }
 
 /**
- * 범용 라디오 버튼 필터 컴포넌트
+ * 범용 라디오 버튼 컴포넌트
  *
  * 다양한 필터에서 재사용 가능한 라디오 버튼 그룹입니다.
  * 평점, 카테고리, 가격대 등 어떤 필터에도 사용할 수 있습니다.
  *
  * @component
- * @param {RadioFilterProps} props - 컴포넌트 속성
+ * @param {RadioProps} props - 컴포넌트 속성
  * @returns {JSX.Element | null} 라디오 필터 UI (옵션이 없으면 null 반환)
  *
  * @example
  * // 평점 필터로 사용
- * function ProductFilter() {
+ * function ProductRadio() {
  *   const [rating, setRating] = useState('all');
  *
  *   const ratingOptions = [
@@ -51,7 +51,7 @@ interface RadioFilterProps {
  *   ];
  *
  *   return (
- *     <RadioFilter
+ *     <Radio
  *       title="RATING"
  *       options={ratingOptions}
  *       selectedValue={rating}
@@ -62,7 +62,7 @@ interface RadioFilterProps {
  *
  * @example
  * // 제목 없이 사용
- * function SimpleFilter() {
+ * function SimpleRadio() {
  *   const [sort, setSort] = useState('latest');
  *
  *   const sortOptions = [
@@ -71,7 +71,7 @@ interface RadioFilterProps {
  *   ];
  *
  *   return (
- *     <RadioFilter
+ *     <Radio
  *       options={sortOptions}
  *       selectedValue={sort}
  *       onValueChange={setSort}
@@ -79,18 +79,12 @@ interface RadioFilterProps {
  *   );
  * }
  */
-export const RadioFilter = ({
-  className,
-  title,
-  options,
-  selectedValue,
-  onValueChange,
-}: RadioFilterProps) => {
+export const Radio = ({ className, title, options, selectedValue, onValueChange }: RadioProps) => {
   if (!options || options.length === 0) return null;
 
   return (
-    <div className={clsx(styles.radioFilterContainer, className)}>
-      {title && <h2 className={styles.filterTitle}>{title}</h2>}
+    <div className={clsx(styles.radioContainer, className)}>
+      {title && <h2 className={styles.title}>{title}</h2>}
 
       {options.map((option) => {
         const isSelected = selectedValue === option.value;
