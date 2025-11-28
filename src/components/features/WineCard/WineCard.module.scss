@@ -1,5 +1,13 @@
 @use '@/styles' as *;
 
+// 와인 카드
+.wineContent {
+  position: relative;
+  border-radius: 16px;
+  border: 1px solid $color-gray-300;
+  background-color: $color-white;
+}
+
 // 별점, 와인설명
 .starDesc {
   strong {
@@ -26,6 +34,20 @@
   }
 }
 
+// 와인 이름, 가격
+.priceDesc {
+  strong {
+    font-size: 30px;
+    font-weight: 700;
+    color: $color-gray-800;
+  }
+  p {
+    margin: 20px 0 16px;
+    color: $color-gray-500;
+    @include text-lg-regular;
+  }
+}
+
 // 추천 와인
 .recommend {
   display: flex;
@@ -42,5 +64,88 @@
     img {
       width: 44px;
     }
+  }
+}
+
+// 배너 와인
+.bannerCard {
+  display: flex;
+  padding-top: 48px;
+  > .wine {
+    width: 224px;
+    > img {
+      width: 58px;
+      margin: 0 auto;
+    }
+  }
+}
+
+// 마이페이지 와인
+.myListCard {
+  display: flex;
+  padding-top: 30px;
+  .wine {
+    width: 176px;
+    > img {
+      width: 76px;
+      margin: -86px auto 0;
+    }
+  }
+
+  .dropdownArea {
+    position: absolute;
+    right: 40px;
+    top: 30px;
+  }
+}
+
+// 와인 목록 와인
+.listCard {
+  > a {
+    position: relative;
+    display: block;
+    padding-top: 36px;
+    padding-right: 50px;
+  }
+
+  .titleArea {
+    display: flex;
+    justify-content: space-between;
+
+    .detail {
+      display: flex;
+    }
+
+    .wine {
+      width: 201px;
+      > img {
+        width: 60px;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .reviewArea {
+    padding: 20px 40px;
+    border-top: 1px solid $color-gray-300;
+
+    margin-right: -50px;
+
+    strong {
+      @include text-lg-semibold;
+      color: $color-gray-800;
+    }
+
+    p {
+      margin-top: 10px;
+      @include text-lg-regular;
+      color: $color-gray-500;
+    }
+  }
+
+  .arrow {
+    position: absolute;
+    right: 50px;
+    top: 173px;
   }
 }
