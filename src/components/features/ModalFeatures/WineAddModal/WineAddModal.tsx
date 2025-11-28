@@ -3,7 +3,7 @@
 import Modal from '@/components/common/Modal/Modal';
 import Button from '@/components/common/Button/Button';
 import FormInput from '@/components/common/Input/FormInput';
-import ImageInput from '@/components/common/Input/ImageInput';
+import ImageInput from '@/components/common/Input/Imageinput';
 import styles from './WineAddModal.module.scss';
 
 type WineAddModalProps = {
