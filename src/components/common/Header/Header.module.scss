@@ -4,10 +4,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  top: 24px;
+  width: 100%;
+  max-width: 1140px;
   padding: 0 60px;
   background-color: $color-black;
   height: 70px;
   border-radius: 16px;
+  z-index: 800;
 
   h1 {
     width: 52px;
@@ -50,12 +55,19 @@
 }
 
 /* 반응형 */
+/* 테블릿 */
+@media screen and (max-width: 1023px) {
+  .header {
+    width: calc(100% - 40px);
+  }
+}
 
 /* 모바일 */
 @media screen and (max-width: 768px) {
   .header {
     padding: 0 20px;
     height: 50px;
+    width: calc(100% - 32px);
 
     // dropdown
     > div {
