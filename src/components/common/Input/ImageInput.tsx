@@ -1,8 +1,9 @@
 import { Photo } from '@/assets';
 import styles from './Input.module.scss';
 import { useState } from 'react';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import { InputProps } from './Input';
+import clsx from 'clsx';
 
 /**
  * ImageInput 컴포넌트의 props 타입
@@ -11,6 +12,10 @@ import { InputProps } from './Input';
  * @property {boolean} [preview=true] - 선택된 이미지 미리보기 표시 여부
  * @property {function} onFileChange - 파일 선택 시 호출되는 콜백 함수
  * @property {string} [accept='image/*'] - 허용할 파일 타입 (기본값: 모든 이미지)
+ * @property {'square' | 'circle'} [variant='square'] - 이미지 표시 형태 (사각형 또는 원형)
+ * @property {number} [size] - 이미지 크기 (px), variant='circle'일 때 권장
+ * @property {string | StaticImageData} [currentImageUrl] - 현재 이미지 URL 또는 import한 이미지 (편집 시 초기 이미지 표시)
+ * @property {boolean} [alwaysShowOverlay=false] - 항상 오버레이 표시 여부 (프로필 페이지 편집 모드용)
  */
 type ImageInputProps = {
   label?: string;
@@ -18,6 +23,10 @@ type ImageInputProps = {
   preview?: boolean;
   onFileChange: (file: File | null) => void;
   accept?: string;
+  variant?: 'square' | 'circle';
+  size?: number;
+  currentImageUrl?: string | StaticImageData;
+  alwaysShowOverlay?: boolean;
 } & Omit<InputProps, 'type' | 'onChange'>;
 
 /**
@@ -27,12 +36,22 @@ type ImageInputProps = {
  * 선택한 파일을 부모 컴포넌트로 전달합니다.
  *
  * @example
- * // 기본 사용법
+ * // 기본 사용법 (사각형)
  * const [profileImage, setProfileImage] = useState<File | null>(null);
  *
  * <ImageInput
  *   label="프로필 이미지"
  *   onFileChange={(file) => setProfileImage(file)}
+ * />
+ *
+ * @example
+ * // 원형 프로필 이미지 (프로필 페이지용 - 항상 오버레이 표시)
+ * <ImageInput
+ *   variant="circle"
+ *   size={120}
+ *   currentImageUrl={user.profileImage}
+ *   alwaysShowOverlay
+ *   onFileChange={(file) => handleProfileChange(file)}
  * />
  *
  * @example
@@ -55,15 +74,6 @@ type ImageInputProps = {
  *   onFileChange={handleFileChange}
  * />
  *
- * @example
- * // 특정 이미지 형식만 허용
- * <ImageInput
- *   label="증명사진 (JPG, PNG만)"
- *   accept="image/jpeg, image/png"
- *   onFileChange={(file) => console.log(file)}
- * />
- *
- *
  * @param {ImageInputProps} props - 컴포넌트 props
  * @returns {JSX.Element} 이미지 업로드 입력 컴포넌트
  */
@@ -75,6 +85,10 @@ export default function ImageInput({
   accept = 'image/*',
   className,
   id = 'file-input',
+  variant = 'square',
+  size,
+  currentImageUrl,
+  alwaysShowOverlay = false,
   ...props
 }: ImageInputProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -97,10 +111,21 @@ export default function ImageInput({
     onFileChange(file);
   };
 
+  const displayImage =
+    previewUrl || (typeof currentImageUrl === 'string' ? currentImageUrl : currentImageUrl?.src);
+
+  const uploadAreaClass = clsx(
+    styles.uploadArea,
+    {
+      [styles.circle]: variant === 'circle',
+    },
+    className,
+  );
+
   return (
     <div className={styles.inputContainer}>
       {label && <p className={styles.label}>{label}</p>}
-      <div className={className}>
+      <div className={styles.imageWrapper} style={size ? { width: size, height: size } : undefined}>
         <input
           id={id}
           type="file"
@@ -110,9 +135,16 @@ export default function ImageInput({
           {...props}
         />
 
-        <label htmlFor={id} className={styles.uploadArea}>
-          {previewUrl ? (
-            <img src={previewUrl} alt="Preview" className={styles.previewImage} />
+        <label htmlFor={id} className={uploadAreaClass}>
+          {displayImage ? (
+            <>
+              <img src={displayImage} alt="Preview" className={styles.previewImage} />
+              {alwaysShowOverlay && (
+                <div className={clsx(styles.overlay, styles.alwaysVisible)}>
+                  <Image src={Photo} alt="이미지 변경" width={24} height={24} />
+                </div>
+              )}
+            </>
           ) : (
             <div className={styles.placeholder}>
               <Image src={Photo} alt="사진 아이콘" width={24} height={24} />
