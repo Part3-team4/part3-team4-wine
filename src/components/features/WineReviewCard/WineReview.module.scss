@@ -1,0 +1,123 @@
+@use '@/styles' as *;
+
+.wineReviewWrap {
+  border-radius: 16px;
+  border: 1px solid $color-gray-300;
+  background-color: $color-white;
+}
+
+.wineReview {
+  position: relative;
+  padding: 24px 40px 18px 40px;
+
+  .info {
+    display: flex;
+    align-items: center;
+
+    .date {
+      margin-left: 15px;
+      color: $color-gray-500;
+      @include text-lg-regular;
+    }
+  }
+
+  .name {
+    display: block;
+    margin-top: 20px;
+    color: $color-gray-500;
+    @include text-lg-medium;
+  }
+
+  .content {
+    margin-top: 10px;
+    color: $color-gray-800;
+    @include text-lg-regular;
+  }
+
+  .dropdownWrap {
+    position: absolute;
+    right: 40px;
+    top: 32px;
+  }
+}
+
+.wineReviewDetail {
+  position: relative;
+  padding: 16px 40px 20px;
+
+  .profileArea {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .profileDetail {
+      strong {
+        display: block;
+        color: $color-gray-800;
+        @include text-2lg-semibold;
+      }
+      span {
+        display: block;
+        margin-top: 4px;
+        color: $color-gray-500;
+        @include text-lg-regular;
+      }
+    }
+  }
+
+  .aromaStarArea {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
+    > ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      max-width: calc(100% - 100px);
+
+      span {
+        padding: 8px 15px;
+      }
+    }
+  }
+
+  .acoContent {
+    margin-top: 24px;
+    overflow: hidden;
+    max-height: none;
+    &.ready {
+      transition: max-height 0.35s;
+    }
+  }
+
+  .desc {
+    color: $color-gray-800;
+    @include text-lg-regular;
+  }
+
+  .wineflaverArea {
+    margin-top: 20px;
+  }
+
+  .toggleBtn {
+    transition: transform 0.5s;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+
+  .btnArea {
+    text-align: center;
+  }
+
+  .etcArea {
+    display: flex;
+    gap: 24px;
+    position: absolute;
+    right: 40px;
+    top: 16px;
+  }
+}
