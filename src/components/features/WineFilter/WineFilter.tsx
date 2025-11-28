@@ -141,8 +141,8 @@ export default function WineFilter({
             disabled={false}
             minValue={value.minPrice}
             maxValue={value.maxPrice}
-            leftLabel={`₩ ${value.minPrice.toLocaleString()}`}
-            rightLabel={`₩ ${value.maxPrice.toLocaleString()}`}
+            leftLabel={`₩ ${value.minPrice.toLocaleString('ko-KR')}`}
+            rightLabel={`₩ ${value.maxPrice.toLocaleString('ko-KR')}`}
             showBubble
             onChange={handlePriceChange}
           />
