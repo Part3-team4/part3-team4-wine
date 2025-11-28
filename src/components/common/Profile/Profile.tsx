@@ -42,7 +42,7 @@ export default function Profile({
 }: ProfileProps) {
   return (
     <div className={styles.profile} style={{ width: size, height: size }}>
-      <Image src={src} alt={alt} fill />
+      <Image src={src} alt={alt} fill sizes={`${size}px`} />
     </div>
   );
 }
