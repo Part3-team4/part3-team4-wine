@@ -1,0 +1,41 @@
+@use '@/styles' as *;
+
+.wineFlavor {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.wrapper {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  width: 70px;
+  flex-shrink: 0;
+  display: flex;
+  background-color: $color-gray-100;
+  color: $color-gray-500;
+  border-radius: 6px;
+  @include text-lg-semibold;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 8px;
+}
+
+.scale {
+  flex: 1;
+  min-width: 0;
+  margin: 0 8px;
+}
+
+.text {
+  width: 70px;
+  flex-shrink: 0;
+  display: flex;
+  @include text-lg-medium;
+  color: $color-gray-800;
+}
