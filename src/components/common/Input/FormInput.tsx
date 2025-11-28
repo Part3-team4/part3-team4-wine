@@ -24,24 +24,24 @@ type FormInputProps = {
  *
  * 사용 예시:
  *
- * <FormInput
+ *  <FormInput
  *   label="이메일"
  *   type="email"
  *   placeholder="example@gmail.com"
  *   value={email}
  *   onChange={(e) => setEmail(e.target.value)}
- *   error={emailError} // 에러 메시지가 있으면 input 아래 빨간색 텍스트 노출 + 테두리 red
+ *   error={emailError}
  * />
  *
  */
 export default function FormInput({ label, error, className, ...inputProps }: FormInputProps) {
   return (
-    <div className={style.inputContainer}>
-      {label && <label className={style.label}>{label}</label>}
+    <label className={style.inputContainer}>
+      {label && <span className={style.label}>{label}</span>}
 
-      <Input {...inputProps} />
+      <Input {...inputProps} className={clsx(className, { [style.error]: error })} />
 
       {error && <p className={style.errorText}>{error}</p>}
-    </div>
+    </label>
   );
 }
