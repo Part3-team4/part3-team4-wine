@@ -1,0 +1,32 @@
+@use '@/styles' as *;
+
+.filterWrapper {
+  padding: 20px;
+}
+
+.wineTypesWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.subTitle {
+  @include text-xl-bold;
+}
+
+.wineTypesChip {
+  display: flex;
+  gap: 10px;
+  padding-bottom: 37px;
+}
+
+.priceWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.priceRange {
+  padding-left: 16px;
+  padding-bottom: 25px;
+}
