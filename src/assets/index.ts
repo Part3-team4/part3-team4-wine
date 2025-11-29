@@ -8,6 +8,7 @@ import KebabMd from '@/assets/icons/ico_kebab_md.png';
 import KebabSm from '@/assets/icons/ico_kebab_sm.png';
 import LikeActive from '@/assets/icons/ico_like_active.png';
 import Like from '@/assets/icons/ico_like.png';
+import Like500 from '@/assets/icons/ico_like_gray500.png';
 import MoreArrow from '@/assets/icons/ico_more_arrow.png';
 import Photo from '@/assets/icons/ico_photo.png';
 import RightArrow from '@/assets/icons/ico_right_arrow.png';
@@ -31,6 +32,7 @@ export {
   KebabSm,
   LikeActive,
   Like,
+  Like500,
   MoreArrow,
   Photo,
   RightArrow,

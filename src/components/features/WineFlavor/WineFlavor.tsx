@@ -13,6 +13,7 @@ interface WineFlavorProps {
     acidity: number;
   };
   onChange?: (values: WineFlavorProps['values']) => void;
+  disabled?: boolean;
 }
 
 /**
@@ -23,6 +24,9 @@ interface WineFlavorProps {
  * @example
  * // 1. 독립적으로 사용 (내부 상태 관리)
  * <WineFlavor />
+ *
+ * // 움직이지 않게 지정
+ * <WineFlavor disabled />
  *
  * @example
  * // 2. 부모 컴포넌트에서 상태 관리 (제어 컴포넌트)
@@ -55,7 +59,11 @@ interface WineFlavorProps {
  * @property {number} sweetness - 당도 (0-100, 드라이해요 ~ 달아요)
  * @property {number} acidity - 산미 (0-100, 안셔요 ~ 많이셔요)
  */
-export default function WineFlavor({ values: propValues, onChange }: WineFlavorProps) {
+export default function WineFlavor({
+  values: propValues,
+  onChange,
+  disabled = false,
+}: WineFlavorProps) {
   // UI 구현을 위해 내부상태로 관리합니다.
   const [internalValues, setInternalValues] = useState({
     body: 50,
@@ -117,7 +125,7 @@ export default function WineFlavor({ values: propValues, onChange }: WineFlavorP
             min={0}
             max={100}
             step={1}
-            disabled={false}
+            disabled={disabled}
             value={values[scale.key as keyof typeof values]}
             onChange={(value) => handleChange(scale.key, value)}
             className={styles.scale}
