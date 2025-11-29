@@ -6,24 +6,7 @@ import Chip from '@/components/common/Chip/Chip';
 import { WINE_TYPE_OPTIONS } from '@/constants/wine';
 import type { WineType } from '@/constants/wine';
 import Scale from '@/components/common/Scale/Scale';
-
-export interface WineFilterValue {
-  wineTypes: WineType[];
-  minPrice: number;
-  maxPrice: number;
-  rating?: number;
-}
-
-// 상태관리 전 UI 구현을 위해 선택적 프롭스 처리했습니다.
-interface WineFilterProps {
-  value?: WineFilterValue;
-  onChange?: (value: WineFilterValue) => void;
-  priceRange?: {
-    min: number;
-    max: number;
-    step: number;
-  };
-}
+import { Radio } from '@/components/common/Radio/Radio';
 
 const DEFAULT_PRICE_RANGE = {
   min: 0,
@@ -31,29 +14,49 @@ const DEFAULT_PRICE_RANGE = {
   step: 1000,
 };
 
+const DEFAULT_RATING_OPTIONS = [
+  { label: '전체', value: 'all' },
+  { label: '4.8 - 5.0', value: '4_8To5_0' },
+  { label: '4.5 - 4.8', value: '4_5To4_8' },
+  { label: '4.0 - 4.5', value: '4_0To4_5' },
+  { label: '3.0 - 4.0', value: '3_0To4_0' },
+];
+export interface WineFilterValue {
+  wineTypes: WineType[];
+  minPrice: number;
+  maxPrice: number;
+  rating: string;
+}
+
+// 상태관리 전 UI 구현을 위해 선택적 프롭스 처리했습니다.
+interface WineFilterProps {
+  value?: WineFilterValue;
+  onChange?: (value: WineFilterValue) => void;
+  priceRange?: typeof DEFAULT_PRICE_RANGE;
+  ratingOptions?: typeof DEFAULT_RATING_OPTIONS;
+}
+
 /**
  * 와인 필터링을 위한 컴포넌트
  *
  * - 와인 타입, 가격 범위, 평점을 기준으로 필터링할 수 있습니다.
- * - 와인 타입은 다중 선택이 가능하며, Chip 컴포넌트로 표시됩니다.
- * - 가격 범위는 Scale 컴포넌트를 통해 최소/최대값을 조정할 수 있습니다.
- *
+ * - 외부에서 value/onChange를 넘기면 "제어 컴포넌트", 넘기지 않으면 "비제어 컴포넌트"로 동작합니다.
  * @example
- * // 1. 독립적으로 사용 (내부 상태 관리)
+ * // 내부 상태 사용 (비제어)
  * <WineFilter />
  *
  * @example
- * // 2. 부모 컴포넌트에서 상태 관리 (제어 컴포넌트)
- * const [filterValue, setFilterValue] = useState<WineFilterValue>({
+ * // 부모에서 값 관리 (제어)
+ * const [value, setValue] = useState<WineFilterValue>({
  *   wineTypes: [],
- *   minPrice: 0,
- *   maxPrice: 74000
+ *   minPrice: 10000,
+ *   maxPrice: 50000,
+ *   rating: 'all',
  * });
- *
- * <WineFilter value={filterValue} onChange={setFilterValue} />
+ * <WineFilter value={value} onChange={setValue} />
  *
  * @example
- * // 3. API 연동 예시
+ * // API 연동 예시
  * const fetchWines = async () => {
  *   const params = new URLSearchParams({
  *     types: filterValue.wineTypes.join(','),
@@ -68,12 +71,14 @@ export default function WineFilter({
   value: propValue,
   onChange,
   priceRange = DEFAULT_PRICE_RANGE,
+  ratingOptions = DEFAULT_RATING_OPTIONS,
 }: WineFilterProps) {
   // UI 구현을 위한 내부상태 관리
   const [internalValue, setInternalValue] = useState<WineFilterValue>({
     wineTypes: [],
     minPrice: 0,
     maxPrice: 74000,
+    rating: 'all',
   });
 
   // props가 있으면 props를, 없으면 내부 상태를 사용합니다.
@@ -113,6 +118,21 @@ export default function WineFilter({
     }
   };
 
+  const handleRatingChange = (newRating: string) => {
+    const newValue = {
+      ...value,
+      rating: newRating,
+    };
+
+    if (onChange) {
+      // props로 onChange가 전달된 경우 (제어 컴포넌트)
+      onChange(newValue);
+    } else {
+      // 내부 상태 사용하는 경우 (비제어 컴포넌트)
+      setInternalValue(newValue);
+    }
+  };
+
   return (
     <div className={styles.filterWrapper}>
       <div className={styles.wineTypesWrapper}>
@@ -141,15 +161,22 @@ export default function WineFilter({
             disabled={false}
             minValue={value.minPrice}
             maxValue={value.maxPrice}
-            leftLabel={`₩ ${value.minPrice.toLocaleString()}`}
-            rightLabel={`₩ ${value.maxPrice.toLocaleString()}`}
+            leftLabel={`₩ ${value.minPrice.toLocaleString('ko-KR')}`}
+            rightLabel={`₩ ${value.maxPrice.toLocaleString('ko-KR')}`}
             showBubble
             onChange={handlePriceChange}
+            className={styles.priceRange}
           />
         </div>
       </div>
       <div className={styles.ratingWrapper}>
         <h2 className={styles.subTitle}>RATING</h2>
+        <Radio
+          options={ratingOptions}
+          selectedValue={value.rating}
+          onValueChange={handleRatingChange}
+          className={styles.radio}
+        />
       </div>
     </div>
   );
