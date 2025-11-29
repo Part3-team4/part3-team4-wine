@@ -51,8 +51,7 @@
   }
 
   &.disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
+    cursor: default;
 
     &:hover,
     &:active {
