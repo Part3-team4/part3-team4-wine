@@ -1,11 +1,11 @@
 'use client';
 
-import RecommendWineCard from '@/components/features/WineCard/RecommendWineCard';
 import styles from './wines.module.scss';
 import ListWineCard from '@/components/features/WineCard/ListWineCard';
 import SearchInput from '@/components/common/Input/searchInput';
 import { useState } from 'react';
 import WineFilter from '@/components/features/WineFilter/WineFilter';
+import WineSlider from '@/components/features/WineSlider/WineSlider';
 
 export default function Page() {
   const [searchText, setSearchText] = useState('');
@@ -15,12 +15,16 @@ export default function Page() {
       <div className={styles.slideArea}>
         <h2>이번 달 추천 와인</h2>
         <div className={styles.recommendSlide}>
-          <RecommendWineCard name="ss" rating={2} />
+          <WineSlider />
         </div>
       </div>
       <div className={styles.contentArea}>
         <div className={styles.filterArea}>
-          <SearchInput placeholder="와인을 검색해 보세요" value={searchText} />
+          <SearchInput
+            placeholder="와인을 검색해 보세요"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
           <div className={styles.wineFilterArea}>
             <WineFilter />
           </div>
