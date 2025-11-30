@@ -51,12 +51,14 @@ interface Option {
 }
 
 interface SelectBoxProps {
+  label: string;
   options: Option[];
   placeholder?: string;
   onChange?: (value: string) => void;
 }
 
 export default function SelectBox({
+  label,
   options,
   placeholder = '선택하세요',
   onChange,
@@ -72,6 +74,8 @@ export default function SelectBox({
 
   return (
     <div className={styles.selectbox}>
+      {label && <label className={styles.label}>{label}</label>}
+
       <Dropdown onChange={handleChange}>
         <Dropdown.Trigger>
           <span className={selectedValue ? styles.selected : styles.placeholder}>
