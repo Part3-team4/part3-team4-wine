@@ -7,6 +7,9 @@
  *
  * @component
  *
+ * @prop {number} id
+ * 와인 상세로 이동하기에 사용됩니다.
+ *
  * @prop {string | StaticImageData} [image]
  * 표시할 와인 이미지.
  * 미전달 시 기본 와인 이미지(`wine.png`)가 사용됩니다.
@@ -22,6 +25,7 @@
  * @example
  * // 기본 사용 예시
  * <RecommendWineCard
+ *   id={1}
  *   rating={4.7}
  *   name="Sentinel Cabernet Sauvignon 2016"
  * />
@@ -29,6 +33,7 @@
  * @example
  * // 이미지 전달
  * <RecommendWineCard
+ *   id={1}
  *   image={customWine}
  *   rating={5}
  *   name="Special Edition Red"
@@ -40,16 +45,23 @@ import styles from './WineCard.module.scss';
 import StarRating from '@/components/common/StarRating/StarRating';
 import wine from '@/assets/wine.png';
 import type { StaticImageData } from 'next/image';
+import Link from 'next/link';
 
 interface RecommendWineCardProps {
+  id: number;
   image?: string | StaticImageData;
   rating: number;
   name: string;
 }
 
-export default function RecommendWineCard({ image = wine, rating, name }: RecommendWineCardProps) {
+export default function RecommendWineCard({
+  id,
+  image = wine,
+  rating,
+  name,
+}: RecommendWineCardProps) {
   return (
-    <div className={styles.recommend}>
+    <Link href={`/wines/${id}`} title={`${name} 페이지로 이동`} className={styles.recommend}>
       <div className={styles.wine}>
         <Image src={image} alt={name} />
       </div>
@@ -60,6 +72,6 @@ export default function RecommendWineCard({ image = wine, rating, name }: Recomm
         </div>
         <div className={styles.text}>{name}</div>
       </div>
-    </div>
+    </Link>
   );
 }
