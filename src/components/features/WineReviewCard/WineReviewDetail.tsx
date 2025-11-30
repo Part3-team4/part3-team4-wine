@@ -176,7 +176,7 @@ export default function WineReviewDetail({
               <button>수정하기</button>
             </Dropdown.Item>
             <Dropdown.Item value="del">
-              <button>삭제하기</button>
+              <button>수정하기</button>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
