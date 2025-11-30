@@ -1,0 +1,84 @@
+@use '@/styles' as *;
+
+.myPage {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 37px;
+  gap: 60px;
+}
+
+.profileWrapper {
+  border-radius: 16px;
+  border: 1px solid $color-gray-300;
+  background-color: $color-white;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 40px;
+  width: 280px;
+}
+
+.nickname {
+  color: $color-gray-800;
+  @include text-2xl-bold;
+  margin: 32px 0 90px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.nicknameInput {
+  margin: 20px 0 48px 0;
+  &::placeholder {
+    color: $color-gray-500;
+  }
+}
+
+.button {
+  margin-bottom: 100px;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 22px;
+}
+
+.navWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tabGroup {
+  display: flex;
+  gap: 32px;
+}
+
+.tab {
+  color: $color-gray-500;
+  @include text-xl-bold;
+
+  &.active {
+    color: $color-gray-800;
+  }
+}
+
+.count {
+  color: $color-primary-purple;
+  @include text-md-regular;
+}
+
+.contentArea {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &.wineContent {
+    > div {
+      margin-top: 64px;
+    }
+    > div + div {
+      margin-top: 60px;
+    }
+  }
+}
