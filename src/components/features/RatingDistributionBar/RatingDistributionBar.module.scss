@@ -1,0 +1,32 @@
+@use '@/styles' as *;
+
+.rating {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.label {
+  color: $color-gray-500;
+}
+
+.barBackground {
+  position: relative;
+  flex: 1;
+  height: 6px;
+  background: $color-gray-100;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  background: linear-gradient(90deg, #8b57ff, #6a3bff);
+  border-radius: 50px;
+}
