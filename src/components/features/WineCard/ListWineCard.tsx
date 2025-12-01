@@ -101,7 +101,12 @@ export default function ListWineCard({
         <div className={styles.titleArea}>
           <div className={styles.detail}>
             <div className={styles.wine}>
-              <Image src={image} alt={name} />
+              <Image
+                src={typeof image === 'string' && image.startsWith('https://') ? image : wine}
+                alt={name}
+                width={200}
+                height={200}
+              />
             </div>
             <div className={styles.priceDesc}>
               <strong>{name}</strong>
@@ -110,11 +115,11 @@ export default function ListWineCard({
             </div>
           </div>
           <div className={styles.starDesc}>
-            <strong>{rating.toFixed(1)}</strong>
+            <strong>{Number(rating ?? 0).toFixed(1)}</strong>
             <div className={styles.starArea}>
               <StarRating defaultValue={rating} />
             </div>
-            <div className={styles.text}>{reviewLength}개의 후기</div>
+            <div className={styles.text}>{(reviewLength ?? 0).toString()}개의 후기</div>
           </div>
         </div>
         <div className={styles.reviewArea}>
