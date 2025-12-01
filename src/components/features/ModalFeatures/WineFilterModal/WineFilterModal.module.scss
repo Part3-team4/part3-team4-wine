@@ -1,0 +1,22 @@
+@use '@/styles' as *;
+
+.modalWrapper {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px 20px;
+}
+
+.header {
+  @include text-2xl-bold;
+  color: $color-gray-800;
+}
+
+.footer {
+  display: flex;
+  gap: 8px;
+}
+
+.applyBtn {
+  flex: 1;
+}
