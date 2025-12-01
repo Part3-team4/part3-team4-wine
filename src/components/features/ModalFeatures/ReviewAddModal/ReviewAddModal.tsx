@@ -8,8 +8,7 @@ import Image from 'next/image';
 import { Wine } from '@/assets';
 import StarRating from '@/components/common/StarRating/StarRating';
 import TextArea from '@/components/common/TextArea/TextArea';
-import Chip from '@/components/common/Chip/Chip';
-import { AROMA_OPTIONS, AromaType } from '@/constants/aroma';
+import { AromaType } from '@/constants/aroma';
 import AromaChipList from '../../AromaChipList/AromaChipList';
 
 type ReviewAddModalProps = {
@@ -67,15 +66,6 @@ type ReviewAddModalProps = {
  */
 export default function ReviewAddModal({ wineName, onAdd }: ReviewAddModalProps) {
   const [review, setReview] = useState('');
-  const [selected, setSelected] = useState<AromaType[]>([]);
-
-  const toggleAroma = (aroma: AromaType) => {
-    setSelected((prev) =>
-      prev.includes(aroma)
-        ? prev.filter((selectedAromaType) => selectedAromaType !== aroma)
-        : [...prev, aroma],
-    );
-  };
 
   return (
     <Modal withCloseButton={true} className={styles.modalWrapper}>
