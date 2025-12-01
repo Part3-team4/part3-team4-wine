@@ -1,0 +1,73 @@
+@use '@/styles' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-white;
+  padding: 80px 48px;
+  width: 496px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.logoContainer {
+  margin-bottom: 64px;
+  display: inline-block;
+}
+
+.form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.forgotPassword {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: $color-primary-purple;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.2s;
+  @include text-md-regular;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.footerText {
+  color: #999;
+  font-size: 0.875rem;
+}
+
+.footerLink {
+  background: none;
+  border: none;
+  color: $color-primary-purple;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  transition: opacity 0.2s;
+  @include text-md-regular;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
