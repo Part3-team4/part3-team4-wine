@@ -87,7 +87,7 @@ export default function SignupPage() {
     setIsLoading(true);
 
     try {
-      const res = await fetch('https://winereview-api.vercel.app/auth/signup', {
+      const res = await fetch('https://winereview-api.vercel.app/4/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
