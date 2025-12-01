@@ -73,12 +73,16 @@
   flex-direction: column;
   gap: 8px;
 
-  &.wineContent {
+  &.wineContent:not(.empty) {
     > div {
       margin-top: 64px;
     }
     > div + div {
       margin-top: 60px;
     }
+  }
+
+  &.empty {
+    margin-top: 64px;
   }
 }
