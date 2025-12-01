@@ -1,0 +1,56 @@
+@use '@/styles' as *;
+
+.winesWrap {
+  width: 100%;
+  max-width: 1140px;
+  margin: 20px auto 0;
+  padding-bottom: 50px;
+
+  .slideArea {
+    padding: 30px 00 30px 30px;
+    border-radius: 16px;
+    background-color: $color-gray-100;
+
+    .recommendSlide {
+      margin-top: 30px;
+    }
+  }
+
+  .contentArea {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+
+    .filterArea {
+      width: 284px;
+    }
+
+    .wineFilterArea {
+      margin-top: 40px;
+    }
+
+    .wineListArea {
+      width: calc(100% - 344px);
+      .sortList {
+        display: flex;
+        gap: 20px;
+        justify-content: flex-end;
+        button {
+          color: $color-gray-500;
+          font-weight: 500;
+          &.active {
+            font-weight: 700;
+            color: $color-gray-800;
+          }
+        }
+      }
+
+      .wineList {
+        margin-top: 35px;
+        > li + li {
+          margin-top: 62px;
+        }
+      }
+    }
+  }
+}
