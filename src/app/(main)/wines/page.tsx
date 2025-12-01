@@ -27,7 +27,6 @@ export default function Page() {
   useEffect(() => {
     const fetchWines = async () => {
       const res = await api.get('/wines?limit=20');
-      console.log(res.data.list);
       setWines(res.data.list);
     };
     fetchWines();
