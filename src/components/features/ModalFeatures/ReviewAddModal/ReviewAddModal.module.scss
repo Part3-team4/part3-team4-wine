@@ -60,3 +60,17 @@
 .addBtn {
   flex: 1;
 }
+
+@media screen and (max-width: 767px) {
+  .header {
+    @include text-xl-bold;
+  }
+
+  .name {
+    @include text-lg-bold;
+  }
+
+  .subTitle {
+    @include text-2lg-bold;
+  }
+}
