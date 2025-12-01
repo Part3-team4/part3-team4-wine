@@ -8,9 +8,9 @@ import Image from 'next/image';
 import { Wine } from '@/assets';
 import StarRating from '@/components/common/StarRating/StarRating';
 import TextArea from '@/components/common/TextArea/TextArea';
-import Chip from '@/components/common/Chip/Chip';
-import { AROMA_OPTIONS, AromaType } from '@/constants/aroma';
+import { AromaType } from '@/constants/aroma';
 import AromaChipList from '../../AromaChipList/AromaChipList';
+import WineFlavor from '../../WineFlavor/WineFlavor';
 
 type ReviewAddModalProps = {
   wineName: string;
@@ -67,15 +67,6 @@ type ReviewAddModalProps = {
  */
 export default function ReviewAddModal({ wineName, onAdd }: ReviewAddModalProps) {
   const [review, setReview] = useState('');
-  const [selected, setSelected] = useState<AromaType[]>([]);
-
-  const toggleAroma = (aroma: AromaType) => {
-    setSelected((prev) =>
-      prev.includes(aroma)
-        ? prev.filter((selectedAromaType) => selectedAromaType !== aroma)
-        : [...prev, aroma],
-    );
-  };
 
   return (
     <Modal withCloseButton={true} className={styles.modalWrapper}>
@@ -104,7 +95,7 @@ export default function ReviewAddModal({ wineName, onAdd }: ReviewAddModalProps)
           </div>
           <div className={styles.section}>
             <h3 className={styles.subTitle}>와인의 맛은 어땠나요?</h3>
-            <div>{/* 추후 Flavor 컴포넌트 추가 예정 */}</div>
+            <WineFlavor />
           </div>
           <div className={styles.section}>
             <h3 className={styles.subTitle}>기억에 남는 향이 있나요?</h3>

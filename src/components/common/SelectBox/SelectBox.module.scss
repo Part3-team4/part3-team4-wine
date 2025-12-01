@@ -1,6 +1,10 @@
 @use '@/styles' as *;
 
 .selectbox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
   > div {
     width: 100%;
     > button {
@@ -39,6 +43,11 @@
       }
     }
   }
+}
+
+.label {
+  color: $color-gray-800;
+  @include text-lg-medium;
 }
 
 .menu {
