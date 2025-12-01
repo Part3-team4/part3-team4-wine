@@ -58,7 +58,7 @@ export default function BannerWineCard({ name, region, price, image = wine }: Ba
   return (
     <div className={`${styles.wineContent} ${styles.bannerCard}`}>
       <div className={styles.wine}>
-        <Image src={image} alt={name} />
+        <Image src={image} alt={name} width={58} height={200} />
       </div>
       <div className={styles.priceDesc}>
         <strong>{name}</strong>
