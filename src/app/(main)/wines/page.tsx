@@ -3,12 +3,34 @@
 import styles from './wines.module.scss';
 import ListWineCard from '@/components/features/WineCard/ListWineCard';
 import SearchInput from '@/components/common/Input/searchInput';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import WineFilter from '@/components/features/WineFilter/WineFilter';
 import WineSlider from '@/components/features/WineSlider/WineSlider';
+import { api } from '@/libs/api';
+
+interface Wine {
+  id: number;
+  name: string;
+  rating: number;
+  region: string;
+  price: number;
+  image?: string;
+  reviewLength: number;
+  reviewContent: string;
+}
 
 export default function Page() {
   const [searchText, setSearchText] = useState('');
+  const [wines, setWines] = useState<Wine[]>([]);
+
+  // wine불러오기
+  useEffect(() => {
+    const fetchWines = async () => {
+      const res = await api.get('/wines?limit=20');
+      setWines(res.data.list);
+    };
+    fetchWines();
+  }, []);
 
   return (
     <div className={styles.winesWrap}>
@@ -45,28 +67,20 @@ export default function Page() {
             </li>
           </ul>
           <ul className={styles.wineList}>
-            <li>
-              <ListWineCard
-                name="a"
-                rating={2}
-                id={1}
-                region="asdsd"
-                price={12312323}
-                reviewLength={2}
-                reviewContent="sadas"
-              />
-            </li>
-            <li>
-              <ListWineCard
-                name="a"
-                rating={2}
-                id={1}
-                region="asdsd"
-                price={12312323}
-                reviewLength={2}
-                reviewContent="sadas"
-              />
-            </li>
+            {wines.map((wine) => (
+              <li key={wine.id}>
+                <ListWineCard
+                  id={wine.id}
+                  name={wine.name}
+                  rating={wine.rating}
+                  region={wine.region}
+                  price={wine.price}
+                  reviewLength={wine.reviewLength}
+                  reviewContent={wine.reviewContent}
+                  image={wine.image}
+                />
+              </li>
+            ))}
           </ul>
         </div>
       </div>
