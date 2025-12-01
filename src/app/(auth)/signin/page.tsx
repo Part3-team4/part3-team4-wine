@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import FormInput from '@/components/common/Input/FormInput';
 import Button from '@/components/common/Button/Button';
@@ -11,6 +11,13 @@ import Link from 'next/link';
 
 export default function LoginPage() {
   const router = useRouter();
+
+  // 로그인 되어있으면 접근 차단
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (token) router.replace('/');
+  }, [router]);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({ email: '', password: '' });
