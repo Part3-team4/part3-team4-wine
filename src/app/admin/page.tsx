@@ -4,13 +4,13 @@ import { useState } from 'react';
 import { api } from '@/libs/api';
 
 // DELETE API
-export async function deleteWine(id: number) {
+async function deleteWine(id: number) {
   const res = await api.delete(`/wines/${id}`);
   return res.data;
 }
 
 // IMAGE UPLOAD API
-export async function uploadImage(file: File) {
+async function uploadImage(file: File) {
   const formData = new FormData();
   formData.append('image', file); // 서버에서 name="image" 로 받는다고 가정
 
@@ -24,7 +24,7 @@ export async function uploadImage(file: File) {
 }
 
 // CREATE WINE API
-export async function createWine(data: {
+async function createWine(data: {
   name: string;
   region: string;
   image: string;
