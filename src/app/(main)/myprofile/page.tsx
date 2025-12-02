@@ -119,48 +119,6 @@ export default function Page() {
     }
   };
 
-  const handleOpenWineAddModal = () => {
-    const modalId = open(
-      <WineAddModal
-        onSubmit={async (data: WineFormData) => {
-          setIsWineLoading(true);
-
-          try {
-            // FormData 생성
-            const submitData = new FormData();
-            submitData.append('name', data.name);
-            submitData.append('price', data.price.toString());
-            submitData.append('region', data.region);
-            submitData.append('type', data.type);
-            if (data.image) {
-              submitData.append('image', data.image);
-            }
-
-            // TODO: API 호출
-            // await axios.post('/api/wines', submitData, {
-            //   headers: { 'Content-Type': 'multipart/form-data' }
-            // });
-
-            console.log('와인 등록:', data);
-
-            // 성공 후 와인 목록 갱신 (실제로는 API 재호출)
-            // const newWines = await fetchWines();
-            // setWines(newWines);
-
-            // 모달 닫기
-            close(modalId);
-          } catch (error) {
-            console.error('와인 등록 실패:', error);
-            alert('와인 등록에 실패했습니다.');
-          } finally {
-            setIsWineLoading(false);
-          }
-        }}
-        isLoading={isWineLoading}
-      />,
-    );
-  };
-
   const handleNavigateToWines = () => {
     router.push('/wines');
   };
@@ -227,9 +185,7 @@ export default function Page() {
               content={activeTab === 'review' ? '작성된 리뷰가 없어요' : '등록한 와인이 없어요'}
               showButton
               buttonText={activeTab === 'review' ? '리뷰 남기기' : '와인 등록하기'}
-              onButtonClick={
-                activeTab === 'review' ? handleNavigateToWines : handleOpenWineAddModal
-              }
+              onButtonClick={handleNavigateToWines}
             />
           ) : activeTab === 'review' ? (
             reviews.map((review) => (
