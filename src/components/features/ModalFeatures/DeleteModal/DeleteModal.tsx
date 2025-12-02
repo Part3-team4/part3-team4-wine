@@ -80,6 +80,7 @@ type DeleteModalProps = {
  * - 이 모달은 파괴적 액션(삭제)을 수행하므로 신중하게 사용해야 합니다.
  * - onDelete 콜백에서 실제 삭제 로직과 모달 닫기를 모두 처리해야 합니다.
  */
+
 export default function DeleteModal({ onDelete, onCancel }: DeleteModalProps) {
   return (
     <Modal withCloseButton={false} className={styles.modalWrapper}>

@@ -1,36 +1,27 @@
+// src/app/(main)/wines/page.tsx
 'use client';
 
+import { useState } from 'react';
 import styles from './wines.module.scss';
 import ListWineCard from '@/components/features/WineCard/ListWineCard';
 import SearchInput from '@/components/common/Input/searchInput';
-import { useEffect, useState } from 'react';
 import WineFilter from '@/components/features/WineFilter/WineFilter';
 import WineSlider from '@/components/features/WineSlider/WineSlider';
-import { api } from '@/libs/api';
-
-interface Wine {
-  id: number;
-  name: string;
-  rating: number;
-  region: string;
-  price: number;
-  image?: string;
-  reviewLength: number;
-  reviewContent: string;
-}
+import { useWines } from '@/domains/wines/hooks/useWines';
+import { WINE_SORT_OPTIONS, type WineSortValue } from '@/domains/wines/types/wine.types';
 
 export default function Page() {
   const [searchText, setSearchText] = useState('');
-  const [wines, setWines] = useState<Wine[]>([]);
+  const [sortOrder, setSortOrder] = useState<WineSortValue>('recent');
 
-  // wine불러오기
-  useEffect(() => {
-    const fetchWines = async () => {
-      const res = await api.get('/wines?limit=20');
-      setWines(res.data.list);
-    };
-    fetchWines();
-  }, []);
+  // 정렬 옵션에 따라 동적으로 쿼리
+  const { data, isPending, error } = useWines({
+    limit: 20,
+    // API스펙이랑 다름
+    order: sortOrder,
+  });
+
+  const wines = data?.list || [];
 
   return (
     <div className={styles.winesWrap}>
@@ -53,35 +44,40 @@ export default function Page() {
         </div>
         <div className={styles.wineListArea}>
           <ul className={styles.sortList}>
-            <li>
-              <button>많은 리뷰</button>
-            </li>
-            <li>
-              <button>높은가격순</button>
-            </li>
-            <li>
-              <button>낮은 가격순</button>
-            </li>
-            <li>
-              <button className={styles.active}>추천순</button>
-            </li>
-          </ul>
-          <ul className={styles.wineList}>
-            {wines.map((wine) => (
-              <li key={wine.id}>
-                <ListWineCard
-                  id={wine.id}
-                  name={wine.name}
-                  rating={wine.rating}
-                  region={wine.region}
-                  price={wine.price}
-                  reviewLength={wine.reviewLength}
-                  reviewContent={wine.reviewContent}
-                  image={wine.image}
-                />
+            {WINE_SORT_OPTIONS.map((option) => (
+              <li key={option.value}>
+                <button
+                  type="button"
+                  className={sortOrder === option.value ? styles.active : undefined}
+                  onClick={() => setSortOrder(option.value)}
+                >
+                  {option.label}
+                </button>
               </li>
             ))}
           </ul>
+
+          {isPending && <div>로딩 중...</div>}
+          {error && <div>에러가 발생했습니다.</div>}
+
+          {!isPending && !error && (
+            <ul className={styles.wineList}>
+              {wines.map((wine) => (
+                <li key={wine.id}>
+                  <ListWineCard
+                    id={wine.id}
+                    name={wine.name}
+                    rating={wine.rating}
+                    region={wine.region}
+                    price={wine.price}
+                    reviewLength={wine.reviewLength}
+                    reviewContent={wine.reviewContent}
+                    image={wine.image}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>
