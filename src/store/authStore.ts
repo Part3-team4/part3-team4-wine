@@ -17,8 +17,10 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   // 로그인 처리
   login: (accessToken, refreshToken) => {
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+    }
 
     set({
       accessToken,
@@ -29,8 +31,10 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   // 로그아웃 처리
   logout: () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+    }
 
     set({
       accessToken: null,
@@ -39,8 +43,10 @@ export const useAuthStore = create<AuthState>((set) => ({
     });
   },
 
-  // 새로고침 시 로그인 유지
+  // 새로고침 시 로그인 유지 (SSR 안전 처리)
   initializeAuth: () => {
+    if (typeof window === 'undefined') return;
+
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
 

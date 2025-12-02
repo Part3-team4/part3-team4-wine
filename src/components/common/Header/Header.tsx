@@ -1,16 +1,3 @@
-/**
- *
- * Header 컴포넌트.
- *
- * @example
- *
- * <Header/>
- * 일단 이렇게 사용
- * 로그인, 비로그인, 마이페이지 케이스는 차후에 작업 예정
- * 마이페이지 링크, 로그아웃 기능 차후에 적용 예정
- * 반응형도 나중에 작업 예정
- * */
-
 'use client';
 
 import Image from 'next/image';
@@ -21,24 +8,24 @@ import styles from './Header.module.scss';
 import { Logo } from '@/assets';
 import Dropdown from '../Dropdown/';
 import Profile from '../Profile/Profile';
+import { useAuthStore } from '@/store/authStore';
 
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
 
-  // 로그인 여부
-  const isLoggedIn = typeof window !== 'undefined' && !!localStorage.getItem('accessToken');
+  // Zustand 로그인 상태
+  const isLogin = useAuthStore((state) => state.isLogin);
+  const logout = useAuthStore((state) => state.logout);
 
   // 마이페이지 여부
   const isMyProfile = pathname === '/myprofile';
 
-  // 로그아웃 (→ 랜딩페이지 /)
+  // 로그아웃 → 랜딩 이동 (뒤로가기 방지)
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-
+    logout();
     alert('로그아웃 되었습니다.');
-    window.location.href = '/';
+    router.replace('/');
   };
 
   return (
@@ -52,8 +39,8 @@ export default function Header() {
 
       {/* 오른쪽 영역 */}
       <div>
-        {/*  비로그인 상태 */}
-        {!isLoggedIn && (
+        {/* 비로그인 상태 */}
+        {!isLogin && (
           <ul className={styles.list}>
             <li>
               <Link href="/signin">로그인</Link>
@@ -64,8 +51,8 @@ export default function Header() {
           </ul>
         )}
 
-        {/*  로그인 상태 + 마이페이지가 아닐 때 → 프로필 드롭다운 */}
-        {isLoggedIn && !isMyProfile && (
+        {/* 로그인 상태 + 마이페이지 아닐 때 → 프로필 드롭다운 */}
+        {isLogin && !isMyProfile && (
           <Dropdown>
             <Dropdown.Trigger>
               <Profile size={45} />
@@ -83,8 +70,8 @@ export default function Header() {
           </Dropdown>
         )}
 
-        {/*  로그인 상태 + 마이페이지일 때 → 버튼 2개 */}
-        {isLoggedIn && isMyProfile && (
+        {/* 로그인 상태 + 마이페이지일 때 → 버튼 2개 */}
+        {isLogin && isMyProfile && (
           <ul className={styles.list}>
             <li>
               <button type="button" onClick={() => router.push('/wines')}>
