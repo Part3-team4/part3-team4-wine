@@ -68,7 +68,16 @@ export default function LoginPage() {
 
   // 카카오 로그인
   const handleKakaoLogin = () => {
-    alert('카카오 로그인 기능 추후에 추가될 예정');
+    const REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_KEY;
+    const REDIRECT_URI = 'https://part3-team4-wine-2.vercel.app/auth/kakao';
+
+    const KAKAO_AUTH_URL =
+      `https://kauth.kakao.com/oauth/authorize` +
+      `?client_id=${REST_API_KEY}` +
+      `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}` +
+      `&response_type=code`;
+
+    window.location.href = KAKAO_AUTH_URL;
   };
 
   // 비밀번호 분실
