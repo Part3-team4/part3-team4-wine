@@ -35,6 +35,32 @@ export default function Page() {
   const [wines, setWines] = useState<Wine[]>([]);
   const [recommendedWines, setRecommendedWines] = useState([]);
 
+  // 정렬
+  const [sortType, setSortType] = useState<'recommended' | 'review' | 'priceHigh' | 'priceLow'>(
+    'recommended',
+  );
+
+  const sortWines = useCallback(
+    (list: Wine[]) => {
+      switch (sortType) {
+        case 'review':
+          return [...list].sort((a, b) => b.reviewCount - a.reviewCount); // 리뷰 많은 순
+        case 'priceHigh':
+          return [...list].sort((a, b) => b.price - a.price); // 높은 가격 순
+        case 'priceLow':
+          return [...list].sort((a, b) => a.price - b.price); // 낮은 가격 순
+        case 'recommended':
+        default:
+          return [...list].sort((a, b) => b.avgRating - a.avgRating); // 추천 = 평점순
+      }
+    },
+    [sortType],
+  );
+
+  useEffect(() => {
+    setWines(sortWines(allWines));
+  }, [sortType, allWines, sortWines]);
+
   // 와인 등록하기
   async function createWine(data: {
     name: string;
@@ -95,6 +121,7 @@ export default function Page() {
   const handleSearch = () => {
     if (!searchText.trim()) {
       setWines(allWines);
+      setSortType('recommended');
       return;
     }
 
@@ -156,16 +183,39 @@ export default function Page() {
         <div className={styles.wineListArea}>
           <ul className={styles.sortList}>
             <li>
-              <button>많은 리뷰</button>
+              <button
+                onClick={() => setSortType('review')} // ⭐ 추가
+                className={sortType === 'review' ? styles.active : ''}
+              >
+                많은 리뷰
+              </button>
             </li>
+
             <li>
-              <button>높은가격순</button>
+              <button
+                onClick={() => setSortType('priceHigh')} // ⭐ 추가
+                className={sortType === 'priceHigh' ? styles.active : ''}
+              >
+                높은가격순
+              </button>
             </li>
+
             <li>
-              <button>낮은 가격순</button>
+              <button
+                onClick={() => setSortType('priceLow')} // ⭐ 추가
+                className={sortType === 'priceLow' ? styles.active : ''}
+              >
+                낮은 가격순
+              </button>
             </li>
+
             <li>
-              <button className={styles.active}>추천순</button>
+              <button
+                onClick={() => setSortType('recommended')} // ⭐ 추가
+                className={sortType === 'recommended' ? styles.active : ''}
+              >
+                추천순
+              </button>
             </li>
           </ul>
           {allWines.length > 0 && wines.length === 0 ? (
