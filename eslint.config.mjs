@@ -9,7 +9,6 @@ export default defineConfig([
       prettier: prettierPlugin,
       import: importPlugin,
     },
-    extends: ['plugin:prettier/recommended'],
     rules: {
       'prettier/prettier': 'error',
 
