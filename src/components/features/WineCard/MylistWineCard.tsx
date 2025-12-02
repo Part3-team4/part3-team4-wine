@@ -55,9 +55,18 @@ interface MylistWineCardProps {
   region: string;
   price: number;
   image?: string | StaticImageData;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
-export default function MylistWineCard({ name, region, price, image = wine }: MylistWineCardProps) {
+export default function MylistWineCard({
+  name,
+  region,
+  price,
+  image = wine,
+  onEdit,
+  onDelete,
+}: MylistWineCardProps) {
   return (
     <div className={`${styles.wineContent} ${styles.myListCard}`}>
       <div className={styles.wine}>
@@ -69,7 +78,12 @@ export default function MylistWineCard({ name, region, price, image = wine }: My
         <Badge prefix="₩">{price.toLocaleString('ko-KR')}</Badge>
       </div>
       <div className={styles.dropdownArea}>
-        <Dropdown>
+        <Dropdown
+          onChange={(value) => {
+            if (value === 'edit' && onEdit) onEdit();
+            if (value === 'delete' && onDelete) onDelete();
+          }}
+        >
           <Dropdown.Trigger>
             <Image src={KebabLg} alt="ss" width={26} height={26} />
           </Dropdown.Trigger>
@@ -77,8 +91,8 @@ export default function MylistWineCard({ name, region, price, image = wine }: My
             <Dropdown.Item value="edit">
               <button>수정하기</button>
             </Dropdown.Item>
-            <Dropdown.Item value="del">
-              <button>수정하기</button>
+            <Dropdown.Item value="delete">
+              <button>삭제하기</button>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
