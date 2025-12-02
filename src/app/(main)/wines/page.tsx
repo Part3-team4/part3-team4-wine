@@ -10,6 +10,7 @@ import { api } from '@/libs/api';
 import Button from '@/components/common/Button/Button';
 import { useModal } from '@/hooks/useModal';
 import WineAddModal from '@/components/features/ModalFeatures/WineAddModal/WineAddModal';
+import NoResult from '@/components/common/NoResult/NoResult';
 
 interface Wine {
   id: number;
@@ -30,6 +31,7 @@ export default function Page() {
 
   const [searchText, setSearchText] = useState('');
 
+  const [allWines, setAllWines] = useState<Wine[]>([]);
   const [wines, setWines] = useState<Wine[]>([]);
   const [recommendedWines, setRecommendedWines] = useState([]);
 
@@ -86,8 +88,23 @@ export default function Page() {
   // 와인 리스트
   const fetchWines = useCallback(async () => {
     const res = await api.get('/wines?limit=50');
+    setAllWines(res.data.list);
     setWines(res.data.list);
   }, []);
+
+  const handleSearch = () => {
+    if (!searchText.trim()) {
+      setWines(allWines);
+      return;
+    }
+
+    // 검색
+    const filtered = allWines.filter((wine) =>
+      wine.name.toLowerCase().includes(searchText.toLowerCase()),
+    );
+
+    setWines(filtered);
+  };
 
   // wine불러오기
   useEffect(() => {
@@ -115,6 +132,9 @@ export default function Page() {
             placeholder="와인을 검색해 보세요"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSearch();
+            }}
           />
           <div className={styles.wineFilterArea}>
             <WineFilter />
@@ -148,22 +168,26 @@ export default function Page() {
               <button className={styles.active}>추천순</button>
             </li>
           </ul>
-          <ul className={styles.wineList}>
-            {wines.map((wine) => (
-              <li key={wine.id}>
-                <ListWineCard
-                  id={wine.id}
-                  name={wine.name}
-                  rating={wine.avgRating}
-                  region={wine.region}
-                  price={wine.price}
-                  reviewLength={wine.reviewCount}
-                  reviewContent={wine.recentReview?.content}
-                  image={wine.image}
-                />
-              </li>
-            ))}
-          </ul>
+          {allWines.length > 0 && wines.length === 0 ? (
+            <NoResult content="검색 결과가 없습니다." />
+          ) : (
+            <ul className={styles.wineList}>
+              {wines.map((wine) => (
+                <li key={wine.id}>
+                  <ListWineCard
+                    id={wine.id}
+                    name={wine.name}
+                    rating={wine.avgRating}
+                    region={wine.region}
+                    price={wine.price}
+                    reviewLength={wine.reviewCount}
+                    reviewContent={wine.recentReview?.content}
+                    image={wine.image}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>
