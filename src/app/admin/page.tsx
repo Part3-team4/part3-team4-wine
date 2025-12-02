@@ -82,12 +82,12 @@ export default function WineAdmin() {
     name: '',
     region: '',
     image: '', // 업로드한 이미지 URL 저장됨
-    price: 0,
+    price: 39900,
     type: 'RED',
   });
 
   const [reviewForm, setReviewForm] = useState({
-    rating: 0,
+    rating: 1,
     lightBold: 0,
     smoothTannic: 0,
     drySweet: 0,
@@ -150,7 +150,7 @@ export default function WineAdmin() {
       name: '',
       region: '',
       image: '',
-      price: 0,
+      price: 39900,
       type: 'RED',
     });
   };
@@ -280,13 +280,14 @@ export default function WineAdmin() {
           <input
             type="number"
             placeholder="rating"
+            min="1"
             max="5"
             value={reviewForm.rating}
             onChange={(e) => setReviewForm({ ...reviewForm, rating: Number(e.target.value) })}
             style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '6px' }}
           />
 
-          <strong>1~10까지 바디감</strong>
+          <strong>0~10까지 바디감</strong>
           <input
             type="number"
             placeholder="lightBold"
@@ -296,7 +297,7 @@ export default function WineAdmin() {
             style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '6px' }}
           />
 
-          <strong>1~10까지 타닌</strong>
+          <strong>0~10까지 타닌</strong>
           <input
             type="number"
             placeholder="smoothTannic"
@@ -306,7 +307,7 @@ export default function WineAdmin() {
             style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '6px' }}
           />
 
-          <strong>1~10까지 당도</strong>
+          <strong>0~10까지 당도</strong>
           <input
             type="number"
             placeholder="drySweet"
@@ -316,7 +317,7 @@ export default function WineAdmin() {
             style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '6px' }}
           />
 
-          <strong>1~10까지 산미</strong>
+          <strong>0~10까지 산미</strong>
           <input
             type="number"
             placeholder="softAcidic"
