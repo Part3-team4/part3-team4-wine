@@ -11,6 +11,7 @@ import Chip from '@/components/common/Chip/Chip';
 import WineFlavor from '../WineFlavor/WineFlavor';
 import Dropdown from '@/components/common/Dropdown';
 import clsx from 'clsx';
+import { AROMA_KO, AromaType } from '@/constants/aroma';
 
 interface WineReviewDetailProps {
   profile: {
@@ -19,7 +20,7 @@ interface WineReviewDetailProps {
   };
   createdAt: string | Date;
   rating: number;
-  aromas: string[];
+  aromas: AromaType[];
   description: string;
   flavor: {
     body: number;
@@ -116,13 +117,17 @@ export default function WineReviewDetail({
         </div>
       </div>
       <div className={styles.aromaStarArea}>
-        <ul>
-          {aromas.map((label) => (
-            <li key={label}>
-              <Chip>{label}</Chip>
-            </li>
-          ))}
-        </ul>
+        {aromas.length === 0 ? (
+          <div className={styles.noAroma}>선택된 향이 없습니다</div>
+        ) : (
+          <ul>
+            {aromas.map((label) => (
+              <li key={label}>
+                <Chip>{AROMA_KO[label as AromaType]}</Chip>
+              </li>
+            ))}
+          </ul>
+        )}
         <Badge prefix={<Image src={StarActive} width={20} alt={`별점 ${rating} 점`} />}>
           {rating.toFixed(1)}
         </Badge>
@@ -176,7 +181,7 @@ export default function WineReviewDetail({
               <button>수정하기</button>
             </Dropdown.Item>
             <Dropdown.Item value="del">
-              <button>수정하기</button>
+              <button>삭제하기</button>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
