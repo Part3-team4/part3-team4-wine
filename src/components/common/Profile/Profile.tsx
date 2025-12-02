@@ -35,14 +35,12 @@ interface ProfileProps {
   alt?: string;
 }
 
-export default function Profile({
-  src = ProfileDefault,
-  size = 45,
-  alt = '프로필 이미지',
-}: ProfileProps) {
+export default function Profile({ src, size = 45, alt = '프로필 이미지' }: ProfileProps) {
+  const resolvedSrc = src && src !== '' ? src : ProfileDefault;
+
   return (
     <div className={styles.profile} style={{ width: size, height: size }}>
-      <Image src={src} alt={alt} fill sizes={`${size}px`} />
+      <Image src={resolvedSrc} alt={alt} fill sizes={`${size}px`} />
     </div>
   );
 }

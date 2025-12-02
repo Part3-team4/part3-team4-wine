@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { landingConImg01Lg } from '@/assets/images/landing';
 import Profile from '@/components/common/Profile/Profile';
 import styles from './page.module.scss';
 import clsx from 'clsx';
@@ -14,9 +13,9 @@ import ImageInput from '@/components/common/Input/ImageInput';
 import Input from '@/components/common/Input/Input';
 import { useModal } from '@/hooks/useModal';
 import WineAddModal from '@/components/features/ModalFeatures/WineAddModal/WineAddModal';
-import { StaticImageData } from 'next/image';
 import { WineFormData } from '@/components/features/ModalFeatures/WineAddModal/WineAddModal';
-import { Wine, Review } from '@/types/wine';
+import { Wine, Review, User } from '@/types/wine';
+import { api } from '@/libs/api';
 
 type TabType = 'review' | 'wine';
 
@@ -30,145 +29,98 @@ const TABS: Tab[] = [
   { id: 'wine', label: '내가 등록한 와인' },
 ];
 
-const EMPTY_MESSAGES = {
-  review: '작성된 리뷰가 없어요',
-  wine: '등록한 와인이 없어요',
-} as const;
-
-const mockReviewData: Review[] = [
-  // {
-  //   id: '1',
-  //   name: '이름',
-  //   rating: 5.0,
-  //   date: '2025-11-28T12:00:00',
-  //   content: '향이 정말 좋고 바디감도 묵직해요!',
-  // },
-  // {
-  //   id: '2',
-  //   name: '이름',
-  //   rating: 5.0,
-  //   date: '2025-11-28T12:00:00',
-  //   content: '향이 정말 좋고 바디감도 묵직해요!',
-  // },
-  // {
-  //   id: '3',
-  //   name: '이름',
-  //   rating: 5.0,
-  //   date: '2025-11-28T12:00:00',
-  //   content: '향이 정말 좋고 바디감도 묵직해요!',
-  // },
-];
-
-const mockWineData: Wine[] = [
-  // { id: '1', name: 'Cabernet Sauvignon 2016', region: 'Western Cape, South Africa', price: 64990 },
-  // { id: '2', name: 'Cabernet Sauvignon 2016', region: 'Western Cape, South Africa', price: 64990 },
-];
-
-const mockUser = { url: landingConImg01Lg, nickname: '완다' };
-
 export default function Page() {
   const { open, close } = useModal();
   const router = useRouter();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [profileFile, setProfileFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | StaticImageData>(mockUser.url);
-  const [nickname, setNickname] = useState(mockUser.nickname);
-
   const [activeTab, setActiveTab] = useState<TabType>('review');
 
-  // 추후 API 데이터로 교체
-  const [reviews, setReviews] = useState(mockReviewData);
-  const [wines, setWines] = useState(mockWineData);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [wines, setWines] = useState<Wine[]>([]);
+  const [user, setUser] = useState<User>({ id: 1, nickname: '', image: '' });
+
+  const [isSaving, setIsSaving] = useState(false);
+
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
   const [isWineLoading, setIsWineLoading] = useState(false);
 
   const currentData = activeTab === 'review' ? reviews : wines;
   const isEmpty = currentData.length === 0;
 
-  const handleSave = () => {
-    // 추후 API 호출해서 저장
-    console.log('저장', { profileFile, nickname });
-    setIsEditing(false);
-  };
+  useEffect(() => {
+    const fetchWines = async () => {
+      const res = await api.get('/users/me/wines?limit=20');
+      setWines(res.data.list);
+      console.log(res.data.list);
+    };
 
-  const handleProfileChange = (file: File | null) => {
+    const fetchReviews = async () => {
+      const res = await api.get('/users/me/reviews?limit=20');
+      setReviews(res.data.list);
+      console.log(res.data.list);
+    };
+
+    const fetchUser = async () => {
+      const res = await api.get('/users/me');
+      setUser(res.data);
+      console.log(res.data);
+    };
+
+    fetchWines();
+    fetchReviews();
+    fetchUser();
+  }, []);
+
+  const handleProfileChange = async (file: File | null) => {
     if (!file) return;
-    setProfileFile(file);
-    setPreviewUrl(URL.createObjectURL(file));
+
+    try {
+      setIsSaving(true);
+
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const res = await api.post('/images/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      const uploadedImageUrl = res.data.url;
+
+      setUser({ ...user, image: uploadedImageUrl });
+
+      setPreviewUrl(uploadedImageUrl);
+    } catch (error) {
+      console.error('이미지 업로드 실패:', error);
+      alert('이미지 업로드에 실패했습니다.');
+    } finally {
+      setIsSaving(false);
+    }
   };
+  const handleSave = async () => {
+    try {
+      const res = await api.patch('/users/me', {
+        nickname: user.nickname,
+        image: user.image,
+      });
 
-  const handleOpenWineAddModal = () => {
-    const modalId = open(
-      <WineAddModal
-        onSubmit={async (data: WineFormData) => {
-          setIsWineLoading(true);
+      setUser(res.data);
+      setPreviewUrl(null);
 
-          try {
-            // FormData 생성
-            const submitData = new FormData();
-            submitData.append('name', data.name);
-            submitData.append('price', data.price.toString());
-            submitData.append('region', data.region);
-            submitData.append('type', data.type);
-            if (data.image) {
-              submitData.append('image', data.image);
-            }
-
-            // TODO: API 호출
-            // await axios.post('/api/wines', submitData, {
-            //   headers: { 'Content-Type': 'multipart/form-data' }
-            // });
-
-            console.log('와인 등록:', data);
-
-            // 성공 후 와인 목록 갱신 (실제로는 API 재호출)
-            // const newWines = await fetchWines();
-            // setWines(newWines);
-
-            // 모달 닫기
-            close(modalId);
-          } catch (error) {
-            console.error('와인 등록 실패:', error);
-            alert('와인 등록에 실패했습니다.');
-          } finally {
-            setIsWineLoading(false);
-          }
-        }}
-        isLoading={isWineLoading}
-      />,
-    );
+      alert('프로필이 수정되었습니다!');
+    } catch (e) {
+      console.error(e);
+      alert('프로필 수정 실패');
+    } finally {
+      setIsEditing(false);
+    }
   };
 
   const handleNavigateToWines = () => {
     router.push('/wines');
-  };
-
-  const renderContent = () => {
-    if (isEmpty) {
-      return (
-        <NoResult
-          content={EMPTY_MESSAGES[activeTab]}
-          showButton={true}
-          buttonText={activeTab === 'review' ? '리뷰 남기기' : '와인 등록하기'}
-          onButtonClick={activeTab === 'review' ? handleNavigateToWines : handleOpenWineAddModal}
-        />
-      );
-    }
-    if (activeTab === 'review') {
-      return reviews.map((review) => (
-        <WineReview
-          key={review.id}
-          name={review.name}
-          rating={review.rating}
-          date={review.date}
-          content={review.content}
-        />
-      ));
-    }
-
-    return wines.map((wine) => (
-      <MylistWineCard key={wine.id} name={wine.name} region={wine.region} price={wine.price} />
-    ));
   };
 
   return (
@@ -179,14 +131,15 @@ export default function Page() {
             <ImageInput
               variant="circle"
               size={162}
-              currentImageUrl={previewUrl}
+              currentImageUrl={previewUrl ?? user.image}
               alwaysShowOverlay
               onFileChange={handleProfileChange}
+              disabled={isSaving}
             />
             <Input
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-              placeholder={nickname}
+              value={user.nickname}
+              onChange={(e) => setUser({ ...user, nickname: e.target.value })}
+              placeholder={user.nickname}
               className={styles.nicknameInput}
             />
             <Button className={styles.button} size="large" onClick={handleSave}>
@@ -195,8 +148,8 @@ export default function Page() {
           </>
         ) : (
           <>
-            <Profile src={previewUrl} size={162} />
-            <div className={styles.nickname}>{nickname}</div>
+            <Profile src={user.image} size={162} />
+            <div className={styles.nickname}>{user.nickname}</div>
             <Button className={styles.button} size="large" onClick={() => setIsEditing(true)}>
               프로필 수정
             </Button>
@@ -227,7 +180,33 @@ export default function Page() {
             [styles.empty]: isEmpty,
           })}
         >
-          {renderContent()}
+          {isEmpty ? (
+            <NoResult
+              content={activeTab === 'review' ? '작성된 리뷰가 없어요' : '등록한 와인이 없어요'}
+              showButton
+              buttonText={activeTab === 'review' ? '리뷰 남기기' : '와인 등록하기'}
+              onButtonClick={handleNavigateToWines}
+            />
+          ) : activeTab === 'review' ? (
+            reviews.map((review) => (
+              <WineReview
+                key={review.id}
+                name={review.wine.name}
+                rating={review.rating}
+                date={review.createdAt}
+                content={review.content}
+              />
+            ))
+          ) : (
+            wines.map((wine) => (
+              <MylistWineCard
+                key={wine.id}
+                name={wine.name}
+                region={wine.region}
+                price={wine.price}
+              />
+            ))
+          )}
         </div>
       </section>
     </main>
