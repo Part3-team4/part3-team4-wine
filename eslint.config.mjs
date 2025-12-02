@@ -1,11 +1,10 @@
 import { defineConfig, globalIgnores } from 'eslint/config';
-import next from 'eslint-config-next';
 import prettierPlugin from 'eslint-plugin-prettier';
 import importPlugin from 'eslint-plugin-import';
 
 export default defineConfig([
-  next,
   {
+    extends: ['next', 'plugin:prettier/recommended', 'eslint:recommended'],
     plugins: {
       prettier: prettierPlugin,
       import: importPlugin,
