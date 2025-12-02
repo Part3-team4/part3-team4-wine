@@ -13,7 +13,7 @@ export type WineFormData = {
   name: string;
   price: number;
   region: string;
-  type: string;
+  type: 'RED' | 'WHITE' | 'SPARKLING';
   image: File | null;
 };
 

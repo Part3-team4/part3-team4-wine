@@ -60,13 +60,14 @@ export default function RecommendWineCard({
   rating,
   name,
 }: RecommendWineCardProps) {
+  const numericRating = Number(rating);
   return (
     <Link href={`/wines/${id}`} title={`${name} 페이지로 이동`} className={styles.recommend}>
       <div className={styles.wine}>
-        <Image src={image} alt={name} />
+        <Image src={image} alt={name} width={200} height={200} />
       </div>
       <div className={styles.starDesc}>
-        <strong>{rating.toFixed(1)}</strong>
+        <strong>{numericRating.toFixed(1)}</strong>
         <div className={styles.starArea}>
           <StarRating defaultValue={rating} />
         </div>

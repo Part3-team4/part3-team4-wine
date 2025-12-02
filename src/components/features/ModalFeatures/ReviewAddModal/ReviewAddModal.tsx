@@ -12,10 +12,20 @@ import { AromaType } from '@/constants/aroma';
 import AromaChipList from '../../AromaChipList/AromaChipList';
 import WineFlavor from '../../WineFlavor/WineFlavor';
 
-type ReviewAddModalProps = {
+interface ReviewAddModalProps {
   wineName: string;
-  onAdd?: () => void;
-};
+  wineId: number;
+  onAdd: (data: {
+    rating: number;
+    lightBold: number;
+    smoothTannic: number;
+    drySweet: number;
+    softAcidic: number;
+    aroma: string[];
+    content: string;
+    wineId: number;
+  }) => void;
+}
 
 /**
  * ReviewAddModal
@@ -65,50 +75,73 @@ type ReviewAddModalProps = {
  * - 와인 향(Aroma) 다중 선택 (Chip 컴포넌트 사용)
  * - Flavor 섹션 (추후 구현 예정)
  */
-export default function ReviewAddModal({ wineName, onAdd }: ReviewAddModalProps) {
-  const [review, setReview] = useState('');
+export default function ReviewAddModal({ wineName, wineId, onAdd }: ReviewAddModalProps) {
+  const [reviewForm, setReviewForm] = useState<{
+    rating: number;
+    lightBold: number;
+    smoothTannic: number;
+    drySweet: number;
+    softAcidic: number;
+    aroma: string[];
+    content: string;
+    wineId: number;
+  }>({
+    rating: 0,
+    lightBold: 0,
+    smoothTannic: 0,
+    drySweet: 0,
+    softAcidic: 0,
+    aroma: [],
+    content: '',
+    wineId: 0,
+  });
 
   return (
     <Modal withCloseButton={true} className={styles.modalWrapper}>
       <Modal.Header>
         <div className={styles.header}>리뷰 등록</div>
       </Modal.Header>
+
       <Modal.Content>
         <div className={styles.content}>
-          <div className={styles.section}>
-            <div className={styles.wineIntroWrapper}>
-              <div className={styles.iconWrapper}>
-                <Image src={Wine} alt="와인 아이콘" width={54} height={54} />
-              </div>
-              <div className={styles.nameAndStarWrapper}>
-                <div className={styles.name}>{wineName}</div>
-                <StarRating clickable={true} />
-              </div>
-            </div>
-            <div className={styles.textarea}>
-              <TextArea
-                placeholder="후기를 작성해 주세요"
-                value={review}
-                onChange={(e) => setReview(e.target.value)}
-              />
-            </div>
+          {/* 별점 */}
+          <div className={styles.nameAndStarWrapper}>
+            <div className={styles.name}>{wineName}</div>
+            <StarRating
+              clickable={true}
+              onChange={(v) => setReviewForm((p) => ({ ...p, rating: v }))}
+            />
           </div>
-          <div className={styles.section}>
-            <h3 className={styles.subTitle}>와인의 맛은 어땠나요?</h3>
-            <WineFlavor />
-          </div>
-          <div className={styles.section}>
-            <h3 className={styles.subTitle}>기억에 남는 향이 있나요?</h3>
-            <AromaChipList />
-          </div>
+
+          {/* 내용 */}
+          <TextArea
+            placeholder="후기를 작성해 주세요"
+            value={reviewForm.content}
+            onChange={(e) => setReviewForm((p) => ({ ...p, content: e.target.value }))}
+          />
+
+          {/* 맛 */}
+          <WineFlavor
+            onChange={(flavorValues) => setReviewForm((p) => ({ ...p, ...flavorValues }))}
+          />
+
+          {/* 향 */}
+          <AromaChipList
+            clickable
+            onChange={(aromaList) => setReviewForm((p) => ({ ...p, aroma: aromaList }))}
+          />
         </div>
       </Modal.Content>
+
       <Modal.Footer>
-        <div className={styles.footer}>
-          <Button className={styles.addBtn} size="large" variant="filled" onClick={onAdd}>
-            리뷰 남기기
-          </Button>
-        </div>
+        <Button
+          className={styles.addBtn}
+          size="large"
+          variant="filled"
+          onClick={() => onAdd(reviewForm)}
+        >
+          리뷰 남기기
+        </Button>
       </Modal.Footer>
     </Modal>
   );

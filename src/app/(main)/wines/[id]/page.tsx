@@ -7,8 +7,10 @@ import Button from '@/components/common/Button/Button';
 import StarRating from '@/components/common/StarRating/StarRating';
 import RatingDistributionBar from '@/components/features/RatingDistributionBar/RatingDistributionBar';
 import { api } from '@/libs/api';
-import { use, useEffect, useState } from 'react';
+import { use, useEffect, useMemo, useState } from 'react';
 import NoResult from '@/components/common/NoResult/NoResult';
+import { useModal } from '@/hooks/useModal';
+import ReviewAddModal from '@/components/features/ModalFeatures/ReviewAddModal/ReviewAddModal';
 
 export interface WineReview {
   id: number;
@@ -32,32 +34,80 @@ export interface WineReview {
   wineId: number;
 }
 
-const ratingData = [
-  { score: 5, value: 80 },
-  { score: 4, value: 70 },
-  { score: 3, value: 25 },
-  { score: 2, value: 10 },
-  { score: 1, value: 2 },
-];
-
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
 export default function Page({ params }: PageProps) {
+  const { open, close } = useModal();
+
   const { id } = use(params);
   const wineId = Number(id);
 
   const [wine, setWine] = useState<any>(null);
 
+  async function fetchWine() {
+    const res = await api.get(`/wines/${wineId}`);
+    setWine(res.data);
+  }
+
   useEffect(() => {
-    async function fetchWine() {
-      const res = await api.get(`/wines/${wineId}`);
-      console.log(res.data);
-      setWine(res.data);
-    }
     fetchWine();
   }, [wineId]);
+
+  // 리뷰 남기기 패칭
+  async function createReview(data: {
+    rating: number;
+    lightBold: number;
+    smoothTannic: number;
+    drySweet: number;
+    softAcidic: number;
+    aroma: string[];
+    content: string;
+    wineId: number;
+  }) {
+    const res = await api.post('/reviews', data);
+    return res.data;
+  }
+
+  // 리뷰 남기기 모달
+  const handleOpenReviewModal = () => {
+    const modalId = open(
+      <ReviewAddModal
+        wineName={wine.name}
+        wineId={wine.id}
+        onAdd={async (data) => {
+          const sendData = {
+            ...data,
+            wineId: wine.id,
+          };
+
+          await createReview(sendData);
+          await fetchWine();
+
+          close(modalId);
+        }}
+      />,
+    );
+  };
+
+  const ratingData = useMemo(() => {
+    if (!wine?.avgRatings) return [];
+
+    const entries = Object.entries(wine.avgRatings).map(([score, count]) => ({
+      score: Number(score),
+      count: Number(count),
+    }));
+
+    const total = entries.reduce((acc, v) => acc + v.count, 0) || 1;
+
+    return entries
+      .map((item) => ({
+        score: item.score,
+        value: Math.round((item.count / total) * 100),
+      }))
+      .sort((a, b) => b.score - a.score);
+  }, [wine]);
 
   if (!wine) return <div>로딩중...</div>;
 
@@ -69,7 +119,12 @@ export default function Page({ params }: PageProps) {
         <div className={styles.reviewList}>
           <h2>리뷰 목록</h2>
           {wine.reviews.length === 0 ? (
-            <NoResult showButton content="작성된 리뷰가 없어요" buttonText="리뷰 남기기" />
+            <NoResult
+              showButton
+              content="작성된 리뷰가 없어요"
+              buttonText="리뷰 남기기"
+              onButtonClick={handleOpenReviewModal}
+            />
           ) : (
             <ul className={styles.list}>
               {wine.reviews.map((review: WineReview) => (
@@ -99,7 +154,7 @@ export default function Page({ params }: PageProps) {
         {wine.reviews.length > 0 && (
           <div className={styles.reviewScore}>
             <div className={styles.starArea}>
-              <strong>4.8</strong>
+              <strong>{Number(wine.avgRating ?? 0).toFixed(1)}</strong>
               <div>
                 <StarRating defaultValue={4} />
                 <span>{wine.reviews.length}개 후기</span>
@@ -110,7 +165,9 @@ export default function Page({ params }: PageProps) {
               <RatingDistributionBar data={ratingData} />
             </div>
 
-            <Button size="xsmall">리뷰 남기기</Button>
+            <Button size="xsmall" onClick={handleOpenReviewModal}>
+              리뷰 남기기
+            </Button>
           </div>
         )}
       </div>

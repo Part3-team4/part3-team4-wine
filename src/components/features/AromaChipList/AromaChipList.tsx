@@ -27,21 +27,31 @@
 
 import Chip from '@/components/common/Chip/Chip';
 import { AROMA_EN, AROMA_KO, AromaType } from '@/constants/aroma';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './AromaChipList.module.scss';
 
 interface AromaChipListProps {
   defaultSelected?: string[];
   clickable?: boolean;
+  onChange?: (selected: string[]) => void;
 }
 
 export default function AromaChipList({
   defaultSelected = [],
   clickable = false,
+  onChange,
 }: AromaChipListProps) {
   const [selectedList, setSelectedList] = useState<string[]>(defaultSelected);
 
+  // ✅ selectedList가 바뀔 때만 부모에게 알려주기
+  useEffect(() => {
+    onChange?.(selectedList);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedList]);
+
   const toggle = (label: string) => {
+    if (!clickable) return;
+
     setSelectedList((prev) =>
       prev.includes(label) ? prev.filter((v) => v !== label) : [...prev, label],
     );
@@ -51,26 +61,17 @@ export default function AromaChipList({
 
   return (
     <ul className={styles.aromaChipList}>
-      {clickable
-        ? aromaList.map((label, i) => (
-            <li key={label}>
-              <Chip
-                key={label}
-                selected={selectedList.includes(label)}
-                onClick={() => toggle(label)}
-                clickable
-              >
-                {AROMA_KO[label]}
-              </Chip>
-            </li>
-          ))
-        : aromaList.map((label, i) => (
-            <li key={label}>
-              <Chip key={label} selected={defaultSelected.includes(label)}>
-                {AROMA_KO[label]}
-              </Chip>
-            </li>
-          ))}
+      {aromaList.map((label) => (
+        <li key={label}>
+          <Chip
+            selected={selectedList.includes(label)}
+            onClick={() => toggle(label)}
+            clickable={clickable}
+          >
+            {AROMA_KO[label]}
+          </Chip>
+        </li>
+      ))}
     </ul>
   );
 }

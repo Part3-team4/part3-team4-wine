@@ -32,7 +32,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './StarRating.module.scss';
 import { Star, StarActive } from '@/assets';
 import Image from 'next/image';
@@ -42,18 +42,24 @@ interface StarRatingProps {
   defaultValue?: number;
   clickable?: boolean;
   max?: number;
+  onChange?: (value: number) => void;
 }
 
 export default function StarRating({
   defaultValue = 0,
   clickable = false,
   max = 5,
+  onChange,
 }: StarRatingProps) {
   const [current, setCurrent] = useState(defaultValue);
 
   const handleClick = (index: number) => {
     if (!clickable) return;
-    setCurrent(index + 1);
+
+    const nextValue = index + 1;
+
+    setCurrent(nextValue);
+    onChange?.(nextValue); // 🔥 여기서 부모에게 바로 전달
   };
 
   return (
