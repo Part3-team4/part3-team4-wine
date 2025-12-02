@@ -8,6 +8,7 @@ import Styles from '@/app/(auth)/signin/page.module.scss';
 import { LogoBlack, Kakao } from '@/assets';
 import Image from 'next/image';
 import Link from 'next/link';
+import { signinSchema } from '@/schemas/authSchema';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -23,42 +24,22 @@ export default function LoginPage() {
   const [errors, setErrors] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
 
-  /** 이메일 형식 검사 */
-  const validateEmailFormat = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  /** blur 시 단일 필드 검사 */
-  const validateField = (field: 'email' | 'password', value: string) => {
-    let error = '';
-
-    if (field === 'email') {
-      if (!value) error = '이메일은 필수 입력입니다.';
-      else if (!validateEmailFormat(value)) error = '이메일 형식으로 작성해 주세요.';
-    }
-
-    if (field === 'password') {
-      if (!value) error = '비밀번호는 필수 입력입니다.';
-    }
-
-    setErrors((prev) => ({ ...prev, [field]: error }));
-    return error;
-  };
-
-  /** 전체 폼 검사 */
-  const validateForm = () => {
-    const emailError = validateField('email', email);
-    const passwordError = validateField('password', password);
-
-    return !emailError && !passwordError;
-  };
-
   /** 로그인 요청 */
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    const result = signinSchema.safeParse({ email, password });
+
+    if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors;
+
+      setErrors({
+        email: fieldErrors.email?.[0] ?? '',
+        password: fieldErrors.password?.[0] ?? '',
+      });
+
+      return;
+    }
 
     setIsLoading(true);
 
@@ -71,7 +52,7 @@ export default function LoginPage() {
 
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.message || '로그인에 실패했습니다.');
+      if (!res.ok) throw new Error(data.message || '로그인 실패');
 
       localStorage.setItem('accessToken', data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);
@@ -125,7 +106,6 @@ export default function LoginPage() {
             setEmail(e.target.value);
             setErrors((prev) => ({ ...prev, email: '' }));
           }}
-          onBlur={() => validateField('email', email)}
           onKeyDown={handleKeyDown}
           error={errors.email}
         />
@@ -140,7 +120,6 @@ export default function LoginPage() {
             setPassword(e.target.value);
             setErrors((prev) => ({ ...prev, password: '' }));
           }}
-          onBlur={() => validateField('password', password)}
           onKeyDown={handleKeyDown}
           error={errors.password}
         />
