@@ -21,13 +21,19 @@ import styles from './Dropdown.module.scss';
 interface ItemProps {
   value: string;
   children: ReactNode;
+  onClick?: () => void;
 }
 
-export default function DropdownItem({ value, children }: ItemProps) {
+export default function DropdownItem({ value, children, onClick }: ItemProps) {
   const { onSelect } = useDropdown();
 
+  const handleClick = () => {
+    onSelect(value); // 기존 드롭다운 동작 유지
+    onClick?.(); // 전달받은 클릭도 실행 (로그아웃)
+  };
+
   return (
-    <div className={styles.item} onClick={() => onSelect(value)}>
+    <div className={styles.item} onClick={handleClick} role="button" tabIndex={0}>
       {children}
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,16 +8,12 @@ import Styles from '@/app/(auth)/signup/page.module.scss';
 import FormInput from '@/components/common/Input/FormInput';
 import Button from '@/components/common/Button/Button';
 import { LogoBlack } from '@/assets';
+import { signupSchema } from '@/schemas/authSchema';
+import { useAuthStore } from '@/store/authStore';
 
 export default function SignupPage() {
   const router = useRouter();
-
-  // 로그인 되어있으면 접근 차단
-  useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (token) router.replace('/');
-  }, [router]);
-
+  const login = useAuthStore((state) => state.login);
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
@@ -31,58 +27,30 @@ export default function SignupPage() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  /** 이메일 형식 */
-  const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  /** 비밀번호 정규식: 숫자, 영문, 특수문자만 */
-  const isValidPassword = (pw: string) => /^[A-Za-z0-9!@#$%^&*]+$/.test(pw);
-
-  /** blur 시 개별 필드 검사 */
-  const validateField = (field: string, value: string) => {
-    let message = '';
-
-    switch (field) {
-      case 'email':
-        if (!value) message = '이메일은 필수 입력입니다.';
-        else if (!isValidEmail(value)) message = '이메일 형식으로 작성해 주세요.';
-        break;
-
-      case 'nickname':
-        if (!value) message = '닉네임은 필수 입력입니다.';
-        else if (value.length > 20) message = '닉네임은 최대 20자까지 가능합니다.';
-        break;
-
-      case 'password':
-        if (!value) message = '비밀번호는 필수 입력입니다.';
-        else if (value.length < 8) message = '비밀번호는 최소 8자 이상입니다.';
-        else if (!isValidPassword(value))
-          message = '비밀번호는 숫자, 영문, 특수문자로만 가능합니다.';
-        break;
-
-      case 'passwordCheck':
-        if (!value) message = '비밀번호 확인을 입력해주세요.';
-        else if (value !== password) message = '비밀번호가 일치하지 않습니다.';
-        break;
-    }
-
-    setErrors((prev) => ({ ...prev, [field]: message }));
-    return message;
-  };
-
-  /** 전체 폼 검사 */
-  const validateForm = () => {
-    const emailErr = validateField('email', email);
-    const nicknameErr = validateField('nickname', nickname);
-    const pwErr = validateField('password', password);
-    const pwCheckErr = validateField('passwordCheck', passwordCheck);
-
-    return !(emailErr || nicknameErr || pwErr || pwCheckErr);
-  };
-
   /** 회원가입 요청 */
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateForm()) return;
+
+    const result = signupSchema.safeParse({
+      email,
+      nickname,
+      password,
+      passwordCheck,
+    });
+
+    // Zod 에러 처리
+    if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors;
+
+      setErrors({
+        email: fieldErrors.email?.[0] ?? '',
+        nickname: fieldErrors.nickname?.[0] ?? '',
+        password: fieldErrors.password?.[0] ?? '',
+        passwordCheck: fieldErrors.passwordCheck?.[0] ?? '',
+      });
+
+      return;
+    }
 
     setIsLoading(true);
 
@@ -94,24 +62,20 @@ export default function SignupPage() {
           email,
           nickname,
           password,
+          passwordConfirmation: passwordCheck,
         }),
       });
 
       const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.message || '회원가입 실패');
-      }
-
-      // 자동 로그인
-      localStorage.setItem('accessToken', data.accessToken);
-      localStorage.setItem('refreshToken', data.refreshToken);
-
+      if (!res.ok) throw new Error(data.message || '회원가입 실패');
+      login(data.accessToken, data.refreshToken);
       router.push('/');
     } catch (err) {
+      console.error('회원가입 실패:', err);
       setErrors((prev) => ({
         ...prev,
-        email: '이미 사용 중인 이메일이거나 가입할 수 없습니다.',
+        email: '이미 사용 중인 이메일일 수 있습니다.',
       }));
     } finally {
       setIsLoading(false);
@@ -144,7 +108,6 @@ export default function SignupPage() {
             setEmail(e.target.value);
             setErrors((p) => ({ ...p, email: '' }));
           }}
-          onBlur={() => validateField('email', email)}
           onKeyDown={handleKeyDown}
           error={errors.email}
         />
@@ -158,7 +121,6 @@ export default function SignupPage() {
             setNickname(e.target.value);
             setErrors((p) => ({ ...p, nickname: '' }));
           }}
-          onBlur={() => validateField('nickname', nickname)}
           onKeyDown={handleKeyDown}
           error={errors.nickname}
         />
@@ -173,7 +135,6 @@ export default function SignupPage() {
             setPassword(e.target.value);
             setErrors((p) => ({ ...p, password: '' }));
           }}
-          onBlur={() => validateField('password', password)}
           onKeyDown={handleKeyDown}
           error={errors.password}
         />
@@ -188,7 +149,6 @@ export default function SignupPage() {
             setPasswordCheck(e.target.value);
             setErrors((p) => ({ ...p, passwordCheck: '' }));
           }}
-          onBlur={() => validateField('passwordCheck', passwordCheck)}
           onKeyDown={handleKeyDown}
           error={errors.passwordCheck}
         />
