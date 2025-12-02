@@ -87,10 +87,10 @@ export default function ReviewAddModal({ wineName, wineId, onAdd }: ReviewAddMod
     wineId: number;
   }>({
     rating: 0,
-    lightBold: 0,
-    smoothTannic: 0,
-    drySweet: 0,
-    softAcidic: 0,
+    lightBold: 5,
+    smoothTannic: 5,
+    drySweet: 5,
+    softAcidic: 5,
     aroma: [],
     content: '',
     wineId: 0,
@@ -122,7 +122,21 @@ export default function ReviewAddModal({ wineName, wineId, onAdd }: ReviewAddMod
 
           {/* 맛 */}
           <WineFlavor
-            onChange={(flavorValues) => setReviewForm((p) => ({ ...p, ...flavorValues }))}
+            values={{
+              body: reviewForm.lightBold,
+              tannin: reviewForm.smoothTannic,
+              sweetness: reviewForm.drySweet,
+              acidity: reviewForm.softAcidic,
+            }}
+            onChange={(values) =>
+              setReviewForm((p) => ({
+                ...p,
+                lightBold: values!.body,
+                smoothTannic: values!.tannin,
+                drySweet: values!.sweetness,
+                softAcidic: values!.acidity,
+              }))
+            }
           />
 
           {/* 향 */}
@@ -139,6 +153,7 @@ export default function ReviewAddModal({ wineName, wineId, onAdd }: ReviewAddMod
           size="large"
           variant="filled"
           onClick={() => onAdd(reviewForm)}
+          fullWidth
         >
           리뷰 남기기
         </Button>
