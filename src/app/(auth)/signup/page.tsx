@@ -116,7 +116,6 @@ export default function SignupPage() {
             setEmail(e.target.value);
             setErrors((p) => ({ ...p, email: '' }));
           }}
-          onBlur={() => validateField('email', email)}
           onKeyDown={handleKeyDown}
           error={errors.email}
         />
@@ -130,7 +129,6 @@ export default function SignupPage() {
             setNickname(e.target.value);
             setErrors((p) => ({ ...p, nickname: '' }));
           }}
-          onBlur={() => validateField('nickname', nickname)}
           onKeyDown={handleKeyDown}
           error={errors.nickname}
         />
@@ -145,7 +143,6 @@ export default function SignupPage() {
             setPassword(e.target.value);
             setErrors((p) => ({ ...p, password: '' }));
           }}
-          onBlur={() => validateField('password', password)}
           onKeyDown={handleKeyDown}
           error={errors.password}
         />
@@ -160,7 +157,6 @@ export default function SignupPage() {
             setPasswordCheck(e.target.value);
             setErrors((p) => ({ ...p, passwordCheck: '' }));
           }}
-          onBlur={() => validateField('passwordCheck', passwordCheck)}
           onKeyDown={handleKeyDown}
           error={errors.passwordCheck}
         />
