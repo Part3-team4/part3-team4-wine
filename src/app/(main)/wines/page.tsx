@@ -3,7 +3,7 @@
 import styles from './wines.module.scss';
 import ListWineCard from '@/components/features/WineCard/ListWineCard';
 import SearchInput from '@/components/common/Input/searchInput';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import WineFilter from '@/components/features/WineFilter/WineFilter';
 import WineSlider from '@/components/features/WineSlider/WineSlider';
 import { api } from '@/libs/api';
@@ -74,6 +74,8 @@ export default function Page() {
             image: imageUrl,
           });
 
+          await fetchWines();
+
           // 3) 등록 성공 후 모달 닫기
           close(modalId);
         }}
@@ -81,15 +83,14 @@ export default function Page() {
     );
   };
 
+  // 와인 리스트
+  const fetchWines = useCallback(async () => {
+    const res = await api.get('/wines?limit=50');
+    setWines(res.data.list);
+  }, []);
+
   // wine불러오기
   useEffect(() => {
-    // 와인 리스트
-    const fetchWines = async () => {
-      const res = await api.get('/wines?limit=50');
-      console.log(res.data.list);
-      setWines(res.data.list);
-    };
-
     // 추천 와인 리스트
     const fetchRecommendedWines = async () => {
       const res = await api.get('/wines/recommended?limit=20');
