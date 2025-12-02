@@ -66,10 +66,10 @@ export default function WineFlavor({
 }: WineFlavorProps) {
   // UI 구현을 위해 내부상태로 관리합니다.
   const [internalValues, setInternalValues] = useState({
-    body: 50,
-    tannin: 50,
-    sweetness: 50,
-    acidity: 50,
+    body: 5,
+    tannin: 5,
+    sweetness: 5,
+    acidity: 5,
   });
 
   // props가 있으면 props를, 없으면 내부 상태를 사용합니다.
@@ -123,7 +123,7 @@ export default function WineFlavor({
           <Scale
             type="single"
             min={0}
-            max={100}
+            max={10}
             step={1}
             disabled={disabled}
             value={values[scale.key as keyof typeof values]}
