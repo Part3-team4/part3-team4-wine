@@ -13,7 +13,9 @@ import ImageInput from '@/components/common/Input/ImageInput';
 import Input from '@/components/common/Input/Input';
 import { useModal } from '@/hooks/useModal';
 import WineAddModal from '@/components/features/ModalFeatures/WineAddModal/WineAddModal';
+import ReviewAddModal from '@/components/features/ModalFeatures/ReviewAddModal/ReviewAddModal';
 import { WineFormData } from '@/components/features/ModalFeatures/WineAddModal/WineAddModal';
+import DeleteModal from '@/components/features/ModalFeatures/DeleteModal/DeleteModal';
 import { Wine, Review, User } from '@/types/wine';
 import { api } from '@/libs/api';
 
@@ -44,7 +46,8 @@ export default function Page() {
 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  const [isWineLoading, setIsWineLoading] = useState(false);
+  const [editingReview, setEditingReview] = useState<Review | null>(null);
+  const [editingWine, setEditingWine] = useState<Wine | null>(null);
 
   const currentData = activeTab === 'review' ? reviews : wines;
   const isEmpty = currentData.length === 0;
@@ -73,6 +76,98 @@ export default function Page() {
     fetchUser();
   }, []);
 
+  // // 리뷰 수정 핸들러
+  // const handleEditReview = (review: Review) => {
+  //   setEditingReview(review);
+  //   // 리뷰 수정 모달 열기 (모달 컴포넌트가 있다고 가정)
+  //   open(<ReviewAddModal />);
+  // };
+
+  const handleDeleteReview = async (id: number) => {
+    const modalId = open(
+      <DeleteModal
+        onDelete={async () => {
+          try {
+            await api.delete(`/reviews/${id}`);
+
+            setReviews(reviews.filter((r) => r.id !== id));
+            close(modalId);
+          } catch (error) {
+            console.error('리뷰 삭제 실패:', error);
+            alert('리뷰 삭제에 실패했습니다. 다시 한번 시도해주세요.');
+            close(modalId);
+          }
+          close(modalId);
+        }}
+        onCancel={() => close(modalId)}
+      />,
+    );
+  };
+
+  // // 리뷰 수정 완료 핸들러
+  // const handleUpdateReview = async (
+  //   id: number,
+  //   updatedData: { rating: number; content: string },
+  // ) => {
+  //   try {
+  //     const res = await api.patch(`/reviews/${id}`, updatedData);
+
+  //     // 로컬 상태 업데이트
+  //     setReviews(reviews.map((r) => (r.id === id ? { ...r, ...res.data } : r)));
+
+  //     setEditingReview(null);
+  //     close();
+  //     alert('리뷰가 수정되었습니다.');
+  //   } catch (error) {
+  //     console.error('리뷰 수정 실패:', error);
+  //     alert('리뷰 수정에 실패했습니다.');
+  //   }
+  // };
+
+  // // 와인 수정 핸들러
+  // const handleEditWine = (wine: Wine) => {
+  //   setEditingWine(wine);
+  //   // 와인 수정 모달 열기
+  //   open('wineEditModal');
+  // };
+
+  const handleDeleteWine = (id: number) => {
+    const modalId = open(
+      <DeleteModal
+        onDelete={async () => {
+          try {
+            await api.delete(`/wines/${id}`);
+
+            setWines(wines.filter((w) => w.id !== id));
+            close(modalId);
+          } catch (error) {
+            console.error('와인 삭제 실패:', error);
+            alert('리뷰 삭제에 실패했습니다. 다시 한번 시도해주세요.');
+            close(modalId);
+          }
+          close(modalId);
+        }}
+        onCancel={() => close(modalId)}
+      />,
+    );
+  };
+
+  // // 와인 수정 완료 핸들러
+  // const handleUpdateWine = async (id: number, updatedData: Partial<Wine>) => {
+  //   try {
+  //     const res = await api.patch(`wines/${id}`, updatedData);
+
+  //     setWines(wines.map((w) => (w.id === id ? { ...w, ...res.data } : w)));
+
+  //     setEditingWine(null);
+  //     close();
+  //     alert('와인 정보가 수정되었습니다.');
+  //   } catch (error) {
+  //     console.error('와인 수정 실패:', error);
+  //     alert('와인 수정에 실패했습니다.');
+  //   }
+  // };
+
   const handleProfileChange = async (file: File | null) => {
     if (!file) return;
 
@@ -88,7 +183,7 @@ export default function Page() {
         },
       });
 
-      const uploadedImageUrl = res.data.url;
+      const uploadedImageUrl = res.data.url || res.data.image;
 
       setUser({ ...user, image: uploadedImageUrl });
 
@@ -109,8 +204,6 @@ export default function Page() {
 
       setUser(res.data);
       setPreviewUrl(null);
-
-      alert('프로필이 수정되었습니다!');
     } catch (e) {
       console.error(e);
       alert('프로필 수정 실패');
@@ -195,6 +288,8 @@ export default function Page() {
                 rating={review.rating}
                 date={review.createdAt}
                 content={review.content}
+                // onEdit={() => handleEditReview(review)}
+                onDelete={() => handleDeleteReview(review.id)}
               />
             ))
           ) : (
@@ -204,6 +299,8 @@ export default function Page() {
                 name={wine.name}
                 region={wine.region}
                 price={wine.price}
+                // onEdit={() => handleEditWine(wine)}
+                onDelete={() => handleDeleteWine(wine.id)}
               />
             ))
           )}
