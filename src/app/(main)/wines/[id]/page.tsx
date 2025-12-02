@@ -11,6 +11,7 @@ import { use, useEffect, useMemo, useState } from 'react';
 import NoResult from '@/components/common/NoResult/NoResult';
 import { useModal } from '@/hooks/useModal';
 import ReviewAddModal from '@/components/features/ModalFeatures/ReviewAddModal/ReviewAddModal';
+import { AromaType } from '@/constants/aroma';
 
 export interface WineReview {
   id: number;
@@ -23,7 +24,7 @@ export interface WineReview {
   createdAt: string;
   rating: number;
 
-  aroma: string[];
+  aroma: AromaType[];
   content: string;
 
   lightBold: number;
@@ -66,8 +67,12 @@ export default function Page({ params }: PageProps) {
     content: string;
     wineId: number;
   }) {
-    const res = await api.post('/reviews', data);
-    return res.data;
+    try {
+      const res = await api.post('/reviews', data);
+      return res.data;
+    } catch (err: any) {
+      throw err;
+    }
   }
 
   // 리뷰 남기기 모달
@@ -156,7 +161,7 @@ export default function Page({ params }: PageProps) {
             <div className={styles.starArea}>
               <strong>{Number(wine.avgRating ?? 0).toFixed(1)}</strong>
               <div>
-                <StarRating defaultValue={4} />
+                <StarRating defaultValue={wine.avgRating} />
                 <span>{wine.reviews.length}개 후기</span>
               </div>
             </div>
