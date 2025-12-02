@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   background-color: $color-white;
-  padding: 80px 48px;
+  padding: 50px 40px;
   width: 496px;
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -17,7 +17,7 @@
 }
 
 .logoContainer {
-  margin-bottom: 64px;
+  margin-bottom: 40px;
   display: inline-block;
 }
 
@@ -69,15 +69,5 @@
 
   &:hover {
     opacity: 0.8;
-  }
-}
-
-@media screen and (max-height: 1000px) {
-  .container {
-    position: static;
-    left: 0;
-    top: 0;
-    transform: none;
-    margin: 0 auto;
   }
 }
