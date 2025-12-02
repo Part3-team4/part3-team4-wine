@@ -27,6 +27,19 @@
 
     .wineFilterArea {
       margin-top: 40px;
+
+      .buttonArea {
+        margin-top: 40px;
+        .half {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 20px;
+          button {
+            width: 48%;
+          }
+        }
+      }
     }
 
     .wineListArea {
