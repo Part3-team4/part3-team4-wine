@@ -12,6 +12,8 @@ interface WineReviewProps {
   rating: number;
   date: string | Date;
   content: string;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
 /**
@@ -37,7 +39,14 @@ interface WineReviewProps {
  * />
  */
 
-export default function WineReview({ name, rating, date, content }: WineReviewProps) {
+export default function WineReview({
+  name,
+  rating,
+  date,
+  content,
+  onEdit,
+  onDelete,
+}: WineReviewProps) {
   return (
     <div className={`${styles.wineReviewWrap} ${styles.wineReview}`}>
       <div className={styles.info}>
@@ -52,8 +61,8 @@ export default function WineReview({ name, rating, date, content }: WineReviewPr
         <Dropdown
           onChange={(value) => {
             // 여기는 테스트 중..
-            if (value === 'edit') console.log('수정하기 클릭');
-            if (value === 'delete') console.log('삭제하기 클릭');
+            if (value === 'edit' && onEdit) onEdit();
+            if (value === 'delete' && onDelete) onDelete();
           }}
         >
           <Dropdown.Trigger>
