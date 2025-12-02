@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,16 +9,11 @@ import FormInput from '@/components/common/Input/FormInput';
 import Button from '@/components/common/Button/Button';
 import { LogoBlack } from '@/assets';
 import { signupSchema } from '@/schemas/authSchema';
+import { useAuthStore } from '@/store/authStore';
 
 export default function SignupPage() {
   const router = useRouter();
-
-  // 로그인 되어있으면 접근 차단
-  useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (token) router.replace('/');
-  }, [router]);
-
+  const login = useAuthStore((state) => state.login);
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
@@ -74,10 +69,7 @@ export default function SignupPage() {
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message || '회원가입 실패');
-
-      localStorage.setItem('accessToken', data.accessToken);
-      localStorage.setItem('refreshToken', data.refreshToken);
-
+      login(data.accessToken, data.refreshToken);
       router.push('/');
     } catch (err) {
       console.error('회원가입 실패:', err);
