@@ -18,8 +18,8 @@
     "react-slick": "^0.31.0",
     "sass": "^1.94.0",
     "slick-carousel": "^1.8.1",
-    "zod": "^4.1.12",
-    "zustand": "^5.0.8"
+    "zod": "^4.1.13",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@types/node": "^20",

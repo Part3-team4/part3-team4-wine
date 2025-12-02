@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Style from '@/app/(home)/page.module.scss';
 import Button from '@/components/common/Button/Button';
 import {
@@ -17,6 +18,8 @@ import {
 } from '@/assets/images/landing/index';
 
 export default function Home() {
+  const router = useRouter();
+
   const [screenSize, setScreenSize] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
 
   useEffect(() => {
@@ -102,7 +105,13 @@ export default function Home() {
           />
         </div>
         {/* 하단 버튼 */}
-        <Button variant="filled" size="medium" rounded className={Style.mainBtn}>
+        <Button
+          variant="filled"
+          size="medium"
+          rounded
+          className={Style.mainBtn}
+          onClick={() => router.push('/wines')}
+        >
           와인 보러가기
         </Button>
       </main>
