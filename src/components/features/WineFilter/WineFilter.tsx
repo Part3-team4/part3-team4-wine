@@ -16,10 +16,10 @@ const DEFAULT_PRICE_RANGE = {
 
 const DEFAULT_RATING_OPTIONS = [
   { label: '전체', value: 'all' },
-  { label: '4.8 - 5.0', value: '4_8To5_0' },
-  { label: '4.5 - 4.8', value: '4_5To4_8' },
-  { label: '4.0 - 4.5', value: '4_0To4_5' },
-  { label: '3.0 - 4.0', value: '3_0To4_0' },
+  { label: '4.5 - 5.0', value: '4_8To5_0' },
+  { label: '4.0 - 4.5', value: '4_5To4_8' },
+  { label: '3.5 - 4.0', value: '4_0To4_5' },
+  { label: '3.0 - 3.5', value: '3_0To4_0' },
 ];
 export interface WineFilterValue {
   wineTypes: WineType[];
