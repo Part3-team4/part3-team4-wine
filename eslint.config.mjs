@@ -1,7 +1,11 @@
 import { defineConfig } from 'eslint/config';
 
 export default defineConfig({
-  extends: ['next/core-web-vitals', 'eslint:recommended', 'plugin:prettier/recommended'],
+  extends: [
+    'next/core-web-vitals',
+    'eslint:recommended',
+    'plugin:prettier/recommended',
+  ],
   plugins: ['prettier', 'import'],
   rules: {
     'prettier/prettier': 'error',
@@ -10,7 +14,7 @@ export default defineConfig({
       {
         groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
         'newlines-between': 'always',
-        alphabetize: { order: 'asc', caseInsensitive: true },
+        alphabetize: { orde₩r: 'asc', caseInsensitive: true },
       },
     ],
   },
