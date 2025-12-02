@@ -94,6 +94,7 @@ export default function SignupPage() {
           email,
           nickname,
           password,
+          passwordConfirmation: passwordCheck,
         }),
       });
 
@@ -109,9 +110,11 @@ export default function SignupPage() {
 
       router.push('/');
     } catch (err) {
+      console.log('회원가입 오류:', err);
+
       setErrors((prev) => ({
         ...prev,
-        email: '이미 사용 중인 이메일이거나 가입할 수 없습니다.',
+        email: '회원가입에 실패했습니다. 콘솔을 확인해주세요.',
       }));
     } finally {
       setIsLoading(false);
