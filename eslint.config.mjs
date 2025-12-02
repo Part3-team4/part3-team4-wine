@@ -4,7 +4,7 @@ import prettierPlugin from 'eslint-plugin-prettier';
 import importPlugin from 'eslint-plugin-import';
 
 export default defineConfig([
-  next(),
+  next,
   {
     plugins: {
       prettier: prettierPlugin,
