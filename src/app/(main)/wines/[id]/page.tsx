@@ -7,7 +7,7 @@ import Button from '@/components/common/Button/Button';
 import StarRating from '@/components/common/StarRating/StarRating';
 import RatingDistributionBar from '@/components/features/RatingDistributionBar/RatingDistributionBar';
 import { api } from '@/libs/api';
-import { use, useEffect, useState } from 'react';
+import { use, useEffect, useMemo, useState } from 'react';
 import NoResult from '@/components/common/NoResult/NoResult';
 
 export interface WineReview {
@@ -59,6 +59,24 @@ export default function Page({ params }: PageProps) {
     fetchWine();
   }, [wineId]);
 
+  const ratingData = useMemo(() => {
+    if (!wine?.avgRatings) return [];
+
+    const entries = Object.entries(wine.avgRatings).map(([score, count]) => ({
+      score: Number(score),
+      count: Number(count),
+    }));
+
+    const total = entries.reduce((acc, v) => acc + v.count, 0) || 1; // 0 나눗셈 방지
+
+    return entries
+      .map((item) => ({
+        score: item.score,
+        value: Math.round((item.count / total) * 100), // 퍼센트 변환
+      }))
+      .sort((a, b) => b.score - a.score); // 5점→1점 순 정렬
+  }, [wine]);
+
   if (!wine) return <div>로딩중...</div>;
 
   return (
@@ -99,7 +117,7 @@ export default function Page({ params }: PageProps) {
         {wine.reviews.length > 0 && (
           <div className={styles.reviewScore}>
             <div className={styles.starArea}>
-              <strong>4.8</strong>
+              <strong>{Number(wine.avgRating ?? 0).toFixed(1)}</strong>
               <div>
                 <StarRating defaultValue={4} />
                 <span>{wine.reviews.length}개 후기</span>
