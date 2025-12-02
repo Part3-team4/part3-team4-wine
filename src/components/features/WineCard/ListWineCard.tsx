@@ -82,7 +82,7 @@ interface ListWineCardProps {
   image?: string | StaticImageData;
   rating: number;
   reviewLength: number;
-  reviewContent: string;
+  reviewContent?: string;
 }
 
 export default function ListWineCard({
@@ -124,7 +124,7 @@ export default function ListWineCard({
         </div>
         <div className={styles.reviewArea}>
           <strong>최신 후기</strong>
-          <p>{reviewContent}</p>
+          <p>{reviewContent ? reviewContent : '후기가 없습니다.'}</p>
         </div>
         <Image
           src={RightArrow}
