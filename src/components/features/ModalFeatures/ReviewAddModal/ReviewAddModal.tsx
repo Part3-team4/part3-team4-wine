@@ -15,7 +15,10 @@ import WineFlavor from '../../WineFlavor/WineFlavor';
 interface ReviewAddModalProps {
   wineName: string;
   wineId: number;
-  onAdd: (data: {
+
+  mode?: 'add' | 'edit';
+
+  defaultValues?: {
     rating: number;
     lightBold: number;
     smoothTannic: number;
@@ -23,7 +26,16 @@ interface ReviewAddModalProps {
     softAcidic: number;
     aroma: string[];
     content: string;
-    wineId: number;
+  };
+
+  onSubmit: (data: {
+    rating: number;
+    lightBold: number;
+    smoothTannic: number;
+    drySweet: number;
+    softAcidic: number;
+    aroma: string[];
+    content: string;
   }) => void;
 }
 
@@ -75,31 +87,27 @@ interface ReviewAddModalProps {
  * - 와인 향(Aroma) 다중 선택 (Chip 컴포넌트 사용)
  * - Flavor 섹션 (추후 구현 예정)
  */
-export default function ReviewAddModal({ wineName, wineId, onAdd }: ReviewAddModalProps) {
-  const [reviewForm, setReviewForm] = useState<{
-    rating: number;
-    lightBold: number;
-    smoothTannic: number;
-    drySweet: number;
-    softAcidic: number;
-    aroma: string[];
-    content: string;
-    wineId: number;
-  }>({
-    rating: 0,
-    lightBold: 5,
-    smoothTannic: 5,
-    drySweet: 5,
-    softAcidic: 5,
-    aroma: [],
-    content: '',
-    wineId: 0,
+export default function ReviewAddModal({
+  wineName,
+  wineId,
+  mode = 'add',
+  defaultValues,
+  onSubmit,
+}: ReviewAddModalProps) {
+  const [reviewForm, setReviewForm] = useState({
+    rating: defaultValues?.rating ?? 0,
+    lightBold: defaultValues?.lightBold ?? 5,
+    smoothTannic: defaultValues?.smoothTannic ?? 5,
+    drySweet: defaultValues?.drySweet ?? 5,
+    softAcidic: defaultValues?.softAcidic ?? 5,
+    aroma: defaultValues?.aroma ?? [],
+    content: defaultValues?.content ?? '',
   });
 
   return (
     <Modal withCloseButton={true} className={styles.modalWrapper}>
       <Modal.Header>
-        <div className={styles.header}>리뷰 등록</div>
+        <div className={styles.header}>{mode === 'edit' ? '리뷰 수정' : '리뷰 등록'}</div>
       </Modal.Header>
 
       <Modal.Content>
@@ -108,7 +116,8 @@ export default function ReviewAddModal({ wineName, wineId, onAdd }: ReviewAddMod
           <div className={styles.nameAndStarWrapper}>
             <div className={styles.name}>{wineName}</div>
             <StarRating
-              clickable={true}
+              clickable
+              defaultValue={reviewForm.rating}
               onChange={(v) => setReviewForm((p) => ({ ...p, rating: v }))}
             />
           </div>
@@ -142,7 +151,8 @@ export default function ReviewAddModal({ wineName, wineId, onAdd }: ReviewAddMod
           {/* 향 */}
           <AromaChipList
             clickable
-            onChange={(aromaList) => setReviewForm((p) => ({ ...p, aroma: aromaList }))}
+            defaultSelected={reviewForm.aroma}
+            onChange={(list) => setReviewForm((p) => ({ ...p, aroma: list }))}
           />
         </div>
       </Modal.Content>
@@ -152,10 +162,10 @@ export default function ReviewAddModal({ wineName, wineId, onAdd }: ReviewAddMod
           className={styles.addBtn}
           size="large"
           variant="filled"
-          onClick={() => onAdd(reviewForm)}
+          onClick={() => onSubmit(reviewForm)}
           fullWidth
         >
-          리뷰 남기기
+          {mode === 'edit' ? '리뷰 수정하기' : '리뷰 남기기'}
         </Button>
       </Modal.Footer>
     </Modal>

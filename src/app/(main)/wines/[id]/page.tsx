@@ -75,21 +75,48 @@ export default function Page({ params }: PageProps) {
     }
   }
 
+  // 리뷰 수정 페칭
+  async function updateReview(reviewId: number, data: any) {
+    const res = await api.patch(`/reviews/${reviewId}`, data);
+    return res.data;
+  }
+
   // 리뷰 남기기 모달
+  const handleOpenEditModal = (review: WineReview) => {
+    const modalId = open(
+      <ReviewAddModal
+        mode="edit"
+        wineName={wine.name}
+        wineId={wine.id}
+        defaultValues={{
+          rating: review.rating,
+          content: review.content,
+          aroma: review.aroma,
+          lightBold: review.lightBold,
+          smoothTannic: review.smoothTannic,
+          drySweet: review.drySweet,
+          softAcidic: review.softAcidic,
+        }}
+        onSubmit={async (data) => {
+          await updateReview(review.id, data);
+          await fetchWine();
+          close(modalId);
+        }}
+      />,
+    );
+  };
+
+  // 리뷰 수정 모달
   const handleOpenReviewModal = () => {
     const modalId = open(
       <ReviewAddModal
+        mode="add"
         wineName={wine.name}
         wineId={wine.id}
-        onAdd={async (data) => {
-          const sendData = {
-            ...data,
-            wineId: wine.id,
-          };
-
+        onSubmit={async (data) => {
+          const sendData = { ...data, wineId: wine.id };
           await createReview(sendData);
           await fetchWine();
-
           close(modalId);
         }}
       />,
@@ -148,6 +175,14 @@ export default function Page({ params }: PageProps) {
                       tannin: review.smoothTannic,
                       sweetness: review.drySweet,
                       acidity: review.softAcidic,
+                    }}
+                    onEdit={() => handleOpenEditModal(review)}
+                    onDelete={() => {
+                      // 삭제 로직 (예: 확인 모달, API 호출 등)
+                      // if (confirm('정말 삭제하시겠습니까?')) {
+                      //   deleteReview(reviewId);
+                      // }
+                      console.log('삭제');
                     }}
                   />
                 </li>

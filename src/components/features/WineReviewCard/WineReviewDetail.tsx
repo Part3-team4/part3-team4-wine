@@ -28,6 +28,8 @@ interface WineReviewDetailProps {
     sweetness: number;
     acidity: number;
   };
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
 /**
@@ -76,6 +78,8 @@ export default function WineReviewDetail({
   aromas,
   description,
   flavor,
+  onEdit,
+  onDelete,
 }: WineReviewDetailProps) {
   const [open, setOpen] = useState(true);
   const [ready, setReady] = useState(false);
@@ -168,9 +172,12 @@ export default function WineReviewDetail({
         <Image src={Like500} alt="좋아요" className={styles.like} width={38} height={38} />
         <Dropdown
           onChange={(value) => {
-            // 여기는 테스트 중..
-            if (value === 'edit') console.log('수정하기 클릭');
-            if (value === 'delete') console.log('삭제하기 클릭');
+            if (value === 'edit' && onEdit) {
+              onEdit();
+            }
+            if (value === 'delete' && onDelete) {
+              onDelete();
+            }
           }}
         >
           <Dropdown.Trigger>
