@@ -64,6 +64,11 @@
           margin-top: 62px;
         }
       }
+
+      // 검색 결과 없음
+      > div {
+        padding: 200px 0;
+      }
     }
   }
 }
