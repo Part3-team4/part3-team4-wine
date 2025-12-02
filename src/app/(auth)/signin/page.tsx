@@ -39,7 +39,7 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const res = await fetch('https://winereview-api.vercel.app/4/auth/signin', {
+      const res = await fetch('https://winereview-api.vercel.app/19-4/auth/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -69,7 +69,7 @@ export default function LoginPage() {
   // 카카오 로그인
   const handleKakaoLogin = () => {
     const REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_KEY;
-    const REDIRECT_URI = 'https://part3-team4-wine-2.vercel.app/auth/kakao';
+    const REDIRECT_URI = 'http://localhost:3001/auth/kakao';
 
     const KAKAO_AUTH_URL =
       `https://kauth.kakao.com/oauth/authorize` +
