@@ -1,13 +1,11 @@
-## 🍷 WINE 
+## 🍷 WINE
 
  <img width="100%" height="auto" alt="image" src="https://github.com/user-attachments/assets/bc819d7e-2f6c-4584-90c7-3bbfb437cafd" />
-
 
 ### 📌 프로젝트 소개
 
 WINE은 사용자가 다양한 와인에 대한 리뷰를 보고 구매 여부를 판단해보고, 구매 여부를 판단해볼 수 있는 플랫폼입니다.
 와인의 종류, 맛, 가격대, 별점을 기반으로 리뷰를 작성할 수 있고, 다양한 필터를 적용해서 와안을 골라 볼 수 있는 기능도 포함됩니다.
-
 
 [WINE 바로가기🍷](https://part3-team4-wine-pi.vercel.app/)
 
@@ -15,9 +13,9 @@ WINE은 사용자가 다양한 와인에 대한 리뷰를 보고 구매 여부�
 
 ### 🗓️ 프로젝트 일정 (수정)
 
-- `프로젝트 기간` : 2025.11.15 ~ 2026.12.04
-- `프로젝트 주제 선정 및 진행 계획 수립` : 2025.11.15 ~ 2025.12.04
-- `프로젝트 배포` : 2026.11.29
+- `프로젝트 기간` : 2025.11.15 ~ 2025.12.04
+- `프로젝트 주제 선정 및 진행 계획 수립` : 2025.11.15 ~ 2025.11.18
+- `프로젝트 배포` : 2025.11.27
 - `팀 소통 및 일정 관리` : Discord로 소통 **|** GitHub Issue로 진행 상황 파악
 
 ---
@@ -105,7 +103,6 @@ WINE은 사용자가 다양한 와인에 대한 리뷰를 보고 구매 여부�
 
 - 프로덕션 배포 : `Vercel`
 
-
 #### 협업 도구
 
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white) ![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white) ![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white) ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
@@ -118,22 +115,22 @@ WINE은 사용자가 다양한 와인에 대한 리뷰를 보고 구매 여부�
 ---
 
 ### 🧭 디렉토리 구조 설계 원칙
-- 이 프로젝트는 Next.js App Router 구조를 기준으로,
-라우팅(app)과 UI 구성 요소(components)의 역할을 명확히 분리하여 설계했습니다.
-- 공통적으로 재사용되는 UI와 도메인에 종속적인 UI를 구분하여,
-공통 컴포넌트는 components/common, 도메인 컴포넌트는 components/features에서 관리함으로써
-재사용성과 확장성을 동시에 고려했습니다.
-- 스타일(styles), 타입(types), 유틸 함수(utils)를 각각 독립적인 폴더로 분리해
-관심사를 명확히 나누고 유지보수 비용을 최소화했습니다.
-- 페이지 단위에서는 화면 구성과 흐름에 집중하고,
-비즈니스 로직과 UI 구현은 하위 컴포넌트로 위임하여
-페이지의 책임을 명확하게 유지하도록 설계했습니다.
 
+- 이 프로젝트는 Next.js App Router 구조를 기준으로,
+  라우팅(app)과 UI 구성 요소(components)의 역할을 명확히 분리하여 설계했습니다.
+- 공통적으로 재사용되는 UI와 도메인에 종속적인 UI를 구분하여,
+  공통 컴포넌트는 components/common, 도메인 컴포넌트는 components/features에서 관리함으로써
+  재사용성과 확장성을 동시에 고려했습니다.
+- 스타일(styles), 타입(types), 유틸 함수(utils)를 각각 독립적인 폴더로 분리해
+  관심사를 명확히 나누고 유지보수 비용을 최소화했습니다.
+- 페이지 단위에서는 화면 구성과 흐름에 집중하고,
+  비즈니스 로직과 UI 구현은 하위 컴포넌트로 위임하여
+  페이지의 책임을 명확하게 유지하도록 설계했습니다.
 
 ### 📦 디렉토리 구조
 
 ```
-📁 src                          
+📁 src
 ├─ 📁 app                       # Next.js App Router 기반 라우팅
 │  ├─ 📁 (auth)                 # 인증 관련 라우트 그룹 (signin, signup)
 │  ├─ 📁 (home)                 # 메인 랜딩 페이지
